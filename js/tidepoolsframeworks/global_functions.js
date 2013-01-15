@@ -25,7 +25,7 @@
  
 	//---- MAP Universal VARIABLES -----//
 	
-	var busAPIkey = mtaBusKey;  //add an API key from http://bustime.mta.info/ to pull in bus locations
+	//var busAPIkey = mtaBusKey;  //add an API key from http://bustime.mta.info/ to pull in bus locations
 	var busSelect;
 	
 	var mapsArray = new Array(); //going to store all the map layers here
