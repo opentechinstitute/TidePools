@@ -39,21 +39,7 @@
 
 require('tidepools_variables.php');
 
-try 
-{
-    $m = new Mongo(); // connect
-    $db = $m->selectDB($DBname);
-}
-catch ( MongoConnectionException $e ) 
-{
-    echo '<p>Couldn\'t connect to mongodb, is the "mongo" process running?</p>';
-    exit();
-}
-
 $curr = "";
-
-$type = 'landmarks';
-$coll = $db->$type;
 
 $nelat = floatval($_GET['nelat']); //remember to query lower right, then upper right
 $nelng = floatval($_GET['nelng']);
@@ -63,8 +49,8 @@ $swlng = floatval($_GET['swlng']);
 
 //-------- IS THERE A FILTER ? ---------//
 $filter = (isset($_GET['filter']) ? $_GET['data'] : null);
-//---------------------------------------//
 
+//---------------------------------------//
 $maps = (isset($_GET['mapIDs']) ? $_GET['mapIDs'] : null);  
 
 $nelat = $nelat + 0.00020; //fixing boundary to compensate for a bit off screen
@@ -72,129 +58,137 @@ $nelng = $nelng + 0.00020;
 $swlat = $swlat - 0.00020;
 $swlng = $swlng - 0.00020;
 
-$box = array(array($swlng,$swlat),array($nelng,$nelat));
+$box = array(
+    array($swlng, $swlat),
+	array($nelng, $nelat),
+);
 
-//need to query for all map ids, sort which ones are public
-$final = array();
 
-if($filter !== null){
+// connect to database and access landmarks 
+try {
+    // open connection to MongoDB server
+    $m = new Mongo('localhost');
 
-    foreach($maps as $i){
+    // access database
+    $db = $m -> selectDB($DBname);
     
-        $cursor = $coll->find(array(
-            'loc' => array('$within' => array('$box' => $box)),
-            'type' => $filter,
-            'mapID' => $i
-        )); 
+    // get 'landmarks' collection
+    $type = 'landmarks';
+    $coll = $db -> $type;
 
-        $cursor->sort(array('_id' => -1));  //sort landmarks by creation, newest first
-        $cursor = iterator_to_array($cursor);
-        array_push($final, $cursor);
-    }
-}
-    
-elseif($maps != null){
 
-    foreach($maps as $i){
+    // need to query for all map ids, sort which ones are public
+    $final = array();
 
-        $cursor = $coll->find(array(
-            'loc' => array('$within' => array('$box' => $box)),
-            'mapID' => $i
-        )); 
+    if ($filter !== null) {
+
+        foreach ($maps as $i) {
         
-        $cursor->sort(array('_id' => -1)); 
+            $cursor = $coll -> find(array(
+                'loc' => array('$within' => array('$box' => $box)),
+                'type' => $filter,
+                'mapID' => $i,
+            )); 
 
-        $cursor = iterator_to_array($cursor);
+            $cursor -> sort(array('_id' => -1));  //sort landmarks by creation, newest first
+            $cursor = iterator_to_array($cursor);
+            array_push($final, $cursor);
+        }
+    } elseif ($maps != null) {
 
-        foreach($cursor as $z){
-        
-            $currentID = $z['_id'];
-            $currentID = (string)$currentID;
+        foreach ($maps as $i) {
 
-            //---- TIME HANDLER STATIC RIGHT NOW, THESE ITEMS HANDLE TIME -----//
+            $cursor = $coll -> find(array(
+                'loc' => array('$within' => array('$box' => $box)),
+                'mapID' => $i,
+            )); 
             
-            if ($z['type'] == "event" 
-                ||$z['type'] == "A" 
-                ||$z['type'] == "B" 
-                ||$z['type'] == "C" 
-                ||$z['type'] == "AUD" 
-                ||$z['type'] == "154" 
-                ||$z['type'] == "156"
-                ||$z['type'] == "157"
-                ||$z['type'] == "1243"
-                ||$z['type'] == "2242"
-                ||$z['type'] == "BC"
-                ||$z['type'] == "E"
-                ||$z['type'] == "FG"
-                ||$z['type'] == "H"
-                ||$z['type'] == "I"
-                ||$z['type'] == "J"
-                ||$z['type'] == "L"
-                ||$z['type'] == "M"
-                ||$z['type'] == "north"
-            ){
+            $cursor -> sort(array('_id' => -1)); 
+            $cursor = iterator_to_array($cursor);
+
+            foreach ($cursor as $z) {
             
-                $timeNow = timeExists($z);
-                
-                if ( $z['stats']['time']['start'] == "Click Here" || $z['stats']['time']['end'] == "Click Here"){
+                $currentID = $z['_id'];
+                $currentID = (string)$currentID;
+
+                //---- TIME HANDLER STATIC RIGHT NOW, THESE ITEMS HANDLE TIME -----//
+                if ($z['type'] == "event" 
+                    ||$z['type'] == "A" 
+                    ||$z['type'] == "B" 
+                    ||$z['type'] == "C" 
+                    ||$z['type'] == "AUD" 
+                    ||$z['type'] == "154" 
+                    ||$z['type'] == "156"
+                    ||$z['type'] == "157"
+                    ||$z['type'] == "1243"
+                    ||$z['type'] == "2242"
+                    ||$z['type'] == "BC"
+                    ||$z['type'] == "E"
+                    ||$z['type'] == "FG"
+                    ||$z['type'] == "H"
+                    ||$z['type'] == "I"
+                    ||$z['type'] == "J"
+                    ||$z['type'] == "L"
+                    ||$z['type'] == "M"
+                    ||$z['type'] == "north"
+                ) {
+                    $timeNow = timeExists($z);
                     
-                    $nestArray = array( 
-                        $currentID => $z
-                    );
-                    array_push($final, $nestArray);
+                    if ($z['stats']['time']['start'] == "Click Here" 
+                        || $z['stats']['time']['end'] == "Click Here") {
+                            $nestArray = array($currentID => $z);
+                            array_push($final, $nestArray);
+                    }
+                    
+                    if ($timeNow == "1") {
+                        $nestArray = array($currentID => $z);
+                        array_push($final, $nestArray);
+                    }
+                    if ($timeNow == "0") {
+                        //nothing
+                    }
+                } else {
+                    $nestArray2 = array($currentID => $z);
+                    array_push($final, $nestArray2);
                 }
-                
-                if ($timeNow == "1"){
-
-                    $nestArray = array( 
-                        $currentID => $z
-                    );
-                    array_push($final, $nestArray);
-                }
-                
-                if ($timeNow == "0"){
-                
-                    //nothing
-                }
-            }
-            
-            //-------------------------------------------------------------//
-
-            else {
-                $nestArray2 = array(    
-                        $currentID => $z
-                    );
-
-                array_push($final, $nestArray2);
             }
         }
     }
+
+    // disconnect from database 
+    $m -> close();
+} catch (MongoConnectionException $e) {
+    die('Error connecting to MongoDB server - is the "mongo" process running?');
+} catch (MongoException $e) {
+    die('Error: ' . $e -> getMessage());
 }
+
     
 $final = json_encode($final);
 print_r($final);
 
+unset($i, $z);
 
-function checkTime($cursor){
 
-    foreach($cursor as $z){
+function checkTime($cursor)
+{
+    foreach ($cursor as $z) {
 
         $stringed = (string)$z['stats']['time']['start'];
 
-        if($stringed !== "0.00000000 0"){
-
+        if ($stringed !== "0.00000000 0") {
             $curr = "test";
         }
         
-        else{
+        else {
             return "none";
         }
     }
 }
         
 
-function timeExists($z){
-    
+function timeExists($z)
+{
     $start = $z['stats']['time']['start'];
     $end = $z['stats']['time']['end'];
 
@@ -208,10 +202,9 @@ function timeExists($z){
 
     //echo $start;
     
-    if ($start == null){
+    if ($start == null) {
         //return;
     }
-    
     //------ End process -----//
     
     $end = (string)$end;
@@ -224,7 +217,7 @@ function timeExists($z){
     $end1 = intval($end);
     $start1 = intval($start);
     
-    if ($end == null){
+    if ($end == null) {
         //return;
     }
     
@@ -235,22 +228,17 @@ function timeExists($z){
     $start = intval($start);
     $end = intval($end);
 
-    if(dateRange($start, $end, $now)){
-    
-      return "1";
-
+    if (dateRange($start, $end, $now)) {
+        return "1";
     } else {
-    
-      return "0";
-
+        return "0";
     }
 }
 
         
-function dateRange($start, $end, $now){
-
-  return (($now >= $start) && ($now <= $end));
-
+function dateRange($start, $end, $now)
+{
+    return (($now >= $start) 
+            && ($now <= $end));
 }
 
-?>

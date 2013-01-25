@@ -7,8 +7,9 @@
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
  
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
- *	Lead: Jonathan Baldwin
- *	This file is part of Tidepools <http://www.tidepools.co>
+ *      Lead: Jonathan Baldwin
+ *      Contributors: Lisa J. Lovchik
+ *      This file is part of Tidepools <http://www.tidepools.co>
 
  *  Tidepools is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,197 +25,144 @@
  *  along with Tidepools.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * record_map.php
+ * 
+ *     Called from:
+ *         index.html
+ *
+ *     Calls:
+ *         none
+ */
+
+
 require('tidepools_variables.php');
 
-try 
-{
-    $m = new Mongo(); // connect
-    $db = $m->selectDB($DBname);
-}
-catch ( MongoConnectionException $e ) 
-{
-    echo '<p>Couldn\'t connect to mongodb, is the "mongo" process running?</p>';
-    exit();
-}
+// if $_POST['landmark']=='buildings', etc. to pass correct landmark value
+if ($_POST['mapname']) {
+    
+    //------ SORTING OUT FORM INPUTS ------//
+    $mapName = $_POST['mapname'];
+    $mapDescrip = $_POST['mapdescrip'];
 
-	//if $_POST['landmark']=='buildings', etc. to pass correct landmark value
-	
-	$type = 'maps';
+    $admin = (isset($_POST['admin']) ? $_POST['admin'] : null);
+    $openEdit = (isset($_POST['openedit']) ? $_POST['openedit'] : 0);
+    $hidden = (isset($_POST['hidden']) ? $_POST['hidden'] : 0);
+    $scavengerHunt = (isset($_POST['scavenger']) ? $_POST['scavenger'] : 0);
 
-	$collection = $db->$type;
-	
+    //----------------------------------//
+    
+    $mapType = mapTypeProcess($openEdit, $hidden, $scavengerHunt);
 
-if($_POST['mapname']) {
+    //------ Map Stats -----------//
+    $avatar = $mapType . '.png'; //avatar based on user selection
+    $expires = 'never';
+
+    $stats = array( 
+        'expires' => $expires,
+        'avatar' => $avatar,
+        'level' => 1,
+        'reputation' => 0,
+        'likes' => 0,
+        'buzz'=> 0,
+        'scavenger' => $scavengerHunt,
+    );
+    
+    //---------- Landmarks on Map --------//
+    $landmarks = array();
+
+    //---------- Permissions --------//
+    $viewers = array();
+    $admins = array();
+    //hidden = not on global map aggregation
+    
+    $permissions = array(
+        'hidden' => $hidden,
+        'viewers' => $viewers,
+        'openedit' => $openEdit,
+        'admins' => $admins 
+    );
+    
+    //------------------------------//
+            
+    //------ MONGO DB ESCAPE STRING -------//
+    /* 
+        $pattern = '$';
+        $replacement = '\$';
+        echo preg_replace($pattern, $replacement, $description); 
+    */
+
+    //------------------------------------//
 
     
-	//------ SORTING OUT FORM INPUTS ------//
-	
-	$mapName = $_POST['mapname'];
-	
-	$mapDescrip = $_POST['mapdescrip'];
-	
-	$admin = $_POST['admin'];
-		
-	
-	if($_POST['openedit'] == 'Yes'){
-	    $openEdit = 1;
-	}
-	
-	else{
-	    $openEdit = 0;
-	}
-
-	if($_POST['hidden'] == 'Yes'){
-	    $hidden = 1;
-	}
-	else{
-	    $hidden = 0;
-	}
-	
-	if($_POST['scavenger'] == 'Yes'){
-	    $scavengerHunt = 1;
-	}
-	else
-	{
-	    $scavengerHunt = 0;
-	}
-	
-	//----------------------------------//
-	
-	$mapType = mapTypeProcess($openEdit, $hidden, $scavengerHunt);
-	
+    //----Map JSON Object------//
+    $map = array(
+        'name' => $mapName,
+        'description' => $mapDescrip,
+        'landmarks' => $landmarks,
+        'stats' => $stats,
+        'permissions' => $permissions,
+    );
+    //---------------------------//
 
 
-	//------ Map Stats -----------//
-	
-	$avatar = $mapType.'.png'; //avatar based on user selection
-	$expires = 'never';
+    // connect to database and access maps
+    try {
+        // open connection to MongoDB server
+        $m = new Mongo('localhost');
 
-	$stats = array(	
-		'expires'=>$expires,
-		'avatar'=>$avatar,
-		'level'=>1,
-		'reputation'=>0,
-		'likes'=>0,
-		'buzz'=>0,
-		'scavenger'=>$scavengerHunt
-	);
-	
-	
-	//---------- Landmarks on Map --------//
-	
-	$landmarks = array(
+        // access database
+        $db = $m -> selectDB($DBname);
+         
+        // get 'maps' collection
+        // if $_POST['landmark']=='buildings', etc. to pass correct landmark value
+        $type = 'maps';
+        $coll = $db -> $type;
+     
 
-	);
+        // create new map
+        insertMap($map, $coll);    
+        echo 'Map Type: ' . $mapType . '\n';
 
-	//---------- Permissions --------//
-	
-	$viewers = array();
-	$admins = array();
-	//hidden = not on global map aggregation
-	
-	$permissions = array(
-		'hidden' => $hidden,
-		'viewers' => $viewers,
-		'openedit' => $openEdit,
-		'admins' => $admins	
-	);
-	
-	//------------------------------//
-
-			
-	    //------ MONGO DB ESCAPE STRING -------//
-	   /* 
-		$pattern = '$';
-		$replacement = '\$';
-		echo preg_replace($pattern, $replacement, $description); 
-		*/
-		//------------------------------------//
-	
-	
-	
-	   	//----Map JSON Object------//
-						
-		$map = array(
-		 
-		    'name'=>$mapName,
-		    'description'=>$mapDescrip,
-		    'landmarks'=>$landmarks,
-		    'stats'=>$stats,
-		    'permissions'=>$permissions
-	
-		);
-		
-		//---------------------------//
-		
-	
-		insertMap($map,$collection);	
-	    
-	}
-
-	function insertMap($map,$collection){
-			
-		//$safe_insert = true;
-		$collection->insert($map);
-		echo "Map Created!";
-	}
-
-	function mapTypeProcess($openEdit, $hidden, $scavengerHunt){
-	
-		//yeah, this wasn't designed so well for scaling...
-	
-		if( ($openEdit == 1) && ($hidden == 1) && ($scavengerHunt == 1) ){
-			return "openhiddenhunt";
-		}
-		
-		else if( ($openEdit == 0) && ($hidden == 0) && ($scavengerHunt == 0) ){
-	
-			return "closedpublicmap";
-
-		}
-		
-		else if( ($openEdit == 1) && ($hidden == 0) && ($scavengerHunt == 0) ){
-		
-			return "openpublicmap";
-		}
-		
-		else if( ($openEdit == 0) && ($hidden == 1) && ($scavengerHunt == 0) ){
-		
-			return "closedhiddenhunt";		
-		
-		}
-		
-		else if( ($openEdit == 0) && ($hidden == 0) && ($scavengerHunt == 1) ){
-		
-			return "closedpublichunt";		
-		
-		}
-		
-		else if( ($openEdit == 1) && ($hidden == 1) && ($scavengerHunt == 0) ){
-		
-			return "openhiddenmap";		
-		
-		}
-		
-		else if( ($openEdit == 0) && ($hidden == 1) && ($scavengerHunt == 1) ){
-		
-			return "closedhiddenhunt";		
-		
-		}
-		
-		else if( ($openEdit == 1) && ($hidden == 0) && ($scavengerHunt == 1) ){
-		
-			return "openpublichunt";		
-		
-		}
-		
-		else {
-		
-			return "nothing";
-		
-		}
-	}
+        // disconnect from database 
+        $m -> close();
+    } catch (MongoConnectionException $e) {
+        die('Error connecting to MongoDB server - is the "mongo" process running?');
+    } catch (MongoException $e) {
+        die('Error: ' . $e -> getMessage());
+    }
+}
 
 
+function insertMap($map, $coll)
+{
+    //$safe_insert = true;
+    $coll -> insert($map);
+    echo 'Map Created!';
+}
 
-?>
+
+// set map type to display according to chosen options
+function mapTypeProcess($openEdit, $hidden, $scavengerHunt)
+{
+    $mapType = 'nothing';
+
+    if ($openEdit == 0) {
+        $mapType = 'closed';
+    } elseif ($openEdit == 1) {
+        $mapType = 'open';
+    }
+    if ($hidden == 0) {
+        $mapType .= 'public';
+    } elseif ($hidden == 1) {
+        $mapType .= 'hidden';
+    }
+    if ($scavengerHunt == 0) {
+        $mapType .= 'map';
+    } elseif ($scavengerHunt == 1) {
+        $mapType .= 'hunt';
+    }
+
+    return $mapType;
+}
+
