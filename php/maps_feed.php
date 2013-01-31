@@ -1,5 +1,10 @@
 <?php 
 /**
+ * maps_feed.php
+ * 
+ * Displaying list of all map layers visible to user
+ *
+ * 
  *.---.      .                    .     
  *  |  o     |                    |     
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
@@ -7,9 +12,9 @@
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
  
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
- *	    Lead: Jonathan Baldwin
+ *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
- *	    This file is part of Tidepools <http://www.tidepools.co>
+ *      This file is part of Tidepools <http://www.tidepools.co>
 
  *  Tidepools is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,22 +30,9 @@
  *  along with Tidepools.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * maps_feed.php
- * 
- *     Called from:
- *         js/tidepoolsframeworks/map_rendering.js
- *
- *     Calls:
- *         none
- */
-
 
 $maps = (isset($_POST['data']) ? $_POST['data'] : null);
-
-// stripslashes expects a string, but $maps is an array
-// what is the intended purpose of the line below?
-//     stripslashes($maps); 
+$maps = stripslashesDeep($maps);
 
 $counter = 1;
 
@@ -63,6 +55,16 @@ if ($maps != null) {
 
     echo "</div>";
 
-    unset($i);
+    unset($i); // remove lingering foreach() values from memory
+
 }
 
+
+function stripslashesDeep($value)
+{
+    $value = is_array($value)
+        ? array_map('stripslashesDeep', $value) 
+        : stripslashes($value);
+
+    return $value;
+}

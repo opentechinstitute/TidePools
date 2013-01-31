@@ -1,5 +1,10 @@
 <?php
 /**
+ * record_map.php
+ * 
+ * Records map layers to Mongo database via form submission.  
+ * 
+ * 
  *.---.      .                    .     
  *  |  o     |                    |     
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
@@ -23,16 +28,6 @@
 
  *  You should have received a copy of the GNU General Public License
  *  along with Tidepools.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/**
- * record_map.php
- * 
- *     Called from:
- *         index.html
- *
- *     Calls:
- *         none
  */
 
 
@@ -82,19 +77,7 @@ if ($_POST['mapname']) {
         'openedit' => $openEdit,
         'admins' => $admins 
     );
-    
-    //------------------------------//
-            
-    //------ MONGO DB ESCAPE STRING -------//
-    /* 
-        $pattern = '$';
-        $replacement = '\$';
-        echo preg_replace($pattern, $replacement, $description); 
-    */
-
-    //------------------------------------//
-
-    
+       
     //----Map JSON Object------//
     $map = array(
         'name' => $mapName,
@@ -118,6 +101,18 @@ if ($_POST['mapname']) {
         // if $_POST['landmark']=='buildings', etc. to pass correct landmark value
         $type = 'maps';
         $coll = $db -> $type;
+
+
+        //------------------------------//
+            
+        //------ MONGO DB ESCAPE STRING -------//
+        /* 
+            $pattern = '$';
+            $replacement = '\$';
+            echo preg_replace($pattern, $replacement, $description); 
+        */
+
+        //------------------------------------//
      
 
         // create new map
@@ -165,4 +160,3 @@ function mapTypeProcess($openEdit, $hidden, $scavengerHunt)
 
     return $mapType;
 }
-

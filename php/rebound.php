@@ -1,6 +1,15 @@
 <?php
     
 /**
+ * rebound.php
+ * 
+ * When a user pans or zooms in the mapping interface, this 
+ * function is called to recalculate visible landmarks in the
+ * current window view, for all map layers. It also determines
+ * what time-based landmarks are visible based on the current 
+ * time and each landmarks start and end time.
+ * 
+ * 
  *.---.      .                    .     
  *  |  o     |                    |     
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
@@ -26,20 +35,12 @@
  *  along with Tidepools.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * rebound.php
- * 
- *     Called from:
- *         js/tidepoolsframeworks/map_rendering.js
- *
- *     Calls:
- *         none
- */
-
 
 require('tidepools_variables.php');
 
 $curr = "";
+
+//-- NOTE: CHANGE METHOD TO 'POST' IN THE JS, FOR SECURITY REASONS! --//
 
 $nelat = floatval($_GET['nelat']); //remember to query lower right, then upper right
 $nelng = floatval($_GET['nelng']);
@@ -51,7 +52,10 @@ $swlng = floatval($_GET['swlng']);
 $filter = (isset($_GET['filter']) ? $_GET['data'] : null);
 
 //---------------------------------------//
-$maps = (isset($_GET['mapIDs']) ? $_GET['mapIDs'] : null);  
+$maps = (isset($_GET['mapIDs']) ? $_GET['mapIDs'] : null);
+
+//-- CHANGE METHOD ABOVE TO 'POST' IN JS -----------------------------//
+  
 
 $nelat = $nelat + 0.00020; //fixing boundary to compensate for a bit off screen
 $nelng = $nelng + 0.00020;
@@ -59,8 +63,10 @@ $swlat = $swlat - 0.00020;
 $swlng = $swlng - 0.00020;
 
 $box = array(
-    array($swlng, $swlat),
-	array($nelng, $nelat),
+    array(
+        $swlng, $swlat),
+    array(
+        $nelng, $nelat),
 );
 
 
@@ -82,13 +88,16 @@ try {
 
     if ($filter !== null) {
 
-        foreach ($maps as $i) {
+        foreach ($maps as $v) {
         
             $cursor = $coll -> find(array(
-                'loc' => array('$within' => array('$box' => $box)),
+                'loc' => array(
+                    '$within' => array(
+                        '$box' => $box)
+                ),
                 'type' => $filter,
-                'mapID' => $i,
-            )); 
+                'mapID' => $v)
+            ); 
 
             $cursor -> sort(array('_id' => -1));  //sort landmarks by creation, newest first
             $cursor = iterator_to_array($cursor);
@@ -96,59 +105,62 @@ try {
         }
     } elseif ($maps != null) {
 
-        foreach ($maps as $i) {
+        foreach ($maps as $v) {
 
             $cursor = $coll -> find(array(
-                'loc' => array('$within' => array('$box' => $box)),
-                'mapID' => $i,
-            )); 
+                'loc' => array(
+                    '$within' => array(
+                        '$box' => $box)
+                ),
+                'mapID' => $v)
+            ); 
             
             $cursor -> sort(array('_id' => -1)); 
             $cursor = iterator_to_array($cursor);
 
-            foreach ($cursor as $z) {
+            foreach ($cursor as $val) {
             
-                $currentID = $z['_id'];
-                $currentID = (string)$currentID;
+                $currentID = $val['_id'];
+                $currentID = (string) $currentID;
 
                 //---- TIME HANDLER STATIC RIGHT NOW, THESE ITEMS HANDLE TIME -----//
-                if ($z['type'] == "event" 
-                    ||$z['type'] == "A" 
-                    ||$z['type'] == "B" 
-                    ||$z['type'] == "C" 
-                    ||$z['type'] == "AUD" 
-                    ||$z['type'] == "154" 
-                    ||$z['type'] == "156"
-                    ||$z['type'] == "157"
-                    ||$z['type'] == "1243"
-                    ||$z['type'] == "2242"
-                    ||$z['type'] == "BC"
-                    ||$z['type'] == "E"
-                    ||$z['type'] == "FG"
-                    ||$z['type'] == "H"
-                    ||$z['type'] == "I"
-                    ||$z['type'] == "J"
-                    ||$z['type'] == "L"
-                    ||$z['type'] == "M"
-                    ||$z['type'] == "north"
+                if ($val['type'] == "event" 
+                    || $val['type'] == "A" 
+                    || $val['type'] == "B" 
+                    || $val['type'] == "C" 
+                    || $val['type'] == "AUD" 
+                    || $val['type'] == "154" 
+                    || $val['type'] == "156"
+                    || $val['type'] == "157"
+                    || $val['type'] == "1243"
+                    || $val['type'] == "2242"
+                    || $val['type'] == "BC"
+                    || $val['type'] == "E"
+                    || $val['type'] == "FG"
+                    || $val['type'] == "H"
+                    || $val['type'] == "I"
+                    || $val['type'] == "J"
+                    || $val['type'] == "L"
+                    || $val['type'] == "M"
+                    || $val['type'] == "north"
                 ) {
-                    $timeNow = timeExists($z);
+                    $timeNow = timeExists($val);
                     
-                    if ($z['stats']['time']['start'] == "Click Here" 
-                        || $z['stats']['time']['end'] == "Click Here") {
-                            $nestArray = array($currentID => $z);
+                    if ($val['stats']['time']['start'] == "Click Here" 
+                        || $val['stats']['time']['end'] == "Click Here") {
+                            $nestArray = array($currentID => $val);
                             array_push($final, $nestArray);
                     }
                     
                     if ($timeNow == "1") {
-                        $nestArray = array($currentID => $z);
+                        $nestArray = array($currentID => $val);
                         array_push($final, $nestArray);
                     }
                     if ($timeNow == "0") {
                         //nothing
                     }
                 } else {
-                    $nestArray2 = array($currentID => $z);
+                    $nestArray2 = array($currentID => $val);
                     array_push($final, $nestArray2);
                 }
             }
@@ -163,18 +175,18 @@ try {
     die('Error: ' . $e -> getMessage());
 }
 
-    
+
 $final = json_encode($final);
 print_r($final);
 
-unset($i, $z);
+unset($v, $val); // remove lingering foreach() values from memory
 
 
 function checkTime($cursor)
 {
-    foreach ($cursor as $z) {
+    foreach ($cursor as $val) {
 
-        $stringed = (string)$z['stats']['time']['start'];
+        $stringed = (string) $val['stats']['time']['start'];
 
         if ($stringed !== "0.00000000 0") {
             $curr = "test";
@@ -187,13 +199,13 @@ function checkTime($cursor)
 }
         
 
-function timeExists($z)
+function timeExists($val)
 {
-    $start = $z['stats']['time']['start'];
-    $end = $z['stats']['time']['end'];
+    $start = $val['stats']['time']['start'];
+    $end = $val['stats']['time']['end'];
 
     //----- Start process -----//
-    $start = (string)$start;
+    $start = (string) $start;
     
     $pattern = "/0.00000000 /";
     $replacement = "";
@@ -207,7 +219,7 @@ function timeExists($z)
     }
     //------ End process -----//
     
-    $end = (string)$end;
+    $end = (string) $end;
     
     $pattern = "/0.00000000 /";
     $replacement = "";
@@ -241,4 +253,3 @@ function dateRange($start, $end, $now)
     return (($now >= $start) 
             && ($now <= $end));
 }
-
