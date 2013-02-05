@@ -1,16 +1,17 @@
 <?php
+
 /**
  * record_landmark.php
- * 
+ *
  * Records landmarks to Mongo database via form submission.
- * 
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -39,32 +40,37 @@ try {
 
     // access database
     $db = $m -> selectDB($DBname);
-    
-    
+
+
     //------ MONGO DB ESCAPE STRING -------//
-    /* 
+    /*
         $pattern = '$';
         $replacement = '\$';
-        echo preg_replace($pattern, $replacement, $description); 
+        echo preg_replace($pattern, $replacement, $description);
         */
     //------------------------------------//
-    
+
 
     // get 'landmarks' collection
     $type = 'landmarks';
-    $coll = $db -> $type;
+    $collection = $db -> $type;
 
     // get 'maps' collection
     $type2 = 'maps';
-    $coll2 = $db -> $type2;
-    
+    $collection2 = $db -> $type2;
+
     $marktype = $_POST['marktype'];
     $mapID = $_POST['maplist'];
     $landmarkAdmin = $_POST['landmarkAdmin'];
-    $timeType = $_POST['timespec'];
-    $timeStart = $_POST['startdatetimepicker'];
-    $timeEnd = $_POST['enddatetimepicker'];
-    
+
+    // $landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
+
+    $timeType = (isset($_POST['timespec']) ? $_POST['timespec'] : null);
+    $timeStart = (isset($_POST['startdatetimepicker'])
+        ? $_POST['startdatetimepicker'] : null);
+    $timeEnd = (isset($_POST['enddatetimepicker'])
+        ? $_POST['enddatetimepicker'] : null);
+
     //---TIME--//
     if ($timeStart == "Click Here" && $timeEnd == "Click Here") {
         $timeStart = 0;
@@ -75,14 +81,14 @@ try {
         } else {
             $timeStart = 0;
         }
-        
+
         if ($timeEnd !== "Click Here") {
             $timeEnd = new MongoDate(strtotime($timeEnd));
         } else {
             $timeEnd = 0;
         }
     }
-    
+
     $time = array(
         'type' => $timeType,
         'start' => $timeStart,
@@ -98,8 +104,8 @@ try {
     $expires = 'never';
     $checkIn = array();
     $imGoing = array();
-    
-    $stats = array( 
+
+    $stats = array(
         'time' => $time,
         'avatar' => $avatar,
         'level' => 1,
@@ -109,58 +115,57 @@ try {
         'checkIn' => $checkIn,
         'imGoing' => $imGoing,
     );
-    
+
     //---------- Landmarks Inside Landmark --------//
-    
+
     $insideStatus = 0;
     $landmarksInside = array();
-    
+
     $insides = array(
         'insideAlready' => $insideStatus,
         'landmarksInside' => $landmarksInside,
     );
-    
+
     //---------- News & Announcements --------//
-    
+
     $post = array(
         'sticky' => 0,
         'global' => 0,
         'post' => '...',
         'likes' => 0,
     );
-    
+
     $feed = array();
-    
+
     //---------- Permissions --------//
-    
+
     $viewers = array();
     $admins = array();
     //hidden = not on global map aggregation
-    
+
     $permissions = array(
         'hidden' => 0,
         'viewers' => $viewers,
         'openedit' => 0,
-        'admins' => $admins, 
+        'admins' => $admins,
     );
-    
+
     //------------------------------//
 
 
     if ($_POST['name']) {
-    
+
         $description = $_POST['description'];
-        
+
         $lat = floatval($_POST['lat']); //converting from string to floats
         $lng = floatval($_POST['lng']); //...^
-        
-        $loc = array($lng, $lat);        
-        
-        
+
+        $loc = array($lng, $lat);
+
+
         //----Landmark JSON Object------//
-                        
+
         $landmark = array(
-         
             'name'=>$_POST['name'],
             'description'=>$description,
             'type'=>$marktype,
@@ -170,40 +175,39 @@ try {
             'insides'=>$insides,
             'feed'=>$feed,
             'permissions'=>$permissions,
-
         );
-        
+
         //---------------------------//
-        
-        insertLandmark($landmark, $coll, $coll2);    
+
+        insertLandmark($landmark, $collection, $collection2);
     }
 
-    // disconnect from database 
+    // disconnect from database
     $m -> close();
 } catch (MongoConnectionException $e) {
     die('Error connecting to MongoDB server - is the "mongo" process running?');
 } catch (MongoException $e) {
         die('Error: ' . $e -> getMessage());
 }
-   
 
-    function insertLandmark($landmark, $coll, $coll2) {
-            
+
+    function insertLandmark($landmark, $collection, $collection2) {
+
         //$safe_insert = true;
-        $coll -> insert($landmark);
-        $coll -> ensureIndex(array("loc" => "2d"));
-                
-        updateMap($landmark['_id'], $landmark['mapID'], $coll2);
+        $collection -> insert($landmark);
+        $collection -> ensureIndex(array("loc" => "2d"));
+
+        updateMap($landmark['_id'], $landmark['mapID'], $collection2);
 
     }
-    
+
     // store landmarks on each map
-    function updateMap($landmarkID, $mapID, $coll2) {
-    
+    function updateMap($landmarkID, $mapID, $collection2) {
+
         $landmarkID = new MongoID($landmarkID);
         $mapIDObj = new MongoID($mapID);
-        
+
         $newdata = array('$push' => array("landmarks" => $landmarkID));
-        $coll2 -> update(array("_id" => $mapIDObj), $newdata);
+        $collection2 -> update(array("_id" => $mapIDObj), $newdata);
 
     }

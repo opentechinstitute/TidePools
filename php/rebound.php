@@ -1,21 +1,21 @@
 <?php
-    
+
 /**
  * rebound.php
- * 
- * When a user pans or zooms in the mapping interface, this 
+ *
+ * When a user pans or zooms in the mapping interface, this
  * function is called to recalculate visible landmarks in the
  * current window view, for all map layers. It also determines
- * what time-based landmarks are visible based on the current 
+ * what time-based landmarks are visible based on the current
  * time and each landmarks start and end time.
- * 
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -49,13 +49,13 @@ $swlng = floatval($_GET['swlng']);
 
 
 //-------- IS THERE A FILTER ? ---------//
-$filter = (isset($_GET['filter']) ? $_GET['data'] : null);
+$filter = (isset($_GET['filter']) ? $_GET['filter'] : null);
 
 //---------------------------------------//
 $maps = (isset($_GET['mapIDs']) ? $_GET['mapIDs'] : null);
 
 //-- CHANGE METHOD ABOVE TO 'POST' IN JS -----------------------------//
-  
+
 
 $nelat = $nelat + 0.00020; //fixing boundary to compensate for a bit off screen
 $nelng = $nelng + 0.00020;
@@ -70,17 +70,26 @@ $box = array(
 );
 
 
-// connect to database and access landmarks 
 try {
     // open connection to MongoDB server
     $m = new Mongo('localhost');
 
     // access database
     $db = $m -> selectDB($DBname);
-    
+
+
+    //------ MONGO DB ESCAPE STRING -------//
+    /*
+        $pattern = '$';
+        $replacement = '\$';
+        echo preg_replace($pattern, $replacement, $description);
+        */
+    //------------------------------------//
+
+
     // get 'landmarks' collection
     $type = 'landmarks';
-    $coll = $db -> $type;
+    $collection = $db -> $type;
 
 
     // need to query for all map ids, sort which ones are public
@@ -89,15 +98,15 @@ try {
     if ($filter !== null) {
 
         foreach ($maps as $v) {
-        
-            $cursor = $coll -> find(array(
+
+            $cursor = $collection -> find(array(
                 'loc' => array(
                     '$within' => array(
                         '$box' => $box)
                 ),
                 'type' => $filter,
                 'mapID' => $v)
-            ); 
+            );
 
             $cursor -> sort(array('_id' => -1));  //sort landmarks by creation, newest first
             $cursor = iterator_to_array($cursor);
@@ -107,29 +116,29 @@ try {
 
         foreach ($maps as $v) {
 
-            $cursor = $coll -> find(array(
+            $cursor = $collection -> find(array(
                 'loc' => array(
                     '$within' => array(
                         '$box' => $box)
                 ),
                 'mapID' => $v)
-            ); 
-            
-            $cursor -> sort(array('_id' => -1)); 
+            );
+
+            $cursor -> sort(array('_id' => -1));
             $cursor = iterator_to_array($cursor);
 
             foreach ($cursor as $val) {
-            
+
                 $currentID = $val['_id'];
                 $currentID = (string) $currentID;
 
                 //---- TIME HANDLER STATIC RIGHT NOW, THESE ITEMS HANDLE TIME -----//
-                if ($val['type'] == "event" 
-                    || $val['type'] == "A" 
-                    || $val['type'] == "B" 
-                    || $val['type'] == "C" 
-                    || $val['type'] == "AUD" 
-                    || $val['type'] == "154" 
+                if ($val['type'] == "event"
+                    || $val['type'] == "A"
+                    || $val['type'] == "B"
+                    || $val['type'] == "C"
+                    || $val['type'] == "AUD"
+                    || $val['type'] == "154"
                     || $val['type'] == "156"
                     || $val['type'] == "157"
                     || $val['type'] == "1243"
@@ -145,13 +154,13 @@ try {
                     || $val['type'] == "north"
                 ) {
                     $timeNow = timeExists($val);
-                    
-                    if ($val['stats']['time']['start'] == "Click Here" 
+
+                    if ($val['stats']['time']['start'] == "Click Here"
                         || $val['stats']['time']['end'] == "Click Here") {
                             $nestArray = array($currentID => $val);
                             array_push($final, $nestArray);
                     }
-                    
+
                     if ($timeNow == "1") {
                         $nestArray = array($currentID => $val);
                         array_push($final, $nestArray);
@@ -167,7 +176,7 @@ try {
         }
     }
 
-    // disconnect from database 
+    // disconnect from database
     $m -> close();
 } catch (MongoConnectionException $e) {
     die('Error connecting to MongoDB server - is the "mongo" process running?');
@@ -191,13 +200,13 @@ function checkTime($cursor)
         if ($stringed !== "0.00000000 0") {
             $curr = "test";
         }
-        
+
         else {
             return "none";
         }
     }
 }
-        
+
 
 function timeExists($val)
 {
@@ -206,35 +215,35 @@ function timeExists($val)
 
     //----- Start process -----//
     $start = (string) $start;
-    
+
     $pattern = "/0.00000000 /";
     $replacement = "";
-    
+
     $start = preg_replace($pattern, $replacement, $start);
 
     //echo $start;
-    
+
     if ($start == null) {
         //return;
     }
     //------ End process -----//
-    
+
     $end = (string) $end;
-    
+
     $pattern = "/0.00000000 /";
     $replacement = "";
-    
+
     $end = preg_replace($pattern, $replacement, $end);
-    
+
     $end1 = intval($end);
     $start1 = intval($start);
-    
+
     if ($end == null) {
         //return;
     }
-    
-    //----------------------//  
-    
+
+    //----------------------//
+
     $now = strtotime("now");
 
     $start = intval($start);
@@ -247,9 +256,9 @@ function timeExists($val)
     }
 }
 
-        
+
 function dateRange($start, $end, $now)
 {
-    return (($now >= $start) 
+    return (($now >= $start)
             && ($now <= $end));
 }

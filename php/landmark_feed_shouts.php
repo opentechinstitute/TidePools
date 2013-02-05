@@ -1,6 +1,11 @@
 <?php 
 
 /**
+ * landmark_feed_shouts.php
+ * 
+ * Displays list view of most recent comments from landmarks currently on map.
+ * 
+ * 
  *.---.      .                    .     
  *  |  o     |                    |     
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
@@ -8,8 +13,9 @@
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
  
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
- *	Lead: Jonathan Baldwin
- *	This file is part of Tidepools <http://www.tidepools.co>
+ *      Lead: Jonathan Baldwin
+ *      Contributors: Lisa J. Lovchik
+ *      This file is part of Tidepools <http://www.tidepools.co>
 
  *  Tidepools is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,58 +32,61 @@
  */
 
 
-	$landmarks = $_POST['data'];
-	
-	stripslashes($landmarks); 
+$landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
+$landmarks = stripslashesDeep($landmarks); 
 
-	$counter = 1;
-	
-	foreach($landmarks as $i){
-	
-		foreach($i as $c){
+$counter = 1;
 
-			if ($c['stats'] !== null){
-			
-				if ($c['name'] == "flora"){
-					continue;
-				}
-				
-				else {
+foreach ($landmarks as $v) {
 
-					if ($c['feed'] !== null){
-		
-						foreach($c['feed'] as $x){
+    foreach ($v as $val) {
 
-							$idVal = "'".$c['_id']['$id']."'";
-		
-							echo '<div style="width:100%; margin-left: -7px; margin-top: 42px; margin-bottom: 5px;" onclick="landmarkWindow('.$idVal.')">';
+        if ($val['stats'] !== null) {
+        
+            if ($val['name'] == "flora") {
 
-							$num = rand(1, 3);
-							
-							echo '<img src="images/people/person'.$num.'.png" style="float:left; max-width:42px; margin-left: 8; margin-right:11;"/>';//
-							
-							echo '<div id="innertext" style=" width:348px;  height:39;  margin-left: 12; margin-top:1; margin-bottom:8">';
-							
-							$name = stripslashes($x['name']);
-							
-							echo "<p5><span style='color:#7f275b'></span>".$name."</p5>";  //plug into CSS here...
-							
-							$descrip = stripslashes($x['words']);
-							
-							echo "<p style='margin-top:2px;'>".$descrip."</p>";
-				
-							echo '</br><hr></div></div>';
-						}
-					}
-				}
-			}
-		}
-	}
-	echo '</div>';
-?>
-	
+                continue;
+                
+            } else {
 
-	
-			
+                if ($val['feed'] !== null) {
+    
+                    foreach ($val['feed'] as $value) {
+
+                        $idVal = "'" . $val['_id']['$id'] . "'";
+    
+                        echo '<div style="width:100%; margin-left: -7px; margin-top: 42px; margin-bottom: 5px;" onclick="landmarkWindow(' . $idVal . ')">';
+
+                        $num = rand(1, 3);
+                        
+                        echo '<img src="images/people/person' . $num . '.png" style="float:left; max-width:42px; margin-left: 8; margin-right:11;"/>';
+                        
+                        echo '<div id="innertext" style=" width:348px;  height:39;  margin-left: 12; margin-top:1; margin-bottom:8">';
+                        
+                        $name = stripslashes($value['name']);
+                        
+                        echo "<p5><span style='color:#7f275b'></span>" . $name . "</p5>";  //plug into CSS here...
+                        
+                        $descrip = stripslashes($value['words']);
+                        
+                        echo "<p style='margin-top:2px;'>" . $descrip . "</p>";
+            
+                        echo '</br><hr></div></div>';
+                    }
+                }
+            }
+        }
+    }
+}
+
+unset ($v, $val); // remove lingering foreach() values from memory
 
 
+function stripslashesDeep($value)
+{
+    $value = is_array($value)
+        ? array_map('stripslashesDeep', $value) 
+        : stripslashes($value);
+
+    return $value;
+}

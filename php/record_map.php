@@ -1,16 +1,17 @@
 <?php
+
 /**
  * record_map.php
- * 
- * Records map layers to Mongo database via form submission.  
- * 
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ *
+ * Records map layers to Mongo database via form submission.
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -35,7 +36,7 @@ require('tidepools_variables.php');
 
 // if $_POST['landmark']=='buildings', etc. to pass correct landmark value
 if ($_POST['mapname']) {
-    
+
     //------ SORTING OUT FORM INPUTS ------//
     $mapName = $_POST['mapname'];
     $mapDescrip = $_POST['mapdescrip'];
@@ -46,14 +47,14 @@ if ($_POST['mapname']) {
     $scavengerHunt = (isset($_POST['scavenger']) ? $_POST['scavenger'] : 0);
 
     //----------------------------------//
-    
+
     $mapType = mapTypeProcess($openEdit, $hidden, $scavengerHunt);
 
     //------ Map Stats -----------//
     $avatar = $mapType . '.png'; //avatar based on user selection
     $expires = 'never';
 
-    $stats = array( 
+    $stats = array(
         'expires' => $expires,
         'avatar' => $avatar,
         'level' => 1,
@@ -62,7 +63,7 @@ if ($_POST['mapname']) {
         'buzz'=> 0,
         'scavenger' => $scavengerHunt,
     );
-    
+
     //---------- Landmarks on Map --------//
     $landmarks = array();
 
@@ -70,14 +71,14 @@ if ($_POST['mapname']) {
     $viewers = array();
     $admins = array();
     //hidden = not on global map aggregation
-    
+
     $permissions = array(
         'hidden' => $hidden,
         'viewers' => $viewers,
         'openedit' => $openEdit,
-        'admins' => $admins 
+        'admins' => $admins,
     );
-       
+
     //----Map JSON Object------//
     $map = array(
         'name' => $mapName,
@@ -89,37 +90,33 @@ if ($_POST['mapname']) {
     //---------------------------//
 
 
-    // connect to database and access maps
     try {
         // open connection to MongoDB server
         $m = new Mongo('localhost');
 
         // access database
         $db = $m -> selectDB($DBname);
-         
+
+
+        //------ MONGO DB ESCAPE STRING -------//
+        /*
+            $pattern = '$';
+            $replacement = '\$';
+            echo preg_replace($pattern, $replacement, $description);
+        */
+        //------------------------------------//
+
+
         // get 'maps' collection
         // if $_POST['landmark']=='buildings', etc. to pass correct landmark value
         $type = 'maps';
-        $coll = $db -> $type;
-
-
-        //------------------------------//
-            
-        //------ MONGO DB ESCAPE STRING -------//
-        /* 
-            $pattern = '$';
-            $replacement = '\$';
-            echo preg_replace($pattern, $replacement, $description); 
-        */
-
-        //------------------------------------//
-     
+        $collection= $db -> $type;
 
         // create new map
-        insertMap($map, $coll);    
+        insertMap($map, $collection);
         echo 'Map Type: ' . $mapType . '\n';
 
-        // disconnect from database 
+        // disconnect from database
         $m -> close();
     } catch (MongoConnectionException $e) {
         die('Error connecting to MongoDB server - is the "mongo" process running?');
@@ -129,10 +126,10 @@ if ($_POST['mapname']) {
 }
 
 
-function insertMap($map, $coll)
+function insertMap($map, $collection)
 {
     //$safe_insert = true;
-    $coll -> insert($map);
+    $collection -> insert($map);
     echo 'Map Created!';
 }
 

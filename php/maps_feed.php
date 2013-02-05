@@ -1,16 +1,17 @@
-<?php 
+<?php
+
 /**
  * maps_feed.php
- * 
- * Displaying list of all map layers visible to user
  *
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ * Displaying list of all map layers visible to user.
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -44,12 +45,12 @@ if ($maps != null) {
 
         $idVal = "'" . $i['_id']['$id'] . "'";
         $selectVal = "'map" . $counter . "'";
-            
+
         echo '<div id="map' . $counter . '" style="width:95px; height:35px; position:relative; float:left;" onclick="reBoundFilterMap(' . $idVal . ',' . $selectVal . ');">';
         echo '<img style="float:left; position:relative; display:inline-block; cursor:pointer;" src="images/icon_map.png"/>';
         echo "<p style='font-size:11px;'>" . $counter . " " . $i['name'] . "</p>     ";  //plug into CSS here...
         echo "</div>";
-                    
+
         $counter++;
     }
 
@@ -63,7 +64,7 @@ if ($maps != null) {
 function stripslashesDeep($value)
 {
     $value = is_array($value)
-        ? array_map('stripslashesDeep', $value) 
+        ? array_map('stripslashesDeep', $value)
         : stripslashes($value);
 
     return $value;

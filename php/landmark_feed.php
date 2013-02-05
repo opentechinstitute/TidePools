@@ -33,7 +33,6 @@
 
 
 $landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
-
 $landmarks = stripslashesDeep($landmarks);
 
 $counter = 1;
@@ -50,15 +49,16 @@ if ($landmarks != null) {
             if ($val['stats'] !== null) {
             
                 if ($val['name'] == "flora") {
+                    
                     continue;
+                
                 } else {
             
                     $idVal = "'" . $val['_id']['$id'] . "'";
                 
                     echo '<div style="width:97%; margin-left: -13px; margin-top: 15px; margin-bottom: 15px;">';
                     echo '<div style="cursor:pointer; margin-left:7px;" onclick="landmarkWindow(' . $idVal . ')">';
-                    echo '<img src="images/' . $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';
-                    
+                    echo '<img src="images/' . $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';                   
                     
                     if (isset($val['feed'])) {
                     
@@ -72,16 +72,15 @@ if ($landmarks != null) {
                     
                     $name = stripslashes($val['name']);
                     echo "<p5><span style='color:#7f275b'> " . $counter . "</span> . " . $name . "</p5>";  
+                
                     $descrip = stripslashes($val['description']);
                     echo "<p style='margin-top:2px;'>" . $descrip . "</p>";
                     
                     if (isset($val['feed'])) {
                     
                         if (!isset($val['stats']['time']['start']['sec'])
-                        // if (($val['stats']['time']['start']['sec'] == null) 
                             || ($val['stats']['time']['start']['sec'] == "0")
                         ) {
-                    
                             $result = array_reverse($val['feed']); 
                             
                             echo "<img src='images/comment.png'/><p4 style='margin-bottom:7px;'>" . $result[0]['words'] . "</p4>";
