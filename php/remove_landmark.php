@@ -55,7 +55,7 @@ try {
     $type = 'landmarks';
 
     $collection = $db -> $type;
-    $landmarkID = $_GET['landmarkID'];
+    $landmarkID = $_POST['landmarkID'];
     $landmarkID = new MongoID($landmarkID);
 
     $collection->remove(array('_id' => $landmarkID));

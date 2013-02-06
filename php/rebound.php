@@ -42,17 +42,17 @@ $curr = "";
 
 //-- NOTE: CHANGE METHOD TO 'POST' IN THE JS, FOR SECURITY REASONS! --//
 
-$nelat = floatval($_GET['nelat']); //remember to query lower right, then upper right
-$nelng = floatval($_GET['nelng']);
-$swlat = floatval($_GET['swlat']);
-$swlng = floatval($_GET['swlng']);
+$nelat = floatval($_POST['nelat']); //remember to query lower right, then upper right
+$nelng = floatval($_POST['nelng']);
+$swlat = floatval($_POST['swlat']);
+$swlng = floatval($_POST['swlng']);
 
 
 //-------- IS THERE A FILTER ? ---------//
-$filter = (isset($_GET['filter']) ? $_GET['filter'] : null);
+$filter = (isset($_POST['filter']) ? $_POST['filter'] : null);
 
 //---------------------------------------//
-$maps = (isset($_GET['mapIDs']) ? $_GET['mapIDs'] : null);
+$maps = (isset($_POST['mapIDs']) ? $_POST['mapIDs'] : null);
 
 //-- CHANGE METHOD ABOVE TO 'POST' IN JS -----------------------------//
 

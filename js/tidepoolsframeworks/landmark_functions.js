@@ -189,7 +189,7 @@
 
 		if (r == true){
 	
-	 			$.getJSON("php/remove_landmark.php",
+	 			$.postJSON("php/remove_landmark.php",
 					{ 
 						'landmarkID' : landmarkID
 					},

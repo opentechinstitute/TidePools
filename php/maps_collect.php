@@ -56,7 +56,7 @@ try {
     $collection = $db -> $type;
 
     //-- NOTE: CHANGE METHOD TO 'POST' IN THE JS, FOR SECURITY REASONS! --//
-    $userID = $_GET['userID'];
+    $userID = $_POST['userID'];
     //-- CHANGE METHOD ABOVE TO 'POST' IN JS -----------------------------//
 
     $cursor = $collection -> find(); //finding all public maps

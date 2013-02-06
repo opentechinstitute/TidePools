@@ -31,7 +31,7 @@
 	
 	function getMaps(userID){ //getting maps from DB
 	
-		 $.getJSON("php/maps_collect.php",
+		 $.postJSON("php/maps_collect.php",
 			{ 
 				'userID' : userID //sending user ID to see which maps they can access
 			},
@@ -114,7 +114,7 @@
 		
 		else {
 		
-			$.getJSON("php/rebound.php", //what data is inside this geo window?
+			$.postJSON("php/rebound.php", //what data is inside this geo window?
 				{ 
 					'nelat' : bounds._northEast.lat, 
 					'nelng' : bounds._northEast.lng, 
@@ -162,7 +162,7 @@
 		
 		var bounds = map.getBounds();	
 			
-		$.getJSON("php/rebound.php",
+		$.postJSON("php/rebound.php",
 			{ 
 				'nelat' : bounds._northEast.lat, 
 				'nelng' : bounds._northEast.lng, 
@@ -344,7 +344,7 @@
 		var iconSizeX;
 		var iconSizeY;
 		
-		$.getJSON("php/image_size.php", //PHP query for image size dimensions
+		$.postJSON("php/image_size.php", //PHP query for image size dimensions
 			{ 
 				'landmark' : landmark 
 			},

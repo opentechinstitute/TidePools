@@ -23,6 +23,19 @@
  *  along with Tidepools.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* 
+  Add the postJSON function to jQuery, which is like getJSON but uses
+  HTTP POST instead of HTTP GET.
+  All instances of getJSON have been changed to postJSON,
+  except for the API_collect function that talks to bustime.mta.info
+    -- Juul
+*/
+jQuery.extend({
+    postJSON: function(url, data, callback) {
+        return jQuery.post(url, data, callback, 'json');
+    }
+});
+
 
 	//------ BASE MAP SETTINGS------//
 	
