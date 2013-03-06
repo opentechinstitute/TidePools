@@ -40,9 +40,8 @@ require('tidepools_variables.php');
 
 $curr = "";
 
-//-- NOTE: CHANGE METHOD TO 'POST' IN THE JS, FOR SECURITY REASONS! --//
-
-$nelat = floatval($_POST['nelat']); //remember to query lower right, then upper right
+//remember to query lower right, then upper right
+$nelat = floatval($_POST['nelat']);
 $nelng = floatval($_POST['nelng']);
 $swlat = floatval($_POST['swlat']);
 $swlng = floatval($_POST['swlng']);
@@ -52,12 +51,11 @@ $swlng = floatval($_POST['swlng']);
 $filter = (isset($_POST['filter']) ? $_POST['filter'] : null);
 
 //---------------------------------------//
+
 $maps = (isset($_POST['mapIDs']) ? $_POST['mapIDs'] : null);
 
-//-- CHANGE METHOD ABOVE TO 'POST' IN JS -----------------------------//
-
-
-$nelat = $nelat + 0.00020; //fixing boundary to compensate for a bit off screen
+//fixing boundary to compensate for a bit off screen
+$nelat = $nelat + 0.00020;
 $nelng = $nelng + 0.00020;
 $swlat = $swlat - 0.00020;
 $swlng = $swlng - 0.00020;

@@ -45,6 +45,7 @@
 	var drop; //when a landmark is put on the map to drag around, this is the object, right here, yes this one.
 	var currentForm;
 
+
 	var userID = 4589912; //the current users database ID number (replace with session id?)
 
 	var feedDiv = '#landmarkfeed';
@@ -60,6 +61,8 @@
 	var imageSizes = new Array(); //storing image sizes in folder
 	
 	var busDots;
+
+	var searchResult;
 
 
 	//------------------------//
@@ -121,6 +124,31 @@
 
 
 
+	//-------  SUBMIT SEARCH ---------//
+	
+
+
+	$("#searchsubmit").click(function(e) {   //on submit, send info to DB
+	
+
+		$.post("php/search.php", $("#searchform").serialize(),
+
+			function(result){
+				searchResult = result;
+        		unhide('searchwindow'); 
+   				changeFeed('searchResults');
+			}
+		);
+	
+	  e.preventDefault();
+
+	});
+	
+
+	//------------------------------//
+
+
+
 	//-------  SUBMIT COMMENT ---------//
 
 	function commentSubmitter(){
@@ -161,12 +189,14 @@
 	  
 	  var h = $(window).height();
 	  $("#nav").css('height',h - 315);
+	  $("#searchwindow").css('height',h - 315);
 	
 	  $(window).resize(function(){
 	  
 	        var h = $(window).height();        
 	        $("#nav").css('height',h - 315);
-	        
+	        $("#searchwindow").css('height',h - 315);
+
 	    });
 	 }
 	 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * landmark_feed.php
+ * search_results_feed.php
  *
- * Displays list view of landmarks currently on map.
+ * Displays list view of landmarks from search results.
  *
  *
  *.---.      .                    .
@@ -34,13 +34,29 @@
 
 $counter = 1;
 
-//THIS is used to display a static message in the landmark feed:
-/* echo '<div style="width:351px; height:80px;"> <hr style="border:3px solid #df1c53;" /><img src="/images/announcement.png" style="float:left; margin-left: 8;" /> <div id="innertext" style="width:299px; height:75; float:left; margin-left: 7; margin-top:-5;"><p2>TidePools Social WiFi</p2>  </br> <p style="margin-top:2px; " > Social software for Community WiFi Mesh networks <a href="http://tidepools.co">http://tidepools.co</a></p></div> <hr></div>'; */
+if (isset($_POST['data'])) {
+    $searchResult = $_POST['data'];
+    $searchResult = stripslashesDeep($searchResult);
+    // var_dump($searchResult);
+    // echo '<br /><br />';
 
+
+    print_r($searchResult);
+
+    echo '<br /><br />';
+
+
+
+
+
+
+}
+
+/*
 if (isset($_POST['data'])) {
 
     $landmarks = $_POST['data'];
-    $landmarks = stripslashesDeep($landmarks);
+    // $landmarks = stripslashesDeep($landmarks);
 
     foreach ($landmarks as $v) {
 
@@ -109,6 +125,7 @@ if (isset($_POST['data'])) {
 
     echo '</div>';
 }
+*/
 
 
 function stripslashesDeep($value)

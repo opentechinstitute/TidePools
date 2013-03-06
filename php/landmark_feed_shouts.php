@@ -1,17 +1,17 @@
-<?php 
+<?php
 
 /**
  * landmark_feed_shouts.php
- * 
+ *
  * Displays list view of most recent comments from landmarks currently on map.
- * 
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -32,60 +32,62 @@
  */
 
 
-$landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
-$landmarks = stripslashesDeep($landmarks); 
+if (isset($_POST['data'])) {
 
-$counter = 1;
+    $landmarks = $_POST['data'];
+    $landmarks = stripslashesDeep($landmarks);
 
-foreach ($landmarks as $v) {
+    $counter = 1;
 
-    foreach ($v as $val) {
 
-        if ($val['stats'] !== null) {
-        
-            if ($val['name'] == "flora") {
+    foreach ($landmarks as $v) {
 
-                continue;
-                
-            } else {
+        foreach ($v as $val) {
 
-                if ($val['feed'] !== null) {
-    
+            if ($val['stats'] !== null) {
+
+                if ($val['name'] == "flora") {
+
+                    continue;
+
+                } elseif (isset($val['feed'])) {
+
                     foreach ($val['feed'] as $value) {
 
                         $idVal = "'" . $val['_id']['$id'] . "'";
-    
+
                         echo '<div style="width:100%; margin-left: -7px; margin-top: 42px; margin-bottom: 5px;" onclick="landmarkWindow(' . $idVal . ')">';
 
                         $num = rand(1, 3);
-                        
+
                         echo '<img src="images/people/person' . $num . '.png" style="float:left; max-width:42px; margin-left: 8; margin-right:11;"/>';
-                        
+
                         echo '<div id="innertext" style=" width:348px;  height:39;  margin-left: 12; margin-top:1; margin-bottom:8">';
-                        
+
                         $name = stripslashes($value['name']);
-                        
+
                         echo "<p5><span style='color:#7f275b'></span>" . $name . "</p5>";  //plug into CSS here...
-                        
+
                         $descrip = stripslashes($value['words']);
-                        
+
                         echo "<p style='margin-top:2px;'>" . $descrip . "</p>";
-            
+
                         echo '</br><hr></div></div>';
                     }
                 }
             }
         }
     }
-}
 
-unset ($v, $val); // remove lingering foreach() values from memory
+    unset ($v, $val, $value); // remove lingering foreach() values from memory
+
+}
 
 
 function stripslashesDeep($value)
 {
     $value = is_array($value)
-        ? array_map('stripslashesDeep', $value) 
+        ? array_map('stripslashesDeep', $value)
         : stripslashes($value);
 
     return $value;
