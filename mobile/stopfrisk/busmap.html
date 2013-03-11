@@ -1,49 +1,33 @@
-<html> 
-  <head> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-    <title>TidePools</title>
-
-    <link rel="icon" href="/images/pound.ico">
-    
-    
- <!DOCTYPE html>
-<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="width=device-width">
-        <meta http-equiv="cleartype" content="on">
-
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
-        <link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
-
- 
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/map.css">
-        
-        <script src="js/vendor/modernizr-2.6.1.min.js"></script>
-        <script src="js/vendor/jquery-1.8.1.js"></script>
-        
-
-
-    </head>
-
-    
-        
-  </head> 
-  <body> 
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>TidePools</title>
+  <link rel="icon" href="/images/pound.ico">
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="cleartype" content="on">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/images/touch/apple-touch-icon-144x144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/images/touch/apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/images/touch/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="../../assets/images/touch/apple-touch-icon-57x57-precomposed.png">
+  <link rel="shortcut icon" href="../../assets/images/touch/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../assets/css/jquerymobile.css">
+  <link rel="stylesheet" href="../../assets/css/leaflet.css">
+  <link rel="stylesheet" href="../../assets/css/stopfrisk.css">
+  <link rel="stylesheet" href="../../assets/css/map.css">
+  <link rel="stylesheet" href="../../assets/css/normalize.css">
+  <link rel="stylesheet" href="../../assets/css/themes/new.css">
+</head> 
+<body> 
   <!-- 
    <div id="navcontainer" style="">
     	
@@ -52,39 +36,20 @@
 </div>
 
 -->
-
- 	<div id="navcontainer" style="position:absolute; z-index:1;">
-    	
-    	<div id="back" onclick="back();">Back<img src="img/back.png" style="margin-top:11px; margin-left:16px; float:left;"></div>
-    	<div id="refresh" onclick="refresh();">Refresh  <span id="timer"></span><img src="img/refresh.png" style=" margin-right:15px; margin-top:11px; float:right;"></div>
-
-	</div>
-	
-	<div id="icons" style="position:absolute; z-index:1; background-color:rgba(34,52,54,0.5); height:161px; width:51px; border-radius:.5em; top:270px; left:9px;">
-	
-		<img src="img/bus_icon.png" onclick="navMap('bus');" style="display:inline-block; float:left; padding-top:11px; padding-left:5px; cursor:pointer;">
-		<img src="img/sign_icon.png" onclick="navMap('sign');" style="display:inline-block; float:left; padding-top:11px; padding-left:14px; cursor:pointer;">
-		<img src="img/person_icon.png" onclick="navMap('person');" style="display:inline-block; float:left; padding-top:11px; padding-left:11px; cursor:pointer;">
-	
-	</div>
-
-
-  
-   <div id="map" style=""></div>
-   
-
-
-  	
-  <script src="js/busmap.js"></script>
-
-  <script src="js/leaflet.js"></script>
-
-
-  
-
-
-  
-
-     
-  </body> 
+<div id="navcontainer" style="position:absolute; z-index:1;">
+ <div id="back" onclick="back();">Back<img src="../../assets/images/back.png" style="margin-top:11px; margin-left:16px; float:left;"></div>
+ <div id="refresh" onclick="refresh();">Refresh  <span id="timer"></span><img src="../../assets/images/refresh.png" style=" margin-right:15px; margin-top:11px; float:right;"></div>
+</div>
+<div id="icons" style="position:absolute; z-index:1; background-color:rgba(34,52,54,0.5); height:161px; width:51px; border-radius:.5em; top:270px; left:9px;">
+  <img src="../../assets/images/bus_icon.png" onclick="navMap('bus');" style="display:inline-block; float:left; padding-top:11px; padding-left:5px; cursor:pointer;">
+  <img src="../../assets/images/sign_icon.png" onclick="navMap('sign');" style="display:inline-block; float:left; padding-top:11px; padding-left:14px; cursor:pointer;">
+  <img src="../../assets/images/person_icon.png" onclick="navMap('person');" style="display:inline-block; float:left; padding-top:11px; padding-left:11px; cursor:pointer;">
+</div>
+<div id="map" style="">
+</div>
+<script src="../../assets/js/vendor/modernizr-2.6.1.min.js"></script>
+<script src="../../assets/js/vendor/jquery-1.8.1.js"></script>
+<script src="../../assets/js/busmap.js"></script>
+<script src="../../assets/js/leaflet.js"></script>
+</body> 
 </html> 

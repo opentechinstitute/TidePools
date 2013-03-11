@@ -1,91 +1,65 @@
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <meta name="viewport" content="width=device-width">
-        <meta http-equiv="cleartype" content="on">
-
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/touch/apple-touch-icon-144x144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/touch/apple-touch-icon-114x114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/touch/apple-touch-icon-72x72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="images/touch/apple-touch-icon-57x57-precomposed.png">
-        <link rel="shortcut icon" href="images/touch/apple-touch-icon.png">
-
- 
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.1.min.js"></script>
-        <script src="js/vendor/jquery-1.8.1.js"></script>
-        <script src="js/vendor/iscroll-lite.js"></script>
-
-
-		<script type="text/javascript">
-		
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-34989988-1']);
-		  _gaq.push(['_trackPageview']);
-		
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-		
-		</script>
-
-    </head>
-    <body>
-    
-    
-    <div id="fullcontainer" style="overflow-x:hidden;">
-
-
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width">
+	<meta http-equiv="cleartype" content="on">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/images/touch/apple-touch-icon-144x144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../assets/images/touch/apple-touch-icon-114x114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../assets/images/touch/apple-touch-icon-72x72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="../../assets/images/touch/apple-touch-icon-57x57-precomposed.png">
+	<link rel="shortcut icon" href="../../assets/images/touch/apple-touch-icon.png">
+	<link rel="stylesheet" href="../../assets/css/jquerymobile.css">
+	<link rel="stylesheet" href="../../assets/css/leaflet.css">
+	<link rel="stylesheet" href="../../assets/css/stopfrisk.css">
+	<link rel="stylesheet" href="../../assets/css/map.css">
+	<link rel="stylesheet" href="../../assets/css/normalize.css">
+	<link rel="stylesheet" href="../../assets/css/themes/new.css">
+</head>
+<body>
+	<div id="fullcontainer" style="overflow-x:hidden;">
 		<div id="direction_initial" class="unhidden">
-				<div style="width:100%; height:100%;  background-color:#9CAFDA; display:block;position:absolute;top:0;left:0; opacity:1;"></div>
-				
-					<div class="green" style="width:100%; height:100%; background-color:#61935E; z-index:0; display:block;position:absolute; opacity:1; top:308px;"></div> 
-
-
-			
-			
+			<div style="width:100%; height:100%;  background-color:#9CAFDA; display:block;position:absolute;top:0;left:0; opacity:1;">
+			</div>
+			<div class="green" style="width:100%; height:100%; background-color:#61935E; z-index:0; display:block;position:absolute; opacity:1; top:308px;">
+			</div> 
 			<div id="direction_container">
-						<p style="position:relative; font-size:27px; color:#2458A8; padding-left:15px; height:15px; font-family: 'GandhiSansItalic'; " >Stop & Frisks<span style="font-size:11px;"> Beta</span></p>
-					
-						<img src="images/squiggle.png" style="position:relative; padding-left:16px; margin-top:-18px;">
-				
+				<p style="position:relative; font-size:27px; color:#2458A8; padding-left:15px; height:15px; font-family: 'GandhiSansItalic'; " >Stop & Frisks<span style="font-size:11px;"> Beta</span></p>
+				<img src="../../assets/images/squiggle.png" style="position:relative; padding-left:16px; margin-top:-18px;">
 				<div id="direction_box" style="border-style:solid; border-width:3px; border-color:#F2DD09; width:95%; margin: 0 auto; height:94px;">
-					
 					<div onclick="window.location = 'report.html';" style=" line-height:2.5em; cursor: pointer; height:45px; text-align: left; background-color:#000; border-style:solid; border-width:1px; color:#fff; border-color:#9CAFDA; text-indent:14px; font-size:17px;">REPORT a Stop & Frisk</div>
-					
-					
-					<div onclick="window.location = 'list.html';" style=" text-indent:14px; line-height:2.5em; cursor: pointer; height:45px; text-align: left;  background-color:#000; border-style:solid; border-width:1px; border-color:#9CAFDA; color:#fff; font-size:17px;">VIEW all Reports</div>
-					
+					<div onclick="window.location = 'list.html';" style=" text-indent:14px; line-height:2.5em; cursor: pointer; height:45px; text-align: left;  background-color:#000; border-style:solid; border-width:1px; border-color:#9CAFDA; color:#fff; font-size:17px;">VIEW all Reports</div>	
 				</div>
-				
-			
-				<img src="images/alert.png" style="position:relative; width:170px; top:10px; left:13%;">
-				
+				<img src="../../assets/images/alert.png" style="position:relative; width:170px; top:10px; left:13%;">
 				<div style="text-align:center; font-size:16px; font-family:'GandhiSansItalic'; cursor:pointer; opacity:.8; margin-top:-18px;">
 					<p><a style="text-decoration:none; color:#000;" href="http://www.rhicenter.org/">Red Hook Initiative WiFi + </a><a style=" color:#000; text-decoration:none;" href="http://www.tidepools.co">Tidepools</a></p>
-					
 				</div>
-
-	
 			</div>
-			
 		</div>
+		<script src="../../assets/js/vendor/modernizr-2.6.1.min.js"></script>
+		<script src="../../assets/js/vendor/jquery-1.8.1.js"></script>
+		<script src="../../assets/js/vendor/iscroll-lite.js"></script>
+		<script type="text/javascript">
 		
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34989988-1']);
+		_gaq.push(['_trackPageview']);
 		
-
-
-        <script src="js/vendor/zepto.min.js"></script>
-        <script src="js/helper.js"></script>
-
-    </body>
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		
+		</script>
+		<script src="../../assets/js/vendor/zepto.min.js"></script>
+		<script src="../../assets/js/helper.js"></script>
+	</body>
 </html>
