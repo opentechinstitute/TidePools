@@ -1,17 +1,18 @@
-<?php 
+<?php
 
 /**
  * landmark_feed.php
- * 
- * Displays list view of landmarks currently on map. 
- * 
- * 
- *.---.      .                    .     
- *  |  o     |                    |     
+ *
+ * Displays list view of appropriate landmarks, either those currently on map or
+ * those returned from search results.
+ *
+ *
+ *.---.      .                    .
+ *  |  o     |                    |
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
  *  |  | (   |(.-' |   )(   )(   )| `--.
  *  '-' `-`-'`-`--'|`-'  `-'  `-' `-`--' v0.2
- 
+
  *  Copyright (C) 2012-2013 Open Technology Institute <tidepools@opentechinstitute.org>
  *      Lead: Jonathan Baldwin
  *      Contributors: Lisa J. Lovchik
@@ -32,79 +33,85 @@
  */
 
 
-$landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
-$landmarks = stripslashesDeep($landmarks);
-
 $counter = 1;
 
 //THIS is used to display a static message in the landmark feed:
 /* echo '<div style="width:351px; height:80px;"> <hr style="border:3px solid #df1c53;" /><img src="/images/announcement.png" style="float:left; margin-left: 8;" /> <div id="innertext" style="width:299px; height:75; float:left; margin-left: 7; margin-top:-5;"><p2>TidePools Social WiFi</p2>  </br> <p style="margin-top:2px; " > Social software for Community WiFi Mesh networks <a href="http://tidepools.co">http://tidepools.co</a></p></div> <hr></div>'; */
-        
-if ($landmarks != null) {
+
+if (isset($_POST['data'])) {
+
+    $landmarks = $_POST['data'];
+    $landmarks = stripslashesDeep($landmarks);
+    //print_r($landmarks);
+
+
+
+    //var_dump($landmarks);
+    //echo '<br /><br />';
 
     foreach ($landmarks as $v) {
-    
+
         foreach ($v as $val) {
-        
+
             if ($val['stats'] !== null) {
-            
+
                 if ($val['name'] == "flora") {
-                    
+
                     continue;
-                
+
                 } else {
-            
+
                     $idVal = "'" . $val['_id']['$id'] . "'";
-                
+
                     echo '<div style="width:97%; margin-left: -13px; margin-top: 15px; margin-bottom: 15px;">';
                     echo '<div style="cursor:pointer; margin-left:7px;" onclick="landmarkWindow(' . $idVal . ')">';
-                    echo '<img src="images/' . $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';                   
-                    
+                    echo '<img src="images/' . $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';
+
                     if (isset($val['feed'])) {
-                    
+
                         echo '<div id="innertext" style=" width:286px;  height:65; float:left; margin-left: 7; margin-top:0; margin-bottom:42">';
-                    
+
                     } else {
-                    
+
                         echo '<div id="innertext" style=" width:286px;  height:65; float:left; margin-left: 7; margin-top:0; margin-bottom:10">';
-                    
+
                     }
-                    
+
                     $name = stripslashes($val['name']);
-                    echo "<p5><span style='color:#7f275b'> " . $counter . "</span> . " . $name . "</p5>";  
-                
+                    echo "<p5><span style='color:#7f275b'> " . $counter . "</span> . " . $name . "</p5>";
+
                     $descrip = stripslashes($val['description']);
                     echo "<p style='margin-top:2px;'>" . $descrip . "</p>";
-                    
+
                     if (isset($val['feed'])) {
-                    
+
                         if (!isset($val['stats']['time']['start']['sec'])
                             || ($val['stats']['time']['start']['sec'] == "0")
                         ) {
-                            $result = array_reverse($val['feed']); 
-                            
+                            $result = array_reverse($val['feed']);
+
                             echo "<img src='images/comment.png'/><p4 style='margin-bottom:7px;'>" . $result[0]['words'] . "</p4>";
                         }
                     }
-                    
+
                     // display time info if it exists
                     if (isset($val['stats']['time']['start']['sec'])
                         && ($val['stats']['time']['start']['sec'] !== "0")
                     ) {
 
-                        echo "<p><b>Start:</b> " . date("H:i m-d", $val['stats']['time']['start']['sec']); 
+                        echo "<p><b>Start:</b> " . date("H:i m-d", $val['stats']['time']['start']['sec']);
                         echo "     <b>End:</b> " . date("H:i m-d", $val['stats']['time']['end']['sec']) . "</p>";
 
                     }
-                    
+
                     echo '</div></br><hr></div></div>';
-                    
+
                     $counter++;
                 }
             }
         }
     }
-    
+
     unset ($v, $val); // remove lingering foreach() values from memory
 
     echo '</div>';
@@ -114,8 +121,9 @@ if ($landmarks != null) {
 function stripslashesDeep($value)
 {
     $value = is_array($value)
-        ? array_map('stripslashesDeep', $value) 
+        ? array_map('stripslashesDeep', $value)
         : stripslashes($value);
 
     return $value;
 }
+

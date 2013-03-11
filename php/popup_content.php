@@ -92,7 +92,7 @@ if ($class == 'status') {
             method="post" onsubmit="this.commentSubmit(); return false;">';
         echo '</select></br>';
         echo '<p style="margin-bottom:2px;">Name / Nickname</p>
-            <input type="text" id="name" value="AMC Participant"
+            <input type="text" id="name" value="Someone"
             name="name" maxlength="20"/>';
         echo '<p style="margin-bottom:1px;">Comment</p>
             <textarea name="description" class="clearme" id="description"

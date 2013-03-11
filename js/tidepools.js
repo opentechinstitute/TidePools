@@ -30,9 +30,9 @@
   except for the API_collect function that talks to bustime.mta.info
     -- Juul
 */
-jQuery.extend({
+$.extend({
     postJSON: function(url, data, callback) {
-        return jQuery.post(url, data, callback, 'json');
+        return $.post(url, data, callback, 'json');
     }
 });
 

@@ -1,15 +1,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-<!--                                      
-                                      
-.===.      .                    .     
-  |  o     |                    |     
+<!--
+
+.===.      .                    .
+  |  o     |                    |
   |  .  .-.| .-. .,-.  .-.  .-. | .==.
   |  | (   |(.-' |   )(   )(   )| `==.
   '-' `-`-'`-`=='|`-'  `-'  `-' `-`==' v0.2
-                 |                    
-                 '                               
+                 |
+                 '
   Open Technology Institute & jrbaldwin
-  
+
   //-->
 
   <head>
@@ -116,7 +116,61 @@
   <p3>Chat Feed</p3>
 </div>
 
+    <div id="Search" style="width:89px; height:19px; background-color:#eb6699;
+        position:relative; display:inline-block; top:90px; margin-left:-1;
+        text-align: center; cursor:pointer;" onclick="unhide('searchwindow')">
+      <p3>Search</p3>
+    </div>
+
 <div id="nav"></div>
+
+<div id="searchwindow" style="z-index:1; position:absolute; background-color:#fff; top:311px;" class="hidden">
+        <form id="searchform">
+
+        <strong>Search by:</strong><br />
+
+        <select name="searchKey">
+            <option value="name">Name</option>
+            <option value="description">Description</option>
+            <option value="type">Type</option>
+            <option value="loc">Within distance of (#):</option>
+            <option value="time" style="font-style: italic; color: #444444;">
+                Time (under construction)</option>
+        </select>
+        <input type="text" name="searchTerm"> <strong>Keyword (max 40
+            characters)</strong><br />
+
+        <strong>(for location) Distance units:</strong>
+        <input type="radio" name="distUnits" value="mi" checked>Miles
+        <input type="radio" name="distUnits" value="km">Kilometers
+        <br /><br />
+
+        <!--starting point for location search is hard-coded for now;
+            later, this will be handled by the map interface -->
+        <input type="hidden" name="lon" value="-74.001862406731" />
+        <input type="hidden" name="lat" value="40.674576233841" />
+
+        <!-- <input type="submit" value="Submit">
+
+        <button onclick="changeFeed('searchResults');">Click me</button> -->
+
+        <input type="button" id="searchsubmit" value="Search" onsubmit=
+        "this.searchsubmit(); return false;" /><br />
+
+          <div style="margin: 3ex; padding: 10px; background-color: #ffff99;
+            width: 18em;">
+            <strong>Example searches:</strong><br />
+            Name: school, health, library, initiative, Brooklyn<br />
+            Type: busstop, library, police, postoffice, event, garden, flowers1, tree<br />
+            Description: dwight, van brunt, barbeque<br />
+            Distance: .3 miles, .4 kilometers
+         </div>
+
+      </form>
+
+
+    </div>
+
 </div>
 
 <div id="landmarkfeed" class="hidden"></div>
@@ -275,16 +329,16 @@ class="hidden"><img src="images/trash.png" /></div>
 onclick="secretLandmark()">
 <div id="loadingDiv" style=
 "background-image:url('images/loading.gif'); position:absolute;"></div><script src=
-"js/resources/leaflet.js" type="text/javascript"></script> 
-<script src="js/resources/jquery.js" type="text/javascript"></script> 
-<script src="js/resources/jquery_ui.js" type="text/javascript"></script> 
-<script src="js/resources/jquery_ui_timepicker.js" type="text/javascript"></script> 
+"js/resources/leaflet.js" type="text/javascript"></script>
+<script src="js/resources/jquery.js" type="text/javascript"></script>
+<script src="js/resources/jquery_ui.js" type="text/javascript"></script>
+<script src="js/resources/jquery_ui_timepicker.js" type="text/javascript"></script>
 <!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> UNCOMMENT TO LOAD YOUR API Keys-->
-<script src="js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script> 
-<script src="js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script> 
-<script src="js/tidepoolsframeworks/map_rendering.js" type="text/javascript"></script> 
-<script src="js/tidepoolsframeworks/API_collect.js" type="text/javascript"></script> 
-<script src="js/tidepoolsframeworks/landmark_functions.js" type="text/javascript"></script> 
+<script src="js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script>
+<script src="js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script>
+<script src="js/tidepoolsframeworks/map_rendering.js" type="text/javascript"></script>
+<script src="js/tidepoolsframeworks/API_collect.js" type="text/javascript"></script>
+<script src="js/tidepoolsframeworks/landmark_functions.js" type="text/javascript"></script>
 <script src="js/tidepools.js" type="text/javascript"></script>
 </div>
 </body>
