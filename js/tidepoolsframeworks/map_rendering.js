@@ -112,7 +112,8 @@
         }
         //-----------//
 
-
+        // if a search was done, only show search results;
+        // otherwise, show everything within the bounds of the map being viewed
         if (feedType == "searchResults"){
 
             drawLandmarks(searchResult); //render data on map
@@ -144,6 +145,13 @@
                         $('#nav').load('php/landmark_feed_shouts.php',{'data':landmarks}); // also sending along the lat/long where landmark was dropped
                         drawLandmarks(landmarks); //render data on map
                     }
+
+                    /*
+                    if (feedType == "test"){
+                        $('#nav').load('php/test.php',{'data':landmarks}); // also sending along the lat/long where landmark was dropped
+                        // drawLandmarks(landmarks); //render data on map
+                    }
+                    */
 
 
                 }
@@ -397,7 +405,7 @@
     }
 
 
-     function select(divID) {
+    function select(divID) {
 
         if (lastFilter !== undefined && lastFilter !== divID){
             var lastItem = document.getElementById(lastFilter);
@@ -417,7 +425,7 @@
 
         lastFilter = divID;
 
-     }
+    }
 
 
     function mapSelect(divID) {
@@ -444,7 +452,14 @@
      }
 
 
-     function changeFeed(type){
+    function changeFeed(type){
         feedType = type;
         reBound();
-     }
+    }
+
+    function landmarkMenu(landmarks){
+        // $('#nav').load('php/landmark_feed.php',{'data':landmarks});
+
+        // $('#landmarkmenu').load('php/landmarkmenu.php');
+        // document.write($menu)
+    }

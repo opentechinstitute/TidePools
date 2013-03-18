@@ -1,4 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]> <html class="no-js" lang="en"> <![endif]-->
 <!--
 
 .===.      .                    .
@@ -10,6 +15,8 @@
                  '
   Open Technology Institute & jrbaldwin
 
+    Contributors: Lisa J. Lovchik
+
   //-->
 
   <head>
@@ -19,7 +26,7 @@
 
     <title>Tidepools</title>
     <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="icon" href="/images/pound.ico" />
+    <link rel="icon" href="images/pound.ico" />
   </head>
 
   <body>
@@ -43,134 +50,86 @@
         <div style=
         "position:relative; display:inline-block; margin-bottom:6px;margin-right: -9; margin-left: -1;">
         <img src="images/filter_landmarks.png" /></div>
+            <?php include "php/landmark_filters_menu.php"; ?>
 
-        <div id="event" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; z-index:1; cursor:pointer;"
-        onclick="reBoundFilter('event'); select('event');"><img src=
-        "images/filter_event.png" width="49" height="49" /></div>
+            <!-- NOTE: NEED TO RENAME 2 ICONS!
 
-        <div id="memory" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('memory'); select('memory');"><img src=
-        "images/filter_memory.png" width="49" height="49" /></div>
+                filter_wifi.png => filter_freewifi.png
+                filter_other.png => filter_somethingelse.png
 
-        <div id="alert" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('alert'); select('alert');"><img src=
-        "images/filter_alert.png" width="49" height="49" /></div>
+            // -->
 
-        <div id="fixthis" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('fixthis'); select('fixthis');"><img src=
-        "images/filter_fixthis.png" width="49" height="49" /></div>
-
-        <div id="freewifi" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('wifi'); select('freewifi');"><img src=
-        "images/filter_wifi.png" width="49" height="49" /></div>
-
-        <div id="friend" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('friend'); select('friend');"><img src=
-        "images/filter_friend.png" width="49" height="49" /></div>
-
-        <div id="group" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('group'); select('group');"><img src=
-        "images/filter_group.png" width="49" height="49" /></div>
-
-        <div id="food" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('food'); select('food');"><img src=
-        "images/filter_food.png" width="49" height="49" /></div>
-
-        <div id="coupons" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('coupons'); select('coupons');"><img src=
-        "images/filter_coupons.png" width="49" height="49" /></div>
-
-        <div id="jobs" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('jobs'); select('jobs');"><img src=
-        "images/filter_jobs.png" width="49" height="49" /></div>
-
-        <div id="somethingelse" class="filter" style=
-        "width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;"
-        onclick="reBoundFilter('somethingelse'); select('somethingelse');"><img src=
-        "images/filter_other.png" width="49" height="49" /></div>
       </div>
     </div>
 
     <div style=
     "width:353; height:5; background-color:#7f275b; top: 92; position: relative;"></div>
 
+    <!-- Buttons to select feed -->
     <div id="LandmarksFeed" style=
-    "width:89px; height:19px; background-color:#8bc3c5; position: relative; display:inline-block; top:90px; text-align: center; cursor:pointer;"
-    onclick="changeFeed('landmarks');">
-    <p3>Landmarks</p3>
-  </div>
+      "width:89px; height:19px; background-color:#8bc3c5; position: relative; display:inline-block; top:90px; text-align: center; cursor:pointer;"
+      onclick="changeFeed('landmarks');">
+      <p3>Landmarks</p3>
+    </div>
 
-  <div id="EventsFeed" style=
-  "width:89px; height:19px; background-color:#ebe1e3; position: relative; display:inline-block; top:90px; margin-left:-1; text-align: center; cursor:pointer;"
-  onclick="changeFeed('comments');">
-  <p3>Chat Feed</p3>
-</div>
+    <div id="EventsFeed" style=
+      "width:89px; height:19px; background-color:#ebe1e3; position: relative; display:inline-block; top:90px; margin-left:-1; text-align: center; cursor:pointer;"
+      onclick="changeFeed('comments');">
+      <p3>Chat Feed</p3>
+    </div>
 
     <div id="Search" style="width:89px; height:19px; background-color:#eb6699;
-        position:relative; display:inline-block; top:90px; margin-left:-1;
-        text-align: center; cursor:pointer;" onclick="unhide('searchwindow')">
+      position:relative; display:inline-block; top:90px; margin-left:-1;
+      text-align: center; cursor:pointer;" onclick="unhide('searchwindow')">
       <p3>Search</p3>
     </div>
+
 
 <div id="nav"></div>
 
 <div id="searchwindow" style="z-index:1; position:absolute; background-color:#fff; top:311px;" class="hidden">
         <form id="searchform">
 
-        <strong>Search by:</strong><br />
+        <div style="padding-left: 2em; padding-top: 1em; width: 330px;">
+            <input type="text" name="searchTerm" style="background-color: #dbd1d3;">
+            <input type="button" id="searchsubmit" value="Find it!"
+                style="background-color: #dbd1d3;" onsubmit=
+                "this.searchsubmit(); return false;" /><br />
 
-        <select name="searchKey">
-            <option value="name">Name</option>
-            <option value="description">Description</option>
-            <option value="type">Type</option>
-            <option value="loc">Within distance of (#):</option>
-            <option value="time" style="font-style: italic; color: #444444;">
-                Time (under construction)</option>
-        </select>
-        <input type="text" name="searchTerm"> <strong>Keyword (max 40
-            characters)</strong><br />
+            <strong>Keyword (max 40 characters)</strong>
+            <br /><br />
 
-        <strong>(for location) Distance units:</strong>
-        <input type="radio" name="distUnits" value="mi" checked>Miles
-        <input type="radio" name="distUnits" value="km">Kilometers
-        <br /><br />
+            <!-- TO BE RE-ADDED LATER FOR ADVANCED GEOINDEXING SEARCH
+            <strong>(for location) Distance units:</strong><br />
+            <input type="radio" name="distUnits" value="mi" checked>Miles
+            <input type="radio" name="distUnits" value="km">Kilometers
+            <br /><br /> -->
 
-        <!--starting point for location search is hard-coded for now;
-            later, this will be handled by the map interface -->
-        <input type="hidden" name="lon" value="-74.001862406731" />
-        <input type="hidden" name="lat" value="40.674576233841" />
+            <!--starting point for location search is hard-coded for now;
+                later, this will be handled by the map interface -->
 
-        <!-- <input type="submit" value="Submit">
+                <!-- ClickGo 157 coordinates
+                <input type="hidden" name="lon" value="42.35404858146037" />
+                <input type="hidden" name="lat" value="-83.07889223098755" /> -->
 
-        <button onclick="changeFeed('searchResults');">Click me</button> -->
+                <!-- Red Hook post office coordinates
+                <input type="hidden" name="lon" value="-74.001862406731" />
+                <input type="hidden" name="lat" value="40.674576233841" /> -->
 
-        <input type="button" id="searchsubmit" value="Search" onsubmit=
-        "this.searchsubmit(); return false;" /><br />
+        </div>
 
-          <div style="margin: 3ex; padding: 10px; background-color: #ffff99;
-            width: 18em;">
-            <strong>Example searches:</strong><br />
-            Name: school, health, library, initiative, Brooklyn<br />
-            Type: busstop, library, police, postoffice, event, garden, flowers1, tree<br />
-            Description: dwight, van brunt, barbeque<br />
-            Distance: .3 miles, .4 kilometers
-         </div>
+            <!-- SEARCH HELP
+            <div style="margin: 3ex; padding: 10px; background-color: #ffff99;
+                width: 18em;">
+                <strong>Example searches:</strong><br />
+                Name: school, health, library, initiative, Brooklyn<br />
+                Type: busstop, library, police, postoffice, event, garden, flowers1, tree<br />
+                Description: dwight, van brunt, barbeque<br />
+                Distance: .3 miles, .4 kilometers
+            </div> -->
 
       </form>
-
-
     </div>
-
 </div>
 
 <div id="landmarkfeed" class="hidden"></div>
@@ -210,45 +169,7 @@
 "width: 170px; height: 337px; position:fixed; background-color:#e6e4ea; border-style:solid; border-color:#444d51; border:1px top:101px; left:398px; z-index:1; margin-top: 48px;"
 class="unhidden">
 <div style="padding: 6px 6px 6px 6px;">
-  <div id="event.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; z-index:1; cursor:move;"
-  onclick="change('event.png');"><img src="images/icon_event.png" width="70" height=
-  "70" /></div>
-
-  <div id="memory.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('memory.png');"><img src="images/icon_memory.png" width="70"
-  height="70" /></div>
-
-  <div id="friend.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('friend.png');"><img src="images/icon_friend.png" width="70"
-  height="70" /></div>
-
-  <div id="group.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('group.png');"><img src="images/icon_group.png" width="70" height=
-  "70" /></div>
-
-  <div id="alert.png" class="landmark" style=
-  "width: 75px; height: 75px;position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('alert.png');"><img src="images/icon_alert.png" width="70" height=
-  "70" /></div>
-
-  <div id="fixthis.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('fixthis.png');"><img src="images/icon_fixthis.png" width="70"
-  height="70" /></div>
-
-  <div id="food.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('food.png');"><img src="images/icon_food.png" width="70" height=
-  "70" /></div>
-
-  <div id="somethingelse.png" class="landmark" style=
-  "width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;"
-  onclick="change('somethingelse.png');"><img src="images/icon_somethingelse.png"
-  width="70" height="70" /></div>
+    <?php include "php/landmark_menu.php"; ?>
 </div>
 </div>
 
@@ -328,18 +249,20 @@ class="hidden"><img src="images/trash.png" /></div>
 "z-index:2; background-color:#fff; position:absolute; width: 8px; height:40px; top:0; margin-left:-8; cursor:pointer;"
 onclick="secretLandmark()">
 <div id="loadingDiv" style=
-"background-image:url('images/loading.gif'); position:absolute;"></div><script src=
-"js/resources/leaflet.js" type="text/javascript"></script>
+"background-image:url('images/loading.gif'); position:absolute;"></div>
+</div>
+
+<script src="js/resources/leaflet.js" type="text/javascript"></script>
 <script src="js/resources/jquery.js" type="text/javascript"></script>
 <script src="js/resources/jquery_ui.js" type="text/javascript"></script>
 <script src="js/resources/jquery_ui_timepicker.js" type="text/javascript"></script>
-<!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> UNCOMMENT TO LOAD YOUR API Keys-->
+<!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> <!-- UNCOMMENT TO LOAD YOUR API Keys-->
 <script src="js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script>
 <script src="js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script>
 <script src="js/tidepoolsframeworks/map_rendering.js" type="text/javascript"></script>
 <script src="js/tidepoolsframeworks/API_collect.js" type="text/javascript"></script>
 <script src="js/tidepoolsframeworks/landmark_functions.js" type="text/javascript"></script>
 <script src="js/tidepools.js" type="text/javascript"></script>
-</div>
+
 </body>
 </html>
