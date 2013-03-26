@@ -1,9 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if gt IE 8]> <html class="no-js" lang="en"> <![endif]-->
+<html class="no-js" lang="en">
 <!--
 
 .===.      .                    .
@@ -96,7 +93,6 @@
                 style="background-color: #dbd1d3;" onsubmit=
                 "this.searchsubmit(); return false;" /><br />
 
-            <strong>Keyword (max 40 characters)</strong>
             <br /><br />
 
             <!-- TO BE RE-ADDED LATER FOR ADVANCED GEOINDEXING SEARCH
