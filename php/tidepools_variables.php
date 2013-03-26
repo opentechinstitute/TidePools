@@ -4,7 +4,8 @@
  * tidepools_variables.php
  *
  * Universal variables for tidepools php functions.
- * Holds name of Mongo collection right now.
+ * Holds name of Mongo collection right now, and arrays used for search and
+ * dynamic menu generation.
  *
  *
  *.---.      .                    .

@@ -3,8 +3,8 @@
 /**
  * search.php
  *
- * Searches database for landmarks by keyword for name, description, or type
- * (takes
+ * Searches database for landmarks by keyword for name, description, or landmark
+ * type and orders them by relevance
  *
  *.---.      .                    .
  *  |  o     |                    |
@@ -38,16 +38,18 @@ $counter = 1;
 
 $maps = (isset($_POST['mapIDs']) ? $_POST['mapIDs'] : null);
 
-//temporary to create array from string on future map layer iteration
+// temporary to create array from string on future map layer iteration
 $maps = explode( ',', $maps );
 
 $searchResult = (isset($_POST['data']) ? $_POST['data'] : null);
 $searchResult = stripslashesDeep($searchResult);
 
-$search1 = array();
-$search2 = array();
-$final = array();
-
+$idArray = array();
+$query = array();
+$results = array();
+$search = array();
+$searchKey = array('name', 'description');
+$currentID = '';
 
 
 try {
@@ -77,39 +79,51 @@ try {
     $sanTermLowercase = strtolower($sanTerm);
 
 
-    // landmark type search, if applicable
+    // add search by landmark type, if applicable
     $landmarkTypeKey = array_search($sanTermLowercase, $landmarkTypes);
 
     if (array_search($sanTermLowercase, $landmarkTypes) !== FALSE) {
         $landmarkType = $landmarkTypes[$landmarkTypeKey];
+        array_push($searchKey, 'landmarktype');
     }
 
-    if (isset($landmarkType)) {
-        $query = array(
-            'type' => $landmarkType
-        );
-
-        $cursor = $collection -> find($query);
-        $cursor = iterator_to_array($cursor);
-        array_push($final, $cursor);
-    }
-
-    // keyword search
-    $searchKey = array('name', 'description');
-
+    // do searches
     foreach ($searchKey as $v) {
-        $query = array(
-            "$v" => new MongoRegex(
-                '/' . $sanTerm . '/i'
-            )
-        );
+
+        switch ($v) {
+            case 'name':
+            case 'description':
+                $query = array("$v" => new MongoRegex('/' . $sanTerm . '/i'));
+                break;
+            case 'landmarktype':
+                $query = array('type' => $landmarkType);
+                break;
+            default:
+                echo 'Error: Invalid search key.';
+        }
 
         $cursor = $collection -> find($query);
         $cursor = iterator_to_array($cursor);
-        array_push($final, $cursor);
+
+        $search['$v'] = $cursor;
+
+        foreach ($cursor as $val) {
+            $currentID = $val['_id'];
+            $currentID = (string) $currentID;
+            array_push($idArray, $currentID);
+
+            $results[0]["$currentID"] = $cursor["$currentID"];
+        }
     }
 
-    unset($v);
+    unset ($v, $val); // remove lingering foreach() values from memory
+
+    $countDupes = array_count_values($idArray);
+
+    // sort results according to number of matches
+    array_multisort($countDupes, SORT_NUMERIC, SORT_DESC, $results[0]);
+
+
 
 /*  TEMPORARY DISABLING GEOLOCATION SEARCH - THIS WILL HAVE ITS OWN BUTTON LATER
 
@@ -226,12 +240,11 @@ try {
     }
 
     unset ($v); // remove lingering foreach() values from memory
-
-
 */
 
-    $final = json_encode($final);
-    print_r($final);
+
+    $results = json_encode($results);
+    print_r($results);
 
     // disconnect from server
     $m -> close();
@@ -241,6 +254,7 @@ try {
     die('Error: ' . $e -> getMessage());
 }
 
+
 function stripslashesDeep($value)
 {
     $value = is_array($value)
@@ -249,3 +263,4 @@ function stripslashesDeep($value)
 
     return $value;
 }
+
