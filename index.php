@@ -12,7 +12,7 @@
                  '
   Open Technology Institute & jrbaldwin
 
-    Contributors: Lisa J. Lovchik
+    Contributors: Lisa J. Lovchik, Nicholas Frota
 
   //-->
 
@@ -88,7 +88,7 @@
         <form id="searchform">
 
         <div style="padding-left: 2em; padding-top: 1em; width: 330px;">
-            <input type="text" name="searchTerm" style="background-color: #dbd1d3;">
+            <input type="text" name="searchTerm" maxlength = "160" style="background-color: #dbd1d3;">
             <input type="button" id="searchsubmit" value="Find it!"
                 style="background-color: #dbd1d3;" onsubmit=
                 "this.searchsubmit(); return false;" /><br />

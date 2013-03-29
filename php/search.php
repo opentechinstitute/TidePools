@@ -45,10 +45,6 @@ $searchResult = (isset($_POST['data']) ? $_POST['data'] : null);
 $searchResult = stripslashesDeep($searchResult);
 
 $idArray = array();
-$query = array();
-$results = array();
-$search = array();
-$searchKey = array('name', 'description');
 $currentID = '';
 
 
@@ -74,56 +70,67 @@ try {
     $collection = $db -> $type;
 
     // sanitize text box input
-    $sanTerm = substr($_POST['searchTerm'], 0, 40);
+    // $sanTerm = 'nerd';
+    $sanTerm = substr($_POST['searchTerm'], 0, 160);
     $sanTerm = strip_tags($sanTerm);
     $sanTermLowercase = strtolower($sanTerm);
 
 
+    // group search types together and prepare to query database
+    $query = array(
+        '$or' => array(
+            array('name' => new MongoRegex('/' . $sanTerm . '/i')),
+            array('description' => new MongoRegex('/' . $sanTerm . '/i')),
+        )
+    );
+
     // add search by landmark type, if applicable
-    $landmarkTypeKey = array_search($sanTermLowercase, $landmarkTypes);
-
     if (array_search($sanTermLowercase, $landmarkTypes) !== FALSE) {
-        $landmarkType = $landmarkTypes[$landmarkTypeKey];
-        array_push($searchKey, 'landmarktype');
+        array_unshift($query['$or'], array('type' => $sanTermLowercase));
     }
 
-    // do searches
-    foreach ($searchKey as $v) {
 
-        switch ($v) {
-            case 'name':
-            case 'description':
-                $query = array("$v" => new MongoRegex('/' . $sanTerm . '/i'));
-                break;
-            case 'landmarktype':
-                $query = array('type' => $landmarkType);
-                break;
-            default:
-                echo 'Error: Invalid search key.';
-        }
+    /*  echo '<pre>';
+        print_r($query);
+        echo '</pre>';
+    */
 
-        $cursor = $collection -> find($query);
-        $cursor = iterator_to_array($cursor);
+    $cursor = $collection -> find($query);
+    $cursor = iterator_to_array($cursor);
 
-        $search['$v'] = $cursor;
+    foreach ($cursor as $v) {
+        $currentID = $v['_id'];
+        $currentID = (string) $currentID;
+        array_push($idArray, $currentID);
 
-        foreach ($cursor as $val) {
-            $currentID = $val['_id'];
-            $currentID = (string) $currentID;
-            array_push($idArray, $currentID);
-
-            $results[0]["$currentID"] = $cursor["$currentID"];
-        }
+        $results[0]["$currentID"] = $cursor["$currentID"];
     }
 
-    unset ($v, $val); // remove lingering foreach() values from memory
+    unset ($v); // remove lingering foreach() values from memory
+
+
+    // ------ NEW SORTING ROUTINE WILL GO HERE -------- //
+
 
     $countDupes = array_count_values($idArray);
 
+/*
+    echo 'idArray: <pre>';
+    print_r($idArray);
+    echo '</pre>';
+
+    echo 'countDupes: <pre>';
+    print_r($countDupes);
+    echo '</pre>';
+*/
+
     // sort results according to number of matches
-    array_multisort($countDupes, SORT_NUMERIC, SORT_DESC, $results[0]);
+    // array_multisort($countDupes, SORT_NUMERIC, SORT_DESC, $results[0]);
 
 
+
+
+// ---------------------------------------------------------------------- //
 
 /*  TEMPORARY DISABLING GEOLOCATION SEARCH - THIS WILL HAVE ITS OWN BUTTON LATER
 
@@ -181,50 +188,22 @@ try {
         case "time":
             // to be added in the future
             break;
-        default:
-            echo "<h3>Error - invalid search type</h3>";
     }
 
 
-    // query database
+    var_dump($cursor);
 
-    $cursor = $collection -> find($query);
+    display search results
+    echo '<b>' . $cursor -> count() . ' item(s) found.</b><br /><br />';
 
-    $cursor = iterator_to_array($cursor);
+    convert search results to JSON format
+    $final = array();
 
-    array_push($final, $cursor);
+    $final = iterator_to_array($cursor);
+    $final = array_push($final, $cursor);
+    echo '<br /><br />';
 */
 
-
-    //var_dump($cursor);
-
-    // display search results
-    // echo '<b>' . $cursor -> count() . ' item(s) found.</b><br /><br />';
-
-    // convert search results to JSON format
-    //$final = array();
-
-    //$final = iterator_to_array($cursor);
-
-
-
-   // $final = array_push($final, $cursor);
-
-
-
-    // echo '<br /><br />';
-
-
-    /*
-    // print raw data for testing purposes
-    echo '<h3>First, the raw data:</h3>';
-
-    while ($cursor -> hasNext()) {
-        var_dump($cursor -> getNext());
-        echo "<br /><br />";
-    }
-    echo '<h3>Now, a little neater:</h3>';
-    */
 
 /* TAKE THIS DISPLAY OUT FOR NOW
 
@@ -242,9 +221,11 @@ try {
     unset ($v); // remove lingering foreach() values from memory
 */
 
+// ---------------------------------------------------------------------- //
 
     $results = json_encode($results);
     print_r($results);
+    // var_dump($results);
 
     // disconnect from server
     $m -> close();
