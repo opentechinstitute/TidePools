@@ -36,6 +36,8 @@
 
     $DBname = "defaultMap";
 
+
+    // note: landmark types must be all lower-case letters
     $landmarkTypes = array(
                         'event',
                         'memory',
@@ -45,12 +47,13 @@
                         'fixthis',
                         'food',
                         'somethingelse',
-                        // extra items in 'Filter Landmarks' section
-                        // 'freewifi',
-                        // 'coupons',
-                        // 'jobs',
+                        // Note, extra items in 'Filter Landmarks' section:
+                        //   'freewifi',
+                        //   'coupons',
+                        //   'jobs',
     );
 
+    // note: landmark type filters must be all lower-case letters
     $landmarkTypesFilters = array(
                         'event',
                         'memory',
