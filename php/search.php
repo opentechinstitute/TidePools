@@ -44,7 +44,13 @@ $maps = explode( ',', $maps );
 $searchResult = (isset($_POST['data']) ? $_POST['data'] : null);
 $searchResult = stripslashesDeep($searchResult);
 
+$searchKey = array('name', 'description');
 $idArray = array();
+$typeMatches = array();
+$otherMatches = array();
+$typeResults = array();
+$otherResults = array();
+$results = array();
 $currentID = '';
 
 
@@ -69,12 +75,15 @@ try {
     $type = 'landmarks';
     $collection = $db -> $type;
 
-    // sanitize text box input
-    // $sanTerm = 'nerd';
     $sanTerm = substr($_POST['searchTerm'], 0, 160);
     $sanTerm = strip_tags($sanTerm);
+    $sanTerm = str_replace(":", " ", $sanTerm);
+    $sanTerm = preg_replace('/\s+/', ' ', $sanTerm); // remove extra spaces
     $sanTermLowercase = strtolower($sanTerm);
 
+    $termsArray = explode(' ', $sanTerm);
+
+    // REMEMBER TO ADD MULTIPLE TERM STUFF BACK IN (E.G., FROM TESTME5.PHP
 
     // group search types together and prepare to query database
     $query = array(
@@ -84,49 +93,54 @@ try {
         )
     );
 
-    // add search by landmark type, if applicable
-    if (array_search($sanTermLowercase, $landmarkTypes) !== FALSE) {
+    // prepend search by landmark type, if applicable
+    $landmarkSearch = in_array($sanTermLowercase, $landmarkTypes);
+
+    if ($landmarkSearch) {
         array_unshift($query['$or'], array('type' => $sanTermLowercase));
+        array_unshift($searchKey, 'type');
     }
-
-
-    /*  echo '<pre>';
-        print_r($query);
-        echo '</pre>';
-    */
 
     $cursor = $collection -> find($query);
     $cursor = iterator_to_array($cursor);
 
-    foreach ($cursor as $v) {
-        $currentID = $v['_id'];
-        $currentID = (string) $currentID;
-        array_push($idArray, $currentID);
+    // if applicable, separate landmark matches from others
+    if ($landmarkSearch) {
+        foreach ($cursor as $v) {
+            $currentID = (string) $v['_id'];
+            // $results[0]["$currentID"] = $cursor["$currentID"];
 
-        $results[0]["$currentID"] = $cursor["$currentID"];
+            if ($v['type'] == $sanTermLowercase) {
+                $countTypeMatches = countMatches($v, $sanTermLowercase);
+                $typeResults[0]["$currentID"] = $cursor["$currentID"];
+                $typeMatches[] = $countTypeMatches;
+            } else {
+                $otherResults[0]["$currentID"] = $cursor["$currentID"];
+                $otherMatches[] = countMatches($v, $sanTermLowercase);
+            }
+        }
+
+        unset ($v, $val); // remove lingering foreach() values from memory
+
+        if ($typeMatches) {
+            array_multisort($typeMatches, SORT_NUMERIC, SORT_DESC, $typeResults[0]);
+        }
+        if ($otherMatches) {
+            array_multisort($otherMatches, SORT_NUMERIC, SORT_DESC, $otherResults[0]);
+        }
+
+        $results = array_merge($typeResults, $otherResults);
+
+    } else {
+        foreach ($cursor as $v) {
+            $currentID = (string) $v['_id'];
+            $results[0]["$currentID"] = $cursor["$currentID"];
+
+            $otherMatches[0]["$currentID"] = countMatches($v, $sanTermLowercase);
+        }
+
+        unset ($v, $val); // remove lingering foreach() values from memory
     }
-
-    unset ($v); // remove lingering foreach() values from memory
-
-
-    // ------ NEW SORTING ROUTINE WILL GO HERE -------- //
-
-
-    $countDupes = array_count_values($idArray);
-
-/*
-    echo 'idArray: <pre>';
-    print_r($idArray);
-    echo '</pre>';
-
-    echo 'countDupes: <pre>';
-    print_r($countDupes);
-    echo '</pre>';
-*/
-
-    // sort results according to number of matches
-    // array_multisort($countDupes, SORT_NUMERIC, SORT_DESC, $results[0]);
-
 
 
 
@@ -217,15 +231,16 @@ try {
         echo 'Type: ' . $v['type'] . '<br />';
         echo '<br />';
     }
-
-    unset ($v); // remove lingering foreach() values from memory
 */
 
 // ---------------------------------------------------------------------- //
 
+
+    // ADD ROUTINE HERE TO TRUNCATE AFTER MAX RESULTS = 50
+    //
+
     $results = json_encode($results);
     print_r($results);
-    // var_dump($results);
 
     // disconnect from server
     $m -> close();
@@ -245,3 +260,16 @@ function stripslashesDeep($value)
     return $value;
 }
 
+function countMatches($thisLandmark, $term)
+{
+    $count = 0;
+
+    if (stripos($thisLandmark['name'], $term) !== FALSE) {
+        $count++;
+    }
+    if (stripos($thisLandmark['description'], $term) !== FALSE) {
+        $count++;
+    }
+
+    return $count;
+}
