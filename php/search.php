@@ -34,6 +34,20 @@
 
 require('tidepools_variables.php');
 
+// sanitize entered search term(s)
+// $sanTerm = 'memory';
+$sanTerm = substr($_POST['searchTerm'], 0, 160);
+$sanTerm = strip_tags($sanTerm);
+$origTerm = $sanTerm;
+$sanTerm = str_replace(":", " ", $sanTerm);
+$sanTerm = preg_replace('/\s+/', ' ', $sanTerm); // remove extra spaces
+$sanTerm = strtolower($sanTerm);
+
+$termsArray = explode(' ', $sanTerm);
+
+// REMEMBER TO ADD MULTIPLE TERM ROUTINES BACK IN (E.G., FROM TESTME5.PHP)
+
+
 $counter = 1;
 
 $maps = (isset($_POST['mapIDs']) ? $_POST['mapIDs'] : null);
@@ -75,16 +89,6 @@ try {
     $type = 'landmarks';
     $collection = $db -> $type;
 
-    $sanTerm = substr($_POST['searchTerm'], 0, 160);
-    $sanTerm = strip_tags($sanTerm);
-    $sanTerm = str_replace(":", " ", $sanTerm);
-    $sanTerm = preg_replace('/\s+/', ' ', $sanTerm); // remove extra spaces
-    $sanTermLowercase = strtolower($sanTerm);
-
-    $termsArray = explode(' ', $sanTerm);
-
-    // REMEMBER TO ADD MULTIPLE TERM STUFF BACK IN (E.G., FROM TESTME5.PHP
-
     // group search types together and prepare to query database
     $query = array(
         '$or' => array(
@@ -93,30 +97,38 @@ try {
         )
     );
 
+
     // prepend search by landmark type, if applicable
-    $landmarkSearch = in_array($sanTermLowercase, $landmarkTypes);
+    $getSingular = array_keys($landmarkTypesPlural, $sanTerm);
+
+    // prepend search by landmark type, if applicable
+    if ($getSingular) {
+        $sanTerm = $getSingular[0];
+        $landmarkSearch = TRUE;
+    } else {
+        $landmarkSearch = in_array($sanTerm, $landmarkTypes);
+    }
 
     if ($landmarkSearch) {
-        array_unshift($query['$or'], array('type' => $sanTermLowercase));
+        array_unshift($query['$or'], array('type' => $sanTerm));
         array_unshift($searchKey, 'type');
     }
 
-    $cursor = $collection -> find($query);
-    $cursor = iterator_to_array($cursor);
+    $cursor = $collection -> find($query); // query database
+    $cursor = iterator_to_array($cursor); // convert mongodb object to array
 
-    // if applicable, separate landmark matches from others
+    // if applicable, separate landmark type matches from others
     if ($landmarkSearch) {
         foreach ($cursor as $v) {
             $currentID = (string) $v['_id'];
-            // $results[0]["$currentID"] = $cursor["$currentID"];
 
-            if ($v['type'] == $sanTermLowercase) {
-                $countTypeMatches = countMatches($v, $sanTermLowercase);
+            if ($v['type'] == $sanTerm) {
+                $countTypeMatches = countMatches($v, $sanTerm);
                 $typeResults[0]["$currentID"] = $cursor["$currentID"];
                 $typeMatches[] = $countTypeMatches;
             } else {
                 $otherResults[0]["$currentID"] = $cursor["$currentID"];
-                $otherMatches[] = countMatches($v, $sanTermLowercase);
+                $otherMatches[] = countMatches($v, $sanTerm);
             }
         }
 
@@ -136,7 +148,7 @@ try {
             $currentID = (string) $v['_id'];
             $results[0]["$currentID"] = $cursor["$currentID"];
 
-            $otherMatches[0]["$currentID"] = countMatches($v, $sanTermLowercase);
+            $otherMatches[0]["$currentID"] = countMatches($v, $sanTerm);
         }
 
         unset ($v, $val); // remove lingering foreach() values from memory
@@ -236,8 +248,8 @@ try {
 // ---------------------------------------------------------------------- //
 
 
-    // ADD ROUTINE HERE TO TRUNCATE AFTER MAX RESULTS = 50
-    //
+    // ---- ADD ROUTINE HERE TO TRUNCATE AFTER MAX RESULTS = 50 ---- //
+
 
     $results = json_encode($results);
     print_r($results);

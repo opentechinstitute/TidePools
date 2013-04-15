@@ -39,31 +39,39 @@
 
     // note: landmark types must be all lower-case letters
     $landmarkTypes = array(
-                        'event',
-                        'memory',
-                        'friend',
-                        'group',
-                        'alert',
-                        'fixthis',
-                        'food',
-                        'somethingelse',
-                        // Note, extra items in 'Filter Landmarks' section:
-                        //   'freewifi',
-                        //   'coupons',
-                        //   'jobs',
+        'event',
+        'memory',
+        'friend',
+        'group',
+        'alert',
+        'fixthis',
+        'food',
+        'somethingelse',
+        // Note, extra items in 'Filter Landmarks' section:
+        //   'freewifi',
+        //   'coupons',
+        //   'jobs',
     );
 
     // note: landmark type filters must be all lower-case letters
     $landmarkTypesFilters = array(
-                        'event',
-                        'memory',
-                        'alert',
-                        'fixthis',
-                        'freewifi',
-                        'friend',
-                        'group',
-                        'food',
-                        'coupons',
-                        'jobs',
-                        'somethingelse',
+        'event',
+        'memory',
+        'alert',
+        'fixthis',
+        'freewifi',
+        'friend',
+        'group',
+        'food',
+        'coupons',
+        'jobs',
+        'somethingelse',
+    );
+
+    $landmarkTypesPlural = array(
+        'event' => 'events',
+        'memory' => 'memories',
+        'alert' => 'alerts',
+        'friend' => 'friends',
+        'group' => 'groups',
     );
