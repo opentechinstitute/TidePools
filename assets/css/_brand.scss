@@ -1,0 +1,27 @@
+@import "colors";
+
+$base-color:		$AliceBlue;
+$fontColor:			#666666;
+$font-family:		Verdana, Geneva, sans-serif;
+$titleColor:		#666666;
+$accColor:			#77bc43;
+$basefont:			13px;
+$baseline:			18px;
+
+$complement:		adjust-hue($base-color, 180);
+$split1:			adjust-hue($base-color, 158);
+$split2:			adjust-hue($base-color, -158);
+$triad1:			adjust-hue($base-color, 135);
+$triad2:			adjust-hue($base-color, -135);
+$tetra1:			adjust-hue($base-color, 90);
+$tetra2:			adjust-hue($base-color, -90);
+$analog1:			adjust-hue($base-color, 22);
+$analog2:			adjust-hue($base-color, -22);
+$dark1:				darken($base-color, 10%);
+$dark2:				darken($base-color, 20%);
+$dark3:				darken($base-color, 30%);
+$dark4:				darken($base-color, 40%);
+$light1:			lighten($base-color, 10%);
+$light2:			lighten($base-color, 20%);
+$light3:			lighten($base-color, 30%);
+$light4:			lighten($base-color, 40%);

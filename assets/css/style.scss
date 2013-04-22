@@ -1,5 +1,13 @@
+@import "brand";
 @import "mixins";
-@import "preboot";
+/* TODO: add and test
+@import "reset";
+@import "bootstrap";
+@import "bootstrap-responsive";
+@import "add2home";
+@import "devices";
+*/
+@import "font-awesome";
 @import "leaflet";
 @import "jquery_ui";
 body {
@@ -10,6 +18,78 @@ body {
 	height: 100%;
 	position: relative; 
 	overflow:hidden;
+	z-index:0;
+}
+#navbarr {
+	width: 434px; 
+	height: 37px; 
+	position:fixed; 
+	background-color:#7871a1; 
+	@include opacity($opacity: 85);
+	border-style:solid; 
+	border-color:#2f5364; 
+	top:-29px; 
+	left:633px; 
+	z-index:1; 
+	margin-top: 48px; 
+	@include border-radius($radius:  9px);
+}
+.navbarr1 {
+	padding: 0px 4px 4px 4px;
+}
+.ABClayer {
+	width: 39px; 
+	height: 37px; 
+	position:relative; 
+	display:inline-block; 
+	margin-bottom:6px; 
+	cursor:pointer; 
+	opacity: 1; 
+	z-index:2;
+}
+#addlandmark {
+	width: 140px; 
+	background-repeat: no-repeat; 
+	position:absolute; 
+	height: 42px; 
+	top:18px; 
+	left:397px; 
+	background-image:url('../images/landmarkbutton.png'); 
+	z-index:1; 
+	cursor:pointer;
+}
+#trashlandmark {
+	width: 171px;
+	height: 337px;
+	position:fixed;
+	background-color:#2d3c4b;
+	border-style:solid;
+	top:58px;
+	left:398px;
+	z-index:1;
+	opacity:0.7;
+}
+#secretbutton {
+	z-index:2; 
+	background-color:#fff; 
+	position:absolute; 
+	width: 8px; 
+	height:40px; 
+	top:0; 
+	margin-left:-8px; 
+	cursor:pointer;
+}
+.targetimg {
+	width: 39px;
+	height: 37px;
+}
+#clickgo {
+	position:relative; 
+	display:inline-block; 
+	margin-bottom:6px; 
+	@include opacity($opacity: 100) ;
+	z-index:2; 
+	margin-top:-5px;
 }
 #mapborder {
 	height: 100%;
@@ -34,6 +114,14 @@ body {
 	float:left; 
 	z-index:1; 
 	background-color: white;
+	margin-top:-10px;
+	.navframe1 { 
+		width: 353px; 
+		height:5px; 
+		background-color:#7f275b; 
+		position: relative; 
+		top:9px;
+	}
 }
 #navtop {
 	width: 96%; 
@@ -66,6 +154,37 @@ body {
 	left:20px; 
 	background-color:fuchsia; 
 	z-index:1;
+}
+#mapcontrol {
+	width:353px; 
+	height:51px;
+	img.mapcontrol1 {
+		margin-top: 15px;
+	}
+}
+#filters {
+	width:353px; 
+	height:134px; 
+	background-color:#ebe1e3;
+	top: 92px;
+	position: relative;
+	.filter1 {
+		padding: 6px;
+	}
+	.filter2 {
+		position:relative; 
+		display:inline-block; 
+		margin-bottom:6px;
+		margin-right: -9px; 
+		margin-left: -1px;
+	}
+	.filter3 {
+		width:353px; 
+		height:5px; 
+		background-color:#7f275b; 
+		top: 92px; 
+		position: relative;
+	}
 }
 .filter {
 	width:50px;
@@ -108,6 +227,78 @@ body {
 	/*display:none;*/
 	/*visibility:hidden;*/
 }
+#newmap {
+	width: 67px; 
+	position:absolute; 
+	height: 31; 
+	top:18px; 
+	left:288px; 
+	cursor:pointer; 
+	background-image:url('../images/new_map.png'); 
+	z-index:1;
+}
+#LandmarksFeed {
+	width:89px;
+	height:19px;
+	background-color:#8bc3c5;
+	position: relative;
+	display:inline-block;
+	top:90px;
+	text-align: center;
+	cursor:pointer;
+}
+#EventsFeed {
+	width:89px;
+	height:19px;
+	background-color:#ebe1e3;
+	position: relative;
+	display:inline-block;
+	top:90px;
+	margin-left:-1;
+	text-align: center;
+	cursor:pointer;
+}
+#Search {
+	width:89px;
+	height:19px;
+	background-color:#eb6699;
+	position:relative;
+	display:inline-block;
+	top:90px;
+	margin-left:-1;
+	text-align: center;
+	cursor:pointer;
+}
+.searchwindow {
+	z-index:1;
+	position:absolute;
+	background-color:#fff;
+	top:311px;
+}
+.searchform {
+	.searchform1 {
+		padding-left: 2em;
+		padding-top: 1em;
+		width: 330px;
+	}
+	input[name='searchTerm'], input[name='searchsubmit'] {
+		background-color: #dbd1d3;
+	}
+}
+#mapform {
+	background-color:#f2edea;
+	#formfont {
+		padding-left:12px;
+		padding-right:12px;
+	}
+	#backbutton {
+		position: relative;
+		width:73px;
+		background-image:url(../images/back.png);
+		height:30px;
+		top:7px;
+	}
+}
 #landmarkfeed {
 	width: 386px; 
 	position:absolute; 
@@ -121,6 +312,22 @@ body {
 	z-index:1; 
 	/*display:none;*/
 	/*visibility:hidden;*/
+}
+#landmarkmenu {
+	width: 170px;
+	height: 337px;
+	position:fixed;
+	background-color:#e6e4ea;
+	border-style:solid;
+	border-color:#444d51;
+	border:1px;
+	top:101px;
+	left:398px;
+	z-index:1;
+	margin-top: 48px;
+}
+.landmark1 {
+	padding: 6px;
 }
 .hidden {
 	display: none;

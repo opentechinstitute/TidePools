@@ -1,7 +1,401 @@
-/*from http://sachagreif.com/useful-sass-mixins/ */
-/* adapted from http://css-tricks.com/snippets/css/useful-css3-less-mixins/ */
-/* Preboot.scss Variables and mixins to pre-ignite any new web development project ------------------------------------------------------------------ */
-canvas { -ms-touch-action: double-tap-zoom; }
+@charset "UTF-8";
+/*
+COLOR NAME DEFINITIONS
+http://www.dbuggr.com/simon-tite/table-css-named-colors-sass-editable-languages/
+*/
+/*
+MIXINS COLLECTION
+
+USAGE:
+make sure file is set, with master CSS importing it. otherwise ALL your includes will break. DO NOT cange this file, refer to URLHERE for updates.
+
+LIST OF MIXINS:
+
+@include reset;
+@include reset-nomargin;
+@include hidetext; hide text from view
+@include ellipsis; add ellipsis to text
+@include clearfix; Clearfix for clearing floats like a boss h5bp.com/q
+@include center-block; Center-align a block level element
+@include size($height: 5px, $width: 5px);
+@include square($size: 5px); Sizing shortcuts
+@include transform($rotate: 90deg, $scale: 1, $skew: 1deg, $left: 10px, $top: 10px); powerful all-together transform function
+@include placeholder($color: $grayLight); Input placeholder text
+@include border-radius($radius: 5px);
+@include border-radius-custom($topleft: 5px, $topright: 5px, $bottomleft: 5px, $bottomright: 5px); Border Radius
+@include box-shadow($shadow: 0 1px 3px rgba(0,0,0,.25)); Drop shadows
+@include transition($prop: all, $time: 1s, $ease: linear); transitions
+@include background-clip($clip); add background clipping
+@include translucent-background($color: $white, $alpha: 1);
+@include translucent-border($color: $white, $alpha: 1); Add an alphatransparency value to any background or border color (via Elyse Holladay)
+@include gradient($origin: left, $start: #ffffff, $stop: #000000);
+@include quick-gradient($origin: left, $alpha: 0.2); gradients
+@include reflect($length: 50%, $opacity: 0.2); reflection
+@include opacity($opacity: 100); opacity
+@include font-shorthand($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-sans-serif($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-serif($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-monospace($weight: normal, $size: 12px, $lineHeight: 20px); font stacks
+@function black($opacity);
+@function white($opacity);
+@include box-emboss($opacity, $opacity2);
+@include letterpress($opacity);
+@include hide-text;
+@include navigation-list; from http://sachagreif.com/useful-sass-includes/
+@include translate3d ($x, $y: 0, $z: 0);
+@include perspective ($value: 1000);
+@include transform-origin ($x:center, $y:center);
+@include border-box; adapted from http://css-tricks.com/snippets/css/useful-css3-less-includes/
+@include responsive($breakpoint);
+
+
+RESPONSIVE BREAKPOINTS
+
+when you need to create variables for specific iphones for instance, use
+@include responsive(phone) { -- EXCEPTIONS HERE --
+}
+other possible breakpoints are:
+@include responsive(iphone) {    }
+@include responsive(iphone_portrait) {    }
+@include responsive(iphone_landscape) {    } smartphones, landscape only
+@include responsive(ipad) {    }
+@include responsive(ipad_portrait) {    }
+@include responsive(ipad_landscape) {    }
+@include responsive(nexus7) {    }
+@include responsive(nexus7_portrait) {    }
+@include responsive(nexus7_landscape) {    }
+@include responsive(large) {    }
+@include responsive(medium) {    }
+@include responsive(small) {    } bootstrap breakpoints for computer screens
+@include responsive(devices) {    } bootstrap breakpoint for tablets + phones
+@include responsive(tabletbt) {    } bootstrap breakpoint for tablets
+@include responsive(phonebt) {    } bootstrap breakpoint for phones 
+@include responsive(retina) {    } retina-only devices
+@include responsive(firefox) {    } firefox-browser only
+@include responsive(safari) {    } safari-browser only
+@include responsive(portrait) {    } portrait orientation only
+@include responsive(landscape) {    } landscape orientation only
+@include responsive(print) {    } print version
+ adapted from http://www.impressivewebs.com/modular-css-media-queries-sass/ */
+/*
+http://alwaystwisted.com/post.php?s=2013-04-01-my-media-query-mixin
+*/
+/* TODO: add and test
+@import "reset";
+@import "bootstrap";
+@import "bootstrap-responsive";
+@import "add2home";
+@import "devices";
+*/
+/*  Font Awesome 3.0 the iconic font designed for use with Twitter Bootstrap ------------------------------------------------------- The full suite of pictographic icons, examples, and documentation can be found at: http://fortawesome.github.com/Font-Awesome/
+ License ------------------------------------------------------- • The Font Awesome font is licensed under the SIL Open Font License - http://scripts.sil.org/OFL • Font Awesome CSS, LESS, and SASS files are licensed under the MIT License - http://opensource.org/licenses/mit-license.html • The Font Awesome pictograms are licensed under the CC BY 3.0 License - http://creativecommons.org/licenses/by/3.0/ • Attribution is no longer required in Font Awesome 3.0, but much appreciated: "Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome"
+ Contact ------------------------------------------------------- Email: dave@davegandy.com Twitter: http://twitter.com/fortaweso_me Work: Lead Product Designer @ http://kyruus.com
+ */
+@font-face { font-family: 'FontAwesome'; src: url("../font/fontawesome-webfont.eot"); src: url("../font/fontawesome-webfont.eot?#iefix") format("embedded-opentype"), url("../font/fontawesome-webfont.woff") format("woff"), url("../font/fontawesome-webfont.ttf") format("truetype"); font-weight: normal; font-style: normal; }
+
+/*  Font Awesome styles
+------------------------------------------------------- */
+/* includes sprites.less reset */
+.html { /* makes sure icons active on rollover in links */ /* makes the font 33% larger relative to the icon container */ @-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
+  100% { -moz-transform: rotate(359deg); } }
+ @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(359deg); } }
+ @-o-keyframes spin { 0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(359deg); } }
+ @-ms-keyframes spin { 0% { -ms-transform: rotate(0deg); }
+  100% { -ms-transform: rotate(359deg); } }
+ @keyframes spin { 0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); } }
+ /*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+readers do not read off random characters that represent icons */ /* \f020 doesn't work in Safari. all shifted one down */ }
+.html [class^="icon-"], .html [class*=" icon-"] { font-family: FontAwesome; font-weight: normal; font-style: normal; text-decoration: inherit; display: inline; width: auto; height: auto; line-height: normal; vertical-align: baseline; background-image: none !important; background-position: 0% 0%; background-repeat: repeat; }
+.html [class^="icon-"]:before, .html [class*=" icon-"]:before { text-decoration: inherit; display: inline-block; speak: none; }
+.html a [class^="icon-"], .html a [class*=" icon-"] { display: inline-block; }
+.html .icon-large:before { vertical-align: -10%; font-size: 1.3333333333333333em; }
+.html .btn [class^="icon-"], .html .btn [class*=" icon-"], .html .nav [class^="icon-"], .html .nav [class*=" icon-"] { display: inline; /* keeps button heights with and without icons the same */ line-height: .6em; }
+.html .btn [class^="icon-"].icon-spin, .html .btn [class*=" icon-"].icon-spin, .html .nav [class^="icon-"].icon-spin, .html .nav [class*=" icon-"].icon-spin { display: inline-block; }
+.html li [class^="icon-"], .html li [class*=" icon-"] { display: inline-block; width: 1.25em; text-align: center; }
+.html li [class^="icon-"].icon-large, .html li [class*=" icon-"].icon-large { /* increased font size for icon-large */ width: 1.5625em; }
+.html ul.icons { list-style-type: none; text-indent: -.75em; }
+.html ul.icons li [class^="icon-"], .html ul.icons li [class*=" icon-"] { width: .75em; }
+.html .icon-muted { color: #eeeeee; }
+.html .icon-border { border: solid 1px #eeeeee; padding: 0.2em 0.25em 0.15em; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+.html .icon-2x { font-size: 2em; }
+.html .icon-2x.icon-border { border-width: 2px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.html .icon-3x { font-size: 3em; }
+.html .icon-3x.icon-border { border-width: 3px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.html .icon-4x { font-size: 4em; }
+.html .icon-4x.icon-border { border-width: 4px; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px; }
+.html .pull-right { float: right; }
+.html .pull-left { float: left; }
+.html [class^="icon-"].pull-left, .html [class*=" icon-"].pull-left { margin-right: .35em; }
+.html [class^="icon-"].pull-right, .html [class*=" icon-"].pull-right { margin-left: .35em; }
+.html .btn [class^="icon-"].pull-left.icon-2x, .html .btn [class^="icon-"].pull-right.icon-2x, .html .btn [class*=" icon-"].pull-left.icon-2x, .html .btn [class*=" icon-"].pull-right.icon-2x { margin-top: .35em; }
+.html .btn [class^="icon-"].icon-spin.icon-large, .html .btn [class*=" icon-"].icon-spin.icon-large { height: .75em; }
+.html .btn.btn-small [class^="icon-"].pull-left.icon-2x, .html .btn.btn-small [class^="icon-"].pull-right.icon-2x, .html .btn.btn-small [class*=" icon-"].pull-left.icon-2x, .html .btn.btn-small [class*=" icon-"].pull-right.icon-2x { margin-top: .45em; }
+.html .btn.btn-large [class^="icon-"].pull-left.icon-2x, .html .btn.btn-large [class^="icon-"].pull-right.icon-2x, .html .btn.btn-large [class*=" icon-"].pull-left.icon-2x, .html .btn.btn-large [class*=" icon-"].pull-right.icon-2x { margin-top: .2em; }
+.html .icon-spin { display: inline-block; -moz-animation: spin 2s infinite linear; -o-animation: spin 2s infinite linear; -webkit-animation: spin 2s infinite linear; animation: spin 2s infinite linear; }
+.html .icon-glass:before { content: "\f000"; }
+.html .icon-music:before { content: "\f001"; }
+.html .icon-search:before { content: "\f002"; }
+.html .icon-envelope:before { content: "\f003"; }
+.html .icon-heart:before { content: "\f004"; }
+.html .icon-star:before { content: "\f005"; }
+.html .icon-star-empty:before { content: "\f006"; }
+.html .icon-user:before { content: "\f007"; }
+.html .icon-film:before { content: "\f008"; }
+.html .icon-th-large:before { content: "\f009"; }
+.html .icon-th:before { content: "\f00a"; }
+.html .icon-th-list:before { content: "\f00b"; }
+.html .icon-ok:before { content: "\f00c"; }
+.html .icon-remove:before { content: "\f00d"; }
+.html .icon-zoom-in:before { content: "\f00e"; }
+.html .icon-zoom-out:before { content: "\f010"; }
+.html .icon-off:before { content: "\f011"; }
+.html .icon-signal:before { content: "\f012"; }
+.html .icon-cog:before { content: "\f013"; }
+.html .icon-trash:before { content: "\f014"; }
+.html .icon-home:before { content: "\f015"; }
+.html .icon-file:before { content: "\f016"; }
+.html .icon-time:before { content: "\f017"; }
+.html .icon-road:before { content: "\f018"; }
+.html .icon-download-alt:before { content: "\f019"; }
+.html .icon-download:before { content: "\f01a"; }
+.html .icon-upload:before { content: "\f01b"; }
+.html .icon-inbox:before { content: "\f01c"; }
+.html .icon-play-circle:before { content: "\f01d"; }
+.html .icon-repeat:before { content: "\f01e"; }
+.html .icon-refresh:before { content: "\f021"; }
+.html .icon-list-alt:before { content: "\f022"; }
+.html .icon-lock:before { content: "\f023"; }
+.html .icon-flag:before { content: "\f024"; }
+.html .icon-headphones:before { content: "\f025"; }
+.html .icon-volume-off:before { content: "\f026"; }
+.html .icon-volume-down:before { content: "\f027"; }
+.html .icon-volume-up:before { content: "\f028"; }
+.html .icon-qrcode:before { content: "\f029"; }
+.html .icon-barcode:before { content: "\f02a"; }
+.html .icon-tag:before { content: "\f02b"; }
+.html .icon-tags:before { content: "\f02c"; }
+.html .icon-book:before { content: "\f02d"; }
+.html .icon-bookmark:before { content: "\f02e"; }
+.html .icon-print:before { content: "\f02f"; }
+.html .icon-camera:before { content: "\f030"; }
+.html .icon-font:before { content: "\f031"; }
+.html .icon-bold:before { content: "\f032"; }
+.html .icon-italic:before { content: "\f033"; }
+.html .icon-text-height:before { content: "\f034"; }
+.html .icon-text-width:before { content: "\f035"; }
+.html .icon-align-left:before { content: "\f036"; }
+.html .icon-align-center:before { content: "\f037"; }
+.html .icon-align-right:before { content: "\f038"; }
+.html .icon-align-justify:before { content: "\f039"; }
+.html .icon-list:before { content: "\f03a"; }
+.html .icon-indent-left:before { content: "\f03b"; }
+.html .icon-indent-right:before { content: "\f03c"; }
+.html .icon-facetime-video:before { content: "\f03d"; }
+.html .icon-picture:before { content: "\f03e"; }
+.html .icon-pencil:before { content: "\f040"; }
+.html .icon-map-marker:before { content: "\f041"; }
+.html .icon-adjust:before { content: "\f042"; }
+.html .icon-tint:before { content: "\f043"; }
+.html .icon-edit:before { content: "\f044"; }
+.html .icon-share:before { content: "\f045"; }
+.html .icon-check:before { content: "\f046"; }
+.html .icon-move:before { content: "\f047"; }
+.html .icon-step-backward:before { content: "\f048"; }
+.html .icon-fast-backward:before { content: "\f049"; }
+.html .icon-backward:before { content: "\f04a"; }
+.html .icon-play:before { content: "\f04b"; }
+.html .icon-pause:before { content: "\f04c"; }
+.html .icon-stop:before { content: "\f04d"; }
+.html .icon-forward:before { content: "\f04e"; }
+.html .icon-fast-forward:before { content: "\f050"; }
+.html .icon-step-forward:before { content: "\f051"; }
+.html .icon-eject:before { content: "\f052"; }
+.html .icon-chevron-left:before { content: "\f053"; }
+.html .icon-chevron-right:before { content: "\f054"; }
+.html .icon-plus-sign:before { content: "\f055"; }
+.html .icon-minus-sign:before { content: "\f056"; }
+.html .icon-remove-sign:before { content: "\f057"; }
+.html .icon-ok-sign:before { content: "\f058"; }
+.html .icon-question-sign:before { content: "\f059"; }
+.html .icon-info-sign:before { content: "\f05a"; }
+.html .icon-screenshot:before { content: "\f05b"; }
+.html .icon-remove-circle:before { content: "\f05c"; }
+.html .icon-ok-circle:before { content: "\f05d"; }
+.html .icon-ban-circle:before { content: "\f05e"; }
+.html .icon-arrow-left:before { content: "\f060"; }
+.html .icon-arrow-right:before { content: "\f061"; }
+.html .icon-arrow-up:before { content: "\f062"; }
+.html .icon-arrow-down:before { content: "\f063"; }
+.html .icon-share-alt:before { content: "\f064"; }
+.html .icon-resize-full:before { content: "\f065"; }
+.html .icon-resize-small:before { content: "\f066"; }
+.html .icon-plus:before { content: "\f067"; }
+.html .icon-minus:before { content: "\f068"; }
+.html .icon-asterisk:before { content: "\f069"; }
+.html .icon-exclamation-sign:before { content: "\f06a"; }
+.html .icon-gift:before { content: "\f06b"; }
+.html .icon-leaf:before { content: "\f06c"; }
+.html .icon-fire:before { content: "\f06d"; }
+.html .icon-eye-open:before { content: "\f06e"; }
+.html .icon-eye-close:before { content: "\f070"; }
+.html .icon-external-link:before { content: "\f071"; }
+.html .icon-plane:before { content: "\f072"; }
+.html .icon-calendar:before { content: "\f073"; }
+.html .icon-random:before { content: "\f074"; }
+.html .icon-comment:before { content: "\f075"; }
+.html .icon-magnet:before { content: "\f076"; }
+.html .icon-chevron-up:before { content: "\f077"; }
+.html .icon-chevron-down:before { content: "\f078"; }
+.html .icon-retweet:before { content: "\f079"; }
+.html .icon-shopping-cart:before { content: "\f07a"; }
+.html .icon-folder-close:before { content: "\f07b"; }
+.html .icon-folder-open:before { content: "\f07c"; }
+.html .icon-resize-vertical:before { content: "\f07d"; }
+.html .icon-resize-horizontal:before { content: "\f07e"; }
+.html .icon-bar-chart:before { content: "\f080"; }
+.html .icon-twitter-sign:before { content: "\f081"; }
+.html .icon-facebooks-sign:before { content: "\f082"; }
+.html .icon-camera-retro:before { content: "\f083"; }
+.html .icon-key:before { content: "\f084"; }
+.html .icon-cogs:before { content: "\f085"; }
+.html .icon-comments:before { content: "\f086"; }
+.html .icon-thumbs-up:before { content: "\f087"; }
+.html .icon-thumbs-down:before { content: "\f088"; }
+.html .icon-star-half:before { content: "\f089"; }
+.html .icon-heart-empty:before { content: "\f08a"; }
+.html .icon-signout:before { content: "\f08b"; }
+.html .icon-linkedin-sign:before { content: "\f08c"; }
+.html .icon-pushpin:before { content: "\f08d"; }
+.html .icon-external-link:before { content: "\f08e"; }
+.html .icon-signin:before { content: "\f090"; }
+.html .icon-trophy:before { content: "\f091"; }
+.html .icon-github-sign:before { content: "\f092"; }
+.html .icon-upload-alt:before { content: "\f093"; }
+.html .icon-lemon:before { content: "\f094"; }
+.html .icon-phone:before { content: "\f095"; }
+.html .icon-check-empty:before { content: "\f096"; }
+.html .icon-bookmark-empty:before { content: "\f097"; }
+.html .icon-phone-sign:before { content: "\f098"; }
+.html .icon-twitter:before { content: "\f099"; }
+.html .icon-facebook:before { content: "\f09a"; }
+.html .icon-github:before { content: "\f09b"; }
+.html .icon-unlock:before { content: "\f09c"; }
+.html .icon-credit-card:before { content: "\f09d"; }
+.html .icon-rss:before { content: "\f09e"; }
+.html .icon-hdd:before { content: "\f0a0"; }
+.html .icon-bullhorn:before { content: "\f0a1"; }
+.html .icon-bell:before { content: "\f0a2"; }
+.html .icon-certificate:before { content: "\f0a3"; }
+.html .icon-hand-right:before { content: "\f0a4"; }
+.html .icon-hand-left:before { content: "\f0a5"; }
+.html .icon-hand-up:before { content: "\f0a6"; }
+.html .icon-hand-down:before { content: "\f0a7"; }
+.html .icon-circle-arrow-left:before { content: "\f0a8"; }
+.html .icon-circle-arrow-right:before { content: "\f0a9"; }
+.html .icon-circle-arrow-up:before { content: "\f0aa"; }
+.html .icon-circle-arrow-down:before { content: "\f0ab"; }
+.html .icon-globe:before { content: "\f0ac"; }
+.html .icon-wrench:before { content: "\f0ad"; }
+.html .icon-tasks:before { content: "\f0ae"; }
+.html .icon-filter:before { content: "\f0b0"; }
+.html .icon-briefcase:before { content: "\f0b1"; }
+.html .icon-fullscreen:before { content: "\f0b2"; }
+.html .icon-group:before { content: "\f0c0"; }
+.html .icon-link:before { content: "\f0c1"; }
+.html .icon-cloud:before { content: "\f0c2"; }
+.html .icon-beaker:before { content: "\f0c3"; }
+.html .icon-cut:before { content: "\f0c4"; }
+.html .icon-copy:before { content: "\f0c5"; }
+.html .icon-paper-clip:before { content: "\f0c6"; }
+.html .icon-save:before { content: "\f0c7"; }
+.html .icon-sign-blank:before { content: "\f0c8"; }
+.html .icon-reorder:before { content: "\f0c9"; }
+.html .icon-list-ul:before { content: "\f0ca"; }
+.html .icon-list-ol:before { content: "\f0cb"; }
+.html .icon-strikethrough:before { content: "\f0cc"; }
+.html .icon-underline:before { content: "\f0cd"; }
+.html .icon-table:before { content: "\f0ce"; }
+.html .icon-magic:before { content: "\f0d0"; }
+.html .icon-truck:before { content: "\f0d1"; }
+.html .icon-pinterest:before { content: "\f0d2"; }
+.html .icon-pinterest-sign:before { content: "\f0d3"; }
+.html .icon-google-plus-sign:before { content: "\f0d4"; }
+.html .icon-google-plus:before { content: "\f0d5"; }
+.html .icon-money:before { content: "\f0d6"; }
+.html .icon-caret-down:before { content: "\f0d7"; }
+.html .icon-caret-up:before { content: "\f0d8"; }
+.html .icon-caret-left:before { content: "\f0d9"; }
+.html .icon-caret-right:before { content: "\f0da"; }
+.html .icon-columns:before { content: "\f0db"; }
+.html .icon-sort:before { content: "\f0dc"; }
+.html .icon-sort-down:before { content: "\f0dd"; }
+.html .icon-sort-up:before { content: "\f0de"; }
+.html .icon-envelope-alt:before { content: "\f0e0"; }
+.html .icon-linkedin:before { content: "\f0e1"; }
+.html .icon-undo:before { content: "\f0e2"; }
+.html .icon-legal:before { content: "\f0e3"; }
+.html .icon-dashboard:before { content: "\f0e4"; }
+.html .icon-comment-alt:before { content: "\f0e5"; }
+.html .icon-comments-alt:before { content: "\f0e6"; }
+.html .icon-bolt:before { content: "\f0e7"; }
+.html .icon-sitemap:before { content: "\f0e8"; }
+.html .icon-umbrella:before { content: "\f0e9"; }
+.html .icon-paste:before { content: "\f0ea"; }
+.html .icon-lightbulb:before { content: "\f0eb"; }
+.html .icon-exchange:before { content: "\f0ec"; }
+.html .icon-cloud-download:before { content: "\f0ed"; }
+.html .icon-cloud-upload:before { content: "\f0ee"; }
+.html .icon-user-md:before { content: "\f0f0"; }
+.html .icon-stethoscope:before { content: "\f0f1"; }
+.html .icon-suitcase:before { content: "\f0f2"; }
+.html .icon-bell-alt:before { content: "\f0f3"; }
+.html .icon-coffee:before { content: "\f0f4"; }
+.html .icon-food:before { content: "\f0f5"; }
+.html .icon-file-alt:before { content: "\f0f6"; }
+.html .icon-building:before { content: "\f0f7"; }
+.html .icon-hospital:before { content: "\f0f8"; }
+.html .icon-ambulance:before { content: "\f0f9"; }
+.html .icon-medkit:before { content: "\f0fa"; }
+.html .icon-fighter-jet:before { content: "\f0fb"; }
+.html .icon-beer:before { content: "\f0fc"; }
+.html .icon-h-sign:before { content: "\f0fd"; }
+.html .icon-plus-sign-alt:before { content: "\f0fe"; }
+.html .icon-double-angle-left:before { content: "\f100"; }
+.html .icon-double-angle-right:before { content: "\f101"; }
+.html .icon-double-angle-up:before { content: "\f102"; }
+.html .icon-double-angle-down:before { content: "\f103"; }
+.html .icon-angle-left:before { content: "\f104"; }
+.html .icon-angle-right:before { content: "\f105"; }
+.html .icon-angle-up:before { content: "\f106"; }
+.html .icon-angle-down:before { content: "\f107"; }
+.html .icon-desktop:before { content: "\f108"; }
+.html .icon-laptop:before { content: "\f109"; }
+.html .icon-tablet:before { content: "\f10a"; }
+.html .icon-mobile-phone:before { content: "\f10b"; }
+.html .icon-circle-blank:before { content: "\f10c"; }
+.html .icon-quote-left:before { content: "\f10d"; }
+.html .icon-quote-right:before { content: "\f10e"; }
+.html .icon-spinner:before { content: "\f110"; }
+.html .icon-circle:before { content: "\f111"; }
+.html .icon-reply:before { content: "\f112"; }
+.html .icon-github-alt:before { content: "\f113"; }
+.html .icon-folder-close-alt:before { content: "\f114"; }
+.html .icon-folder-open-alt:before { content: "\f115"; }
+
+.oldie { /* fix bootstrap icons for older browsers */ /* fix bootstrap in buttons for older browsers */ /* fix fontawesome icons for older browsers, incomplete */ }
+.oldie .icon-glass, .oldie .icon-music, .oldie .icon-search, .oldie .icon-envelope, .oldie .icon-heart, .oldie .icon-star, .oldie .icon-star-empty, .oldie .icon-user, .oldie .icon-film, .oldie .icon-th-large, .oldie .icon-th, .oldie .icon-th-list, .oldie .icon-ok, .oldie .icon-remove, .oldie .icon-zoom-in, .oldie .icon-zoom-out, .oldie .icon-off, .oldie .icon-signal, .oldie .icon-cog, .oldie .icon-trash, .oldie .icon-home, .oldie .icon-file, .oldie .icon-time, .oldie .icon-road, .oldie .icon-download-alt, .oldie .icon-download, .oldie .icon-upload, .oldie .icon-inbox, .oldie .icon-play-circle, .oldie .icon-repeat, .oldie .icon-refresh, .oldie .icon-list-alt, .oldie .icon-lock, .oldie .icon-flag, .oldie .icon-headphones, .oldie .icon-volume-off, .oldie .icon-volume-down, .oldie .icon-volume-up, .oldie .icon-qrcode, .oldie .icon-barcode, .oldie .icon-tag, .oldie .icon-tags, .oldie .icon-book, .oldie .icon-bookmark, .oldie .icon-print, .oldie .icon-camera, .oldie .icon-font, .oldie .icon-bold, .oldie .icon-italic, .oldie .icon-text-height, .oldie .icon-text-width, .oldie .icon-align-left, .oldie .icon-align-center, .oldie .icon-align-right, .oldie .icon-align-justify, .oldie .icon-list, .oldie .icon-indent-left, .oldie .icon-indent-right, .oldie .icon-facetime-video, .oldie .icon-picture, .oldie .icon-pencil, .oldie .icon-map-marker, .oldie .icon-adjust, .oldie .icon-tint, .oldie .icon-edit, .oldie .icon-share, .oldie .icon-check, .oldie .icon-move, .oldie .icon-step-backward, .oldie .icon-fast-backward, .oldie .icon-backward, .oldie .icon-play, .oldie .icon-pause, .oldie .icon-stop, .oldie .icon-forward, .oldie .icon-fast-forward, .oldie .icon-step-forward, .oldie .icon-eject, .oldie .icon-chevron-left, .oldie .icon-chevron-right, .oldie .icon-plus-sign, .oldie .icon-minus-sign, .oldie .icon-remove-sign, .oldie .icon-ok-sign, .oldie .icon-question-sign, .oldie .icon-info-sign, .oldie .icon-screenshot, .oldie .icon-remove-circle, .oldie .icon-ok-circle, .oldie .icon-ban-circle, .oldie .icon-arrow-left, .oldie .icon-arrow-right, .oldie .icon-arrow-up, .oldie .icon-arrow-down, .oldie .icon-share-alt, .oldie .icon-resize-full, .oldie .icon-resize-small, .oldie .icon-plus, .oldie .icon-minus, .oldie .icon-asterisk, .oldie .icon-exclamation-sign, .oldie .icon-gift, .oldie .icon-leaf, .oldie .icon-fire, .oldie .icon-eye-open, .oldie .icon-eye-close, .oldie .icon-external-link, .oldie .icon-plane, .oldie .icon-calendar, .oldie .icon-random, .oldie .icon-comment, .oldie .icon-magnet, .oldie .icon-chevron-up, .oldie .icon-chevron-down, .oldie .icon-retweet, .oldie .icon-shopping-cart, .oldie .icon-folder-close, .oldie .icon-folder, .oldie .icon-resize-vertical, .oldie .icon-resize-horizontal, .oldie .icon-hdd, .oldie .icon-bullhorn, .oldie .icon-bell, .oldie .icon-certificate, .oldie .icon-thumbs-up, .oldie .icon-thumbs-down, .oldie .icon-hand-right, .oldie .icon-hand-left, .oldie .icon-hand-up, .oldie .icon-hand-down, .oldie .icon-circle-arrow-right, .oldie .icon-circle-arrow-left, .oldie .icon-circle-arrow-up, .oldie .icon-circle-arrow-down, .oldie .icon-globe, .oldie .icon-wrench, .oldie .icon-tasks, .oldie .icon-filter, .oldie .icon-briefcase, .oldie .icon-fullscreen { display: inline-block; width: 14px; height: 14px; margin-top: 1px; line-height: 14px; vertical-align: text-top; background-image: url("../img/glyphicons-halflings.gif"); background-position: 14px 14px; background-repeat: no-repeat; }
+.oldie .btn .icon-glass, .oldie .btn .icon-music, .oldie .btn .icon-search, .oldie .btn .icon-envelope, .oldie .btn .icon-heart, .oldie .btn .icon-star, .oldie .btn .icon-star-empty, .oldie .btn .icon-user, .oldie .btn .icon-film, .oldie .btn .icon-th-large, .oldie .btn .icon-th, .oldie .btn .icon-th-list, .oldie .btn .icon-ok, .oldie .btn .icon-remove, .oldie .btn .icon-zoom-in, .oldie .btn .icon-zoom-out, .oldie .btn .icon-off, .oldie .btn .icon-signal, .oldie .btn .icon-cog, .oldie .btn .icon-trash, .oldie .btn .icon-home, .oldie .btn .icon-file, .oldie .btn .icon-time, .oldie .btn .icon-road, .oldie .btn .icon-download-alt, .oldie .btn .icon-download, .oldie .btn .icon-upload, .oldie .btn .icon-inbox, .oldie .btn .icon-play-circle, .oldie .btn .icon-repeat, .oldie .btn .icon-refresh, .oldie .btn .icon-list-alt, .oldie .btn .icon-lock, .oldie .btn .icon-flag, .oldie .btn .icon-headphones, .oldie .btn .icon-volume-off, .oldie .btn .icon-volume-down, .oldie .btn .icon-volume-up, .oldie .btn .icon-qrcode, .oldie .btn .icon-barcode, .oldie .btn .icon-tag, .oldie .btn .icon-tags, .oldie .btn .icon-book, .oldie .btn .icon-bookmark, .oldie .btn .icon-print, .oldie .btn .icon-camera, .oldie .btn .icon-font, .oldie .btn .icon-bold, .oldie .btn .icon-italic, .oldie .btn .icon-text-height, .oldie .btn .icon-text-width, .oldie .btn .icon-align-left, .oldie .btn .icon-align-center, .oldie .btn .icon-align-right, .oldie .btn .icon-align-justify, .oldie .btn .icon-list, .oldie .btn .icon-indent-left, .oldie .btn .icon-indent-right, .oldie .btn .icon-facetime-video, .oldie .btn .icon-picture, .oldie .btn .icon-pencil, .oldie .btn .icon-map-marker, .oldie .btn .icon-adjust, .oldie .btn .icon-tint, .oldie .btn .icon-edit, .oldie .btn .icon-share, .oldie .btn .icon-check, .oldie .btn .icon-move, .oldie .btn .icon-step-backward, .oldie .btn .icon-fast-backward, .oldie .btn .icon-backward, .oldie .btn .icon-play, .oldie .btn .icon-pause, .oldie .btn .icon-stop, .oldie .btn .icon-forward, .oldie .btn .icon-fast-forward, .oldie .btn .icon-step-forward, .oldie .btn .icon-eject, .oldie .btn .icon-chevron-left, .oldie .btn .icon-chevron-right, .oldie .btn .icon-plus-sign, .oldie .btn .icon-minus-sign, .oldie .btn .icon-remove-sign, .oldie .btn .icon-ok-sign, .oldie .btn .icon-question-sign, .oldie .btn .icon-info-sign, .oldie .btn .icon-screenshot, .oldie .btn .icon-remove-circle, .oldie .btn .icon-ok-circle, .oldie .btn .icon-ban-circle, .oldie .btn .icon-arrow-left, .oldie .btn .icon-arrow-right, .oldie .btn .icon-arrow-up, .oldie .btn .icon-arrow-down, .oldie .btn .icon-share-alt, .oldie .btn .icon-resize-full, .oldie .btn .icon-resize-small, .oldie .btn .icon-plus, .oldie .btn .icon-minus, .oldie .btn .icon-asterisk, .oldie .btn .icon-exclamation-sign, .oldie .btn .icon-gift, .oldie .btn .icon-leaf, .oldie .btn .icon-fire, .oldie .btn .icon-eye-open, .oldie .btn .icon-eye-close, .oldie .btn .icon-external-link, .oldie .btn .icon-plane, .oldie .btn .icon-calendar, .oldie .btn .icon-random, .oldie .btn .icon-comment, .oldie .btn .icon-magnet, .oldie .btn .icon-chevron-up, .oldie .btn .icon-chevron-down, .oldie .btn .icon-retweet, .oldie .btn .icon-shopping-cart, .oldie .btn .icon-folder-close, .oldie .btn .icon-folder, .oldie .btn .icon-resize-vertical, .oldie .btn .icon-resize-horizontal, .oldie .btn .icon-hdd, .oldie .btn .icon-bullhorn, .oldie .btn .icon-bell, .oldie .btn .icon-certificate, .oldie .btn .icon-thumbs-up, .oldie .btn .icon-thumbs-down, .oldie .btn .icon-hand-right, .oldie .btn .icon-hand-left, .oldie .btn .icon-hand-up, .oldie .btn .icon-hand-down, .oldie .btn .icon-circle-arrow-right, .oldie .btn .icon-circle-arrow-left, .oldie .btn .icon-circle-arrow-up, .oldie .btn .icon-circle-arrow-down, .oldie .btn .icon-globe, .oldie .btn .icon-wrench, .oldie .btn .icon-tasks, .oldie .btn .icon-filter, .oldie .btn .icon-briefcase, .oldie .btn .icon-fullscreen { background-image: url("../img/glyphicons-halflings-btn.gif"); }
+.oldie .icon-external-link, .oldie .icon-key, .oldie .icon-external-link, .oldie .icon-cogs, .oldie .icon-key, .oldie .icon-signin, .oldie .icon-cloud-download, .oldie .icon-cloud-upload { display: inline-block; width: 14px; height: 14px; margin-top: 1px; *margin-right: .3em; line-height: 14px; vertical-align: text-top; background-image: url("../img/fontawesome-halflings.gif"); background-position: 14px 14px; background-repeat: no-repeat; }
+.oldie .btn .icon-external-link, .oldie .btn .icon-key, .oldie .btn .icon-external-link, .oldie .btn .icon-cogs, .oldie .btn .icon-key, .oldie .btn .icon-signin, .oldie .btn .icon-cloud-download, .oldie .btn .icon-cloud-upload { background-image: url("../img/fontawesome-halflings-btn.gif"); }
+.oldie .icon-key { background-position: 0 0 !important; }
+.oldie .icon-external-link { background-position: -40px 0px !important; }
+.oldie .icon-cogs { background-position: -20px 0px !important; }
+.oldie .icon-signin { background-position: -60px 0px !important; }
+.oldie .icon-cloud-download { background-position: -80px 0px !important; }
+.oldie .icon-cloud-upload { background-position: -100px 0px !important; }
 
 /* required styles */
 .leaflet-map-pane, .leaflet-tile, .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-tile-pane, .leaflet-overlay-pane, .leaflet-shadow-pane, .leaflet-marker-pane, .leaflet-popup-pane, .leaflet-overlay-pane svg, .leaflet-zoom-box, .leaflet-image-layer, .leaflet-layer { /* TODO optimize classes */ position: absolute; }
@@ -822,19 +1216,44 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; }
 
 body { cursor: default; overflow: hidden; }
 
-#map { height: 100%; position: relative; overflow: hidden; }
+#map { height: 100%; position: relative; overflow: hidden; z-index: 0; }
+
+#navbarr { width: 434px; height: 37px; position: fixed; background-color: #7871a1; opacity: 0.85; filter: "alpha(opacity=85)"; -khtml-opacity: 0.85; -moz-opacity: 0.85; border-style: solid; border-color: #2f5364; top: -29px; left: 633px; z-index: 1; margin-top: 48px; -webkit-border-radius: 9px; -moz-border-radius: 9px; border-radius: 9px; }
+
+.navbarr1 { padding: 0px 4px 4px 4px; }
+
+.ABClayer { width: 39px; height: 37px; position: relative; display: inline-block; margin-bottom: 6px; cursor: pointer; opacity: 1; z-index: 2; }
+
+#addlandmark { width: 140px; background-repeat: no-repeat; position: absolute; height: 42px; top: 18px; left: 397px; background-image: url("../images/landmarkbutton.png"); z-index: 1; cursor: pointer; }
+
+#trashlandmark { width: 171px; height: 337px; position: fixed; background-color: #2d3c4b; border-style: solid; top: 58px; left: 398px; z-index: 1; opacity: 0.7; }
+
+#secretbutton { z-index: 2; background-color: #fff; position: absolute; width: 8px; height: 40px; top: 0; margin-left: -8px; cursor: pointer; }
+
+.targetimg { width: 39px; height: 37px; }
+
+#clickgo { position: relative; display: inline-block; margin-bottom: 6px; opacity: 1; filter: "alpha(opacity=100)"; -khtml-opacity: 1; -moz-opacity: 1; z-index: 2; margin-top: -5px; }
 
 #mapborder { height: 100%; position: relative; overflow: hidden; background-color: transparent; }
 
 #nav { width: 101%; height: 100%; /*top:40; */ float: left; position: absolute; overflow-y: scroll; top: 309; }
 
-#navframe { width: 370px; position: relative; height: 100%; left: 0; float: left; z-index: 1; background-color: white; }
+#navframe { width: 370px; position: relative; height: 100%; left: 0; float: left; z-index: 1; background-color: white; margin-top: -10px; }
+#navframe .navframe1 { width: 353px; height: 5px; background-color: #7f275b; position: relative; top: 9px; }
 
 #navtop { width: 96%; position: absolute; height: 78px; top: 57px; left: 0; overflow-x: scroll; padding: 2 0 3 2; /*background-color:#000;*/ }
 
 #landmarkfeed { width: 378px; background-repeat: no-repeat; position: absolute; height: 290px; top: 7; left: 0; float: left; /*position: relative;*/ overflow-y: scroll; /*background-color:#000;*/ }
 
 #addmap { width: 100px; background-repeat: no-repeat; position: fixed; height: 52; top: 20px; left: 20px; background-color: fuchsia; z-index: 1; }
+
+#mapcontrol { width: 353px; height: 51px; }
+#mapcontrol img.mapcontrol1 { margin-top: 15px; }
+
+#filters { width: 353px; height: 134px; background-color: #ebe1e3; top: 92px; position: relative; }
+#filters .filter1 { padding: 6px; }
+#filters .filter2 { position: relative; display: inline-block; margin-bottom: 6px; margin-right: -9px; margin-left: -1px; }
+#filters .filter3 { width: 353px; height: 5px; background-color: #7f275b; top: 92px; position: relative; }
 
 .filter { width: 50px; height: 50px; }
 
@@ -848,7 +1267,28 @@ body { cursor: default; overflow: hidden; }
 
 #mapform { width: 386px; position: absolute; height: 100%; top: 7; left: 0; float: left; /*position: relative;*/ overflow-y: scroll; background-color: #fff; z-index: 1; /*display:none;*/ /*visibility:hidden;*/ }
 
+#newmap { width: 67px; position: absolute; height: 31; top: 18px; left: 288px; cursor: pointer; background-image: url("../images/new_map.png"); z-index: 1; }
+
+#LandmarksFeed { width: 89px; height: 19px; background-color: #8bc3c5; position: relative; display: inline-block; top: 90px; text-align: center; cursor: pointer; }
+
+#EventsFeed { width: 89px; height: 19px; background-color: #ebe1e3; position: relative; display: inline-block; top: 90px; margin-left: -1; text-align: center; cursor: pointer; }
+
+#Search { width: 89px; height: 19px; background-color: #eb6699; position: relative; display: inline-block; top: 90px; margin-left: -1; text-align: center; cursor: pointer; }
+
+.searchwindow { z-index: 1; position: absolute; background-color: #fff; top: 311px; }
+
+.searchform .searchform1 { padding-left: 2em; padding-top: 1em; width: 330px; }
+.searchform input[name='searchTerm'], .searchform input[name='searchsubmit'] { background-color: #dbd1d3; }
+
+#mapform { background-color: #f2edea; }
+#mapform #formfont { padding-left: 12px; padding-right: 12px; }
+#mapform #backbutton { position: relative; width: 73px; background-image: url(../images/back.png); height: 30px; top: 7px; }
+
 #landmarkfeed { width: 386px; position: absolute; height: 100%; top: 7; left: 0; float: left; /*position: relative;*/ overflow-y: scroll; background-color: #fff; z-index: 1; /*display:none;*/ /*visibility:hidden;*/ }
+
+#landmarkmenu { width: 170px; height: 337px; position: fixed; background-color: #e6e4ea; border-style: solid; border-color: #444d51; border: 1px; top: 101px; left: 398px; z-index: 1; margin-top: 48px; }
+
+.landmark1 { padding: 6px; }
 
 .hidden { display: none; }
 

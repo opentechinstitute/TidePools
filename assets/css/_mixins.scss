@@ -1,40 +1,147 @@
-@mixin reset {
-  margin: 0px !important;
-  padding: 0px !important;
-  border: none;
-  background: transparent;
+/*
+MIXINS COLLECTION
+
+USAGE:
+make sure file is set, with master CSS importing it. otherwise ALL your includes will break. DO NOT cange this file, refer to URLHERE for updates.
+
+LIST OF MIXINS:
+
+@include reset;
+@include reset-nomargin;
+@include hidetext;
+  hide text from view
+@include ellipsis;
+  add ellipsis to text
+@include clearfix;
+  Clearfix for clearing floats like a boss h5bp.com/q
+@include center-block;
+  Center-align a block level element
+@include size($height: 5px, $width: 5px);
+@include square($size: 5px);
+  Sizing shortcuts
+@include transform($rotate: 90deg, $scale: 1, $skew: 1deg, $left: 10px, $top: 10px);
+  powerful all-together transform function
+@include placeholder($color: $grayLight);
+  Input placeholder text
+@include border-radius($radius: 5px);
+@include border-radius-custom($topleft: 5px, $topright: 5px, $bottomleft: 5px, $bottomright: 5px);
+   Border Radius
+@include box-shadow($shadow: 0 1px 3px rgba(0,0,0,.25));
+  Drop shadows
+@include transition($prop: all, $time: 1s, $ease: linear);
+  transitions
+@include background-clip($clip);
+  add background clipping
+@include translucent-background($color: $white, $alpha: 1);
+@include translucent-border($color: $white, $alpha: 1);
+  Add an alphatransparency value to any background or border color (via Elyse Holladay)
+@include gradient($origin: left, $start: #ffffff, $stop: #000000);
+@include quick-gradient($origin: left, $alpha: 0.2);
+  gradients
+@include reflect($length: 50%, $opacity: 0.2);
+  reflection
+@include opacity($opacity: 100);
+  opacity
+@include font-shorthand($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-sans-serif($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-serif($weight: normal, $size: 14px, $lineHeight: 20px);
+@include font-monospace($weight: normal, $size: 12px, $lineHeight: 20px);
+  font stacks
+@function black($opacity);
+@function white($opacity);
+@include box-emboss($opacity, $opacity2);
+@include letterpress($opacity);
+@include hide-text;
+@include navigation-list;
+  from http://sachagreif.com/useful-sass-includes/
+@include translate3d ($x, $y: 0, $z: 0);
+@include perspective ($value: 1000);
+@include transform-origin ($x:center, $y:center);
+@include border-box;
+  adapted from http://css-tricks.com/snippets/css/useful-css3-less-includes/
+@include responsive($breakpoint);
+
+
+RESPONSIVE BREAKPOINTS
+
+when you need to create variables for specific iphones for instance, use
+@include responsive(phone) {
+  -- EXCEPTIONS HERE --
 }
-@mixin hidetext {
-  display: block;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  text-align: left;
-  text-indent: -999em;
-  direction: ltr;
-}
-@mixin ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-// Clearfix for clearing floats like a boss h5bp.com/q
-@mixin clearfix {
-  zoom: 1;
-  &:before, &:after {
-    display: table;
-    content: "";
+other possible breakpoints are:
+@include responsive(iphone) {    }
+@include responsive(iphone_portrait) {    }
+@include responsive(iphone_landscape) {    }
+  smartphones, landscape only
+@include responsive(ipad) {    }
+@include responsive(ipad_portrait) {    }
+@include responsive(ipad_landscape) {    }
+@include responsive(nexus7) {    }
+@include responsive(nexus7_portrait) {    }
+@include responsive(nexus7_landscape) {    }
+@include responsive(large) {    }
+@include responsive(medium) {    }
+@include responsive(small) {    }
+  bootstrap breakpoints for computer screens
+@include responsive(devices) {    }
+  bootstrap breakpoint for tablets + phones
+@include responsive(tabletbt) {    }
+  bootstrap breakpoint for tablets
+@include responsive(phonebt) {    }
+  bootstrap breakpoint for phones 
+@include responsive(retina) {    }
+  retina-only devices
+@include responsive(firefox) {    }
+  firefox-browser only
+@include responsive(safari) {    }
+  safari-browser only
+@include responsive(portrait) {    }
+  portrait orientation only
+@include responsive(landscape) {    }
+  landscape orientation only
+@include responsive(print) {    }
+  print version
+
+  adapted from http://www.impressivewebs.com/modular-css-media-queries-sass/
+  */
+  @mixin reset {
+    margin:     0px !important;
+    @include reset-nomargin;
   }
-  &:after {
-    clear: both;
+  @mixin reset-nomargin {
+    padding:    0px !important;
+    border:     none;
+    background: transparent;
+    @include box-shadow($shadow: 0 0px 0px rgba(0,0,0,.25));
   }
-}
-// Center-align a block level element
-@mixin center-block {
- display: block;
- margin: 0 auto;
-}
-// Sizing shortcuts
-@mixin size($height: 5px, $width: 5px) {
+  @mixin hidetext {
+    display: block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    text-align: left;
+    text-indent: -999em;
+    direction: ltr;
+  }
+  @mixin ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @mixin clearfix {
+    zoom: 1;
+    &:before, &:after {
+      display: table;
+      content: "";
+    }
+    &:after {
+      clear: both;
+    }
+  }
+  @mixin center-block {
+   display: block;
+   margin: 0 auto;
+ }
+ @mixin size($height: 5px, $width: 5px) {
   width: $width;
   height: $height;
 }
@@ -48,7 +155,6 @@
   -o-transform: rotate($rotate) scale($scale) skew($skew) translate($left, $top);
   transform: rotate($rotate) scale($scale) skew($skew) translate($left, $top);
 }
-// Input placeholder text
 @mixin placeholder($color: $grayLight) {
   :-moz-placeholder {
     color: $color;
@@ -57,7 +163,6 @@
     color: $color;
   }
 }
-// Border Radius
 @mixin border-radius($radius: 5px) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
@@ -80,13 +185,11 @@
   -webkit-background-clip: padding-box; 
   background-clip:         padding-box; 
 }
-// Drop shadows
 @mixin box-shadow($shadow: 0 1px 3px rgba(0,0,0,.25)) {
   -webkit-box-shadow: $shadow;
   -moz-box-shadow: $shadow;
   box-shadow: $shadow;
 }
-// Transitions
 @mixin transition($prop: all, $time: 1s, $ease: linear) {
   -webkit-transition: $prop $time $ease;
   -moz-transition: $prop $time $ease;
@@ -94,13 +197,11 @@
   -o-transition: $prop $time $ease;
   transition: $prop $time $ease;
 }
-// Background clipping
 @mixin background-clip($clip) {
  background-clip: $clip;
  -webkit-background-clip: $clip;
  -moz-background-clip: $clip;
 }
-// Add an alphatransparency value to any background or border color (via Elyse Holladay)
 @mixin translucent-background($color: $white, $alpha: 1) {
   background-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
 }
@@ -108,7 +209,6 @@
   border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
   background-clip: padding-box;
 }
-// Gradients
 @mixin gradient($origin: left, $start: #ffffff, $stop: #000000) {
   background-color: $start;
   background-image: -webkit-linear-gradient($origin, $start, $stop);
@@ -124,18 +224,15 @@
   background-image: -ms-linear-gradient($origin, rgba(0,0,0,0.0), rgba(0,0,0,$alpha));
   background-image: linear-gradient($origin, rgba(0,0,0,0.0), rgba(0,0,0,$alpha));
 }
-// Reflection
 @mixin reflect($length: 50%, $opacity: 0.2){
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop($length, transparent), to(rgba(255,255,255,$opacity)));
 }
-// Opacity
 @mixin opacity($opacity: 100) {
   opacity: $opacity / 100;
   filter: "alpha(opacity=#{$opacity})";
   -khtml-opacity: $opacity / 100;
   -moz-opacity: $opacity / 100;
 }
-// Font Stacks
 @mixin font-shorthand($weight: normal, $size: 14px, $lineHeight: 20px) {
   font-weight: $weight;
   font-size: $size;
@@ -159,7 +256,6 @@
   font-family: "Monaco", Courier New, monospace;
   line-height: $lineHeight;
 }
-/*from http://sachagreif.com/useful-sass-mixins/ */
 @function black($opacity){
   @return rgba(0,0,0,$opacity)
 }
@@ -171,6 +267,9 @@
 }
 @mixin letterpress($opacity){
   text-shadow:white($opacity) 0 1px 0;
+}
+@mixin text-shadow($opacity: .4, $blur: 3px){
+  text-shadow:black($opacity) 0 1px $blur;
 }
 @mixin hide-text {
   font: 0/0 a;
@@ -190,18 +289,17 @@
     }
   }
 }
-/* adapted from http://css-tricks.com/snippets/css/useful-css3-less-mixins/ */
 @mixin translate3d ($x, $y: 0, $z: 0) {
-  -webkit-transform:       translate3d($x, $y, $z);
+  -webkit-transform: translate3d($x, $y, $z);
   -moz-transform:    translate3d($x, $y, $z);
   -ms-transform:     translate3d($x, $y, $z);
   -o-transform:      translate3d($x, $y, $z);
 }
 @mixin perspective ($value: 1000) {
   -webkit-perspective:  $value;
-  -moz-perspective:   $value;
-  -ms-perspective:  $value;
-  perspective:    $value;
+  -moz-perspective:     $value;
+  -ms-perspective:      $value;
+  perspective:          $value;
 }
 @mixin transform-origin ($x:center, $y:center) {
   -webkit-transform-origin: $x $y;
@@ -209,3 +307,84 @@
   -ms-transform-origin:     $x $y;
   -o-transform-origin:      $x $y;
 }
+@mixin border-box {
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+@mixin placeholder {
+  &.placeholder { @content }
+  &::-webkit-input-placeholder { @content }
+  &:-moz-placeholder { @content }
+  &::-moz-placeholder { @content }
+  &:-ms-input-placeholder { @content }
+}
+/*
+http://alwaystwisted.com/post.php?s=2013-04-01-my-media-query-mixin
+*/
+$ipod1: 320px; 
+$ipod2: 480px;
+$ipad1: 760px; 
+$ipad2: 1024px;
+@mixin mq($point, $query1: min, $query2: width) {
+        @media screen and (#{$query1}-#{$query2}: $point) {
+            @content;
+        }
+}
+@mixin orient($orientation: landscape) {
+    @media (orientation : $orientation) {
+        @content;  
+    }
+}
+@mixin responsive($breakpoint) {  
+ @if $breakpoint == iphone {  
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) { @content; }  
+}
+@else if $breakpoint == iphone_portrait {  
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) { @content; }  
+}
+@else if $breakpoint == iphone_landscape {  
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape)  { @content; }  
+}
+@else if $breakpoint == ipad {  
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) { @content; }  
+}
+@else if $breakpoint == ipad_portrait {  
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) { @content; }  
+}
+@else if $breakpoint == ipad_landscape {  
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { @content; }  
+}
+@else if $breakpoint == nexus7 { @media screen and (device-width: 600px) and (device-height: 905px) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 1.332)  { @content; }
+}
+@else if $breakpoint == nexus7_portrait { @media screen and (device-width: 600px) and (device-height: 905px) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 1.332) and (orientation : portrait)  { @content; }
+}
+@else if $breakpoint == nexus7_landscape { @media screen and (device-width: 600px) and (device-height: 905px) and (-webkit-min-device-pixel-ratio: 1.331) and (-webkit-max-device-pixel-ratio: 1.332) and (orientation : landscape)  { @content; }
+}
+@else if $breakpoint == large { @media (min-width: 1200px) { @content; }  
+}
+@else if $breakpoint == medium { @media (min-width: 980px) and (max-width: 1199px) { @content; }  
+}
+@else if $breakpoint == small { @media (min-width: 768px) and (max-width: 979px) { @content; }  
+}
+@else if $breakpoint == devices { @media (max-width: 767px) { @content; }  
+}
+@else if $breakpoint == tabletbt { @media (min-width: 481px) and(max-width: 767px) { @content; }  
+}
+@else if $breakpoint == phonebt { @media (max-width: 480px) { @content; }  
+}
+@else if $breakpoint == retina { @media
+  only screen and (-webkit-min-device-pixel-ratio : 1.5),
+  only screen and (min-device-pixel-ratio : 1.5) { @content; } 
+}
+@else if $breakpoint == firefox { @-moz-document url-prefix() { @content; } 
+}
+@else if $breakpoint == safari { @media screen and (-webkit-min-device-pixel-ratio:0) { @content; } 
+}
+@else if $breakpoint == portrait { @media all and (orientation:portrait) { @content; } 
+}
+@else if $breakpoint == landscape { @media all and (orientation:landscape) { @content; } 
+}
+@else if $breakpoint == print { @media print { @content; } 
+}
+} 
