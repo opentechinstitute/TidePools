@@ -252,6 +252,7 @@ onclick="secretLandmark()">
 <script src="assets/js/resources/jquery.js" type="text/javascript"></script>
 <script src="assets/js/resources/jquery_ui.js" type="text/javascript"></script>
 <script src="assets/js/resources/jquery_ui_timepicker.js" type="text/javascript"></script>
+<script src="assets/js/resources/svg-min.js" type="text/javascript"></script>
 <!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> <!-- UNCOMMENT TO LOAD YOUR API Keys-->
 <script src="assets/js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script>
 <script src="assets/js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script>

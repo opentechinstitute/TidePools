@@ -34,7 +34,7 @@
  */
 
 
-    $DBname = "defaultMap";
+    $DBname = "treasureHunt";
 
 
     // note: landmark types must be all lower-case letters
