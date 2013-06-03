@@ -48,60 +48,48 @@
 	$tropo = new Tropo(); 
 
 	
+
 	
-	if (!preg_match('/@/', $sms)) {
-   			 
-   		errorSMS($tropo);
-	}
+	$where = substr( strrchr( $sms, '@' ), 1 );
 	
-	else {
+	$where_r = preg_replace("/ /","+",$where);
+	
+	
+	
+	$need = strstr( $sms, '@', true );
+
+	
+	$geo = file_get_contents("http://maps.googleapis.com/maps/api/geocode/json?address=".$where_r."&sensor=false");
+	
+	
+	
+	
+	$geo = json_decode($geo);
 	
 
-		
-		$where = substr( strrchr( $sms, '@' ), 1 );
-		
-		$where_r = preg_replace("/ /","+",$where);
-		
-		
-		
-		$need = strstr( $sms, '@', true );
 	
-		
-		$geo = file_get_contents("http://maps.googleapis.com/maps/api/geocode/json?address=".$where_r."&sensor=false");
-		
-		
-		
-		
-		$geo = json_decode($geo);
-		
+	$lat = $geo->results[0]->geometry->location->lat;
 	
-		
-		$lat = $geo->results[0]->geometry->location->lat;
-		
-		$lon = $geo->results[0]->geometry->location->lng;
-	
-		$loc = array($lon,$lat);
-	
-	
-		$when = strftime('%c');
-		
-		$newNeed = array(
-		 
-		    'need'=>$need,
-		    'loc'=>$loc,
-		    'where'=>$where,
-		    'when'=>$when
-		);
-	
-	
-		
-		insertNeed($newNeed, $coll, $need, $where, $tropo, $when, $loc, $collection, $collection2);
+	$lon = $geo->results[0]->geometry->location->lng;
 
-	}
+	$loc = array($lon,$lat);
+
+
+	$when = strftime('%c');
+	
+	$newNeed = array(
+	 
+	    'need'=>$need,
+	    'loc'=>$loc,
+	    'where'=>$where,
+	    'when'=>$when
+	);
+
+
+	
+	insertNeed($newNeed, $coll, $need, $where, $tropo, $when, $loc, $collection, $collection2);
 
 		
-	
-	
 	function insertNeed($newNeed,$coll, $need, $where, $tropo, $when, $loc, $collection, $collection2){
 			
 		$safe_insert = true;
@@ -128,19 +116,6 @@
 
 
 
-function errorSMS($tropo){
-
-
-	$tropo->say("Please format text as Need @ Your Location, i.e. -> Gas, Water Pump @ Van Brundt and Pioneer Brooklyn");
-		
-
-	$tropo->RenderJson(); 
-
-
-
-
-}
-
 
 function recordLandmark($loc, $where, $need, $collection, $collection2, $when){
 
@@ -148,8 +123,16 @@ function recordLandmark($loc, $where, $need, $collection, $collection2, $when){
 
 	$marktype = "alert";
 
-	$mapID = "509022b6a5d3972e03000000"; //adding SMS texts to this map
+	$mapID = "509022b6a5d3972e03000000";
 	
+	
+
+	/*
+$marktype = $_POST['marktype'];
+	
+
+	$mapID = $_POST['maplist'];
+*/
 		
 		
 	$landmarkAdmin = "null";
@@ -237,7 +220,22 @@ function recordLandmark($loc, $where, $need, $collection, $collection2, $when){
 	    $description = $where;
 	    
 	    
-	 
+	    //MAP ID TO POST TO
+	    // ADMIN NAME
+
+	    
+	  		
+
+			
+	    //------ MONGO DB ESCAPE STRING -------//
+	   /* 
+		$pattern = '$';
+		$replacement = '\$';
+		echo preg_replace($pattern, $replacement, $description); 
+		*/
+		//------------------------------------//
+		
+
 	    
 	   	//----Landmark JSON Object------//
 						
@@ -259,6 +257,49 @@ function recordLandmark($loc, $where, $need, $collection, $collection2, $when){
 		
 	insertLandmark($landmark,$collection, $collection2, $mapID);
 	
+/*
+	$marktype = "alert";
+
+	$mapID = "509022b6a5d3972e03000000";
+	
+
+	//------ Landmark Stats -----------//
+	
+	$avatar = $marktype.'.png'; //avatar based on user selection
+
+
+	$stats = array(	
+		'avatar'=>$avatar
+	);
+	
+		
+	//---------- News & Annoucements --------//
+	
+
+		
+		$feed = array(
+				
+		);
+
+	    
+	   	//----Landmark JSON Object------//
+						
+		$landmark = array(
+		 
+		    'name'=>$need,
+		    'description'=>$where,
+		    'loc'=>$loc,
+		    'mapID'=>$mapID,
+		    'stats'=>$stats,
+		    'feed'=>$feed
+
+		);
+		
+		//---------------------------//
+		
+
+		insertLandmark($landmark,$collection, $collection2, $mapID);	
+*/
 	    
 	    
 	}
@@ -298,4 +339,8 @@ function recordLandmark($loc, $where, $need, $collection, $collection2, $when){
 	
 	}
 	
-?>
+
+
+ 
+ 
+?> 

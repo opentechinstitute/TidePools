@@ -62,10 +62,12 @@ if (isset($_POST['data'])) {
                 } else {
 
                     $idVal = "'" . $val['_id']['$id'] . "'";
+                    $loc0 = "'" . $val['loc'][0] . "'";
+                    $loc1 = "'" . $val['loc'][1] . "'";
 
                     echo '<div style="width:97%; margin-left: -13px; margin-top: 15px; margin-bottom: 15px;">';
-                    echo '<div style="cursor:pointer; margin-left:7px;" onclick="landmarkWindow(' . $idVal . ')">';
-                    echo '<img src="assets/images/' . $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';
+                    echo '<div style="cursor:pointer; margin-left:7px;" onclick="landmarkWindow(' . $idVal . ',' . $loc0 . ',' . $loc1 .')">';
+                    echo '<img src="'. $val['stats']['avatar'].'"style="float:left; max-width:42px; margin-left: 8;"/>';
 
                     if (isset($val['feed'])) {
 

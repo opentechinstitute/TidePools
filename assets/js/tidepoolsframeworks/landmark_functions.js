@@ -4,6 +4,8 @@
 	 
 	 
     function change(landmark) { //click to place landmark function (initial after drag drop fire)
+
+    	alert("Noktayi eklemek icin haritaya tiklayin");
         
 		map.on('click', function(e){
 			
@@ -21,6 +23,7 @@
 		
 		var currentZ = map.getZoom(); //current map zoom
 		var current;
+
 	   
 	 	if (clickState == 0){ //if not currently in a "adding landmark state" then do this:
 		   
@@ -29,6 +32,11 @@
 		   	landmarkLat = e.lat;
 		  	landmarkLng = e.lng; 
 		  	
+
+		  	// if ( $('#navbarr').hasClass('unhidden') ) {
+    	// 	$('#navbarr').removeClass('unhidden').addClass('hidden');
+
+    		
 		  	
 		  	
 	    	//---- on drop, pan to drop ----//
@@ -51,7 +59,12 @@
 				var wWidth = $(window).width()/2;
 				
 				var class2 = "record";
-				landmarkType = landmark.substr(0, landmark.lastIndexOf('.')) || landmark; //removing file extension
+
+				//alert(landmarkType);
+
+				landmarkType = landmark;
+
+				var landmarkTypeExt = landmark.substr(0, landmark.lastIndexOf('.')) || landmark; //removing file extension
 								
 				var popWidth = 196;
 				var popHeight = 325;
@@ -73,7 +86,7 @@
 				$('#popupdiv').load('php/popup_content.php',
 					{
 					'class': class2,
-					'type': landmarkType,
+					'type': landmarkTypeExt,
 					'width': popWidth,
 					'height': popHeight
 					},
@@ -96,6 +109,7 @@
 		  }
 		  
 		  if (clickState == 1) {
+		  	unhide('navbarr');
 		  	console.log("moving pyramid");
 		  	return;
 		  }
@@ -122,6 +136,9 @@
 		 clickState = 0;
 		 unhide('form'); 
 		 map.removeLayer(drop);
+
+		 unhide('navbarr');
+		 
 
 	 }
 
@@ -164,14 +181,42 @@
 		var current2 = landmarkResize();
 		return current2;
 	}
+
+
+	// function addbyLocation(){
+
+	// 	var secretName = prompt("huh","defaultvalue");
+	//  	if (secretName!=null && secretName!=""){
+	// 	 	//change('assets/images/'+secretName);
+	// 	  }
+
+	// }
+
+
+	function addbyLocation(){
+
+		var userSearch = prompt("Hangi Noktayi Bildiriyorsunuz?","Adresi buraya giriniz");
+
+        $.postJSON("php/locationsearch.php",
+            {
+                'query' : userSearch
+            },
+
+            function(success){
+
+                gotoCoordinates(success[1],success[0]);
+                L.marker([success[1],success[0]]).addTo(map);
+            }
+        );
+    }
 	
 
 		 
 	 function secretLandmark(){ //needs to expand into a actual loader for all other landmark images, include URL image links
 	 
-	 	var secretName = prompt("You found a secret button! Load landmarks from the images folder here (input filename w/out .png), click map to place landmark","defaultvalue");
+	 	var secretName = prompt("You found a secret button! Load landmarks from the images folder here (include image name and extension, like: tree.png) click map to place landmark","defaultvalue");
 	 	if (secretName!=null && secretName!=""){
-		 	change(secretName);
+		 	change('assets/images/'+secretName);
 		  }
 	 }
 	 

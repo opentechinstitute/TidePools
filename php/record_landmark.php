@@ -62,6 +62,7 @@ try {
     $marktype = $_POST['marktype'];
     $mapID = $_POST['maplist'];
     $landmarkAdmin = $_POST['landmarkAdmin'];
+    $id = 'test';
 
     // $landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
 
@@ -100,10 +101,11 @@ try {
 
     //------ Landmark Stats -----------//
 
-    $avatar = $marktype.'.png'; //avatar based on user selection
+    $avatar = $marktype; //avatar based on user selection
     $expires = 'never';
     $checkIn = array();
     $imGoing = array();
+
 
     $stats = array(
         'time' => $time,
@@ -175,6 +177,7 @@ try {
             'insides'=>$insides,
             'feed'=>$feed,
             'permissions'=>$permissions,
+            'id'=>$id
         );
 
         //---------------------------//

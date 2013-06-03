@@ -193,13 +193,13 @@
 	  // Adjusting div height for scrolling vertical
 	  
 	  var h = $(window).height();
-	  $("#nav").css('height',h - 315);
+	  $("#nav").css('height',h - 260);
 	  $("#searchform").css('height',h - 315);
 	
 	  $(window).resize(function(){
 	  
 	        var h = $(window).height();        
-	        $("#nav").css('height',h - 315);
+	        $("#nav").css('height',h - 260);
 	        $("#searchform").css('height',h - 315);
 
 	    });
@@ -219,7 +219,9 @@
 	}
 
 
-	function landmarkWindow(landmarkID){
+	function landmarkWindow(landmarkID, loc0, loc1){
+
+
 	
 		lastClickLandmark = landmarkID;
 	
@@ -231,6 +233,10 @@
 		});
 	
 		$('#landmarkfeed').load('php/landmark_feed_single.php',{'data':landmarkID}); 
+
+		gotoCoordinates(loc1,loc0);
+
+		map.setZoom(18);
 	}
 
 

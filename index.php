@@ -24,25 +24,35 @@
     <title>Tidepools</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
     <link rel="icon" href="assets/images/pound.ico" />
+
+    <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32066814-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+    
   </head>
 
   <body>
     <div id="navframe" style="margin-top:-10px">
-      <div style=
-      "width:353; height:5; background-color:#7f275b; position: relative; top:9;"></div>
-
-      <div id="mapcontrol" style="width:353; height:51;">
+      <div id="mapcontrol" style="display:none; width:353; height:51;">
         <img src="assets/images/map_collection.png" style="margin-top:15" />
-
         <div id="newmap" style=
         "width: 67px; position:absolute; height: 31; top:18px; left:288px; cursor:pointer; background-image:url('assets/images/new_map.png'); z-index:1;"
         value='Hide Layer' onclick="unhide('mapform');"></div>
       </div>
-
-      <div id="navtop" class="unhidden"></div>
-
+      <div id="navtop" class="unhidden" style="display:none; top: 12px; left:-3"></div>
+      <img src="assets/images/sms_note.png" ">
       <div id="filters" style=
-      "width:353; height:134; background-color:#ebe1e3;top: 92;position: relative;">
+      "width:353; height:134; background-color:#ebe1e3;position: relative;">
       <div style="padding: 6px 6px 6px 6px;">
         <div style=
         "position:relative; display:inline-block; margin-bottom:6px;margin-right: -9; margin-left: -1;">
@@ -60,31 +70,31 @@
     </div>
 
     <div style=
-    "width:353; height:5; background-color:#7f275b; top: 92; position: relative;"></div>
+    "width:353; height:5; background-color:#7f275b; position: relative;"></div>
 
     <!-- Buttons to select feed -->
     <div id="LandmarksFeed" style=
-      "width:89px; height:19px; background-color:#8bc3c5; position: relative; display:inline-block; top:90px; text-align: center; cursor:pointer;"
+      "width:89px; height:19px; background-color:#8bc3c5; position: relative; display:inline-block; text-align: center; cursor:pointer;"
       onclick="changeFeed('landmarks');">
-      <p3>Landmarks</p3>
+      <p3>Yerler</p3>
     </div>
 
     <div id="EventsFeed" style=
-      "width:89px; height:19px; background-color:#ebe1e3; position: relative; display:inline-block; top:90px; margin-left:-1; text-align: center; cursor:pointer;"
+      "width:89px; height:19px; background-color:#ebe1e3; position: relative; display:inline-block; margin-left:-1; text-align: center; cursor:pointer;"
       onclick="changeFeed('comments');">
-      <p3>Chat Feed</p3>
+      <p3>Yorumlar</p3>
     </div>
 
     <div id="Search" style="width:89px; height:19px; background-color:#eb6699;
-      position:relative; display:inline-block; top:90px; margin-left:-1;
+      position:relative; display:inline-block; margin-left:-1;
       text-align: center; cursor:pointer;" onclick="unhide('searchwindow')">
-      <p3>Search</p3>
+      <p3>Arama</p3>
     </div>
 
 
-<div id="nav"></div>
+<div id="nav" style="top:266px;"></div>
 
-<div id="searchwindow" style="z-index:1; position:absolute; background-color:#fff; top:311px;" class="hidden">
+<div id="searchwindow" style="z-index:1; position:absolute; background-color:#fff; top:170px;" class="hidden">
         <form id="searchform">
 
         <div style="padding-left: 2em; padding-top: 1em; width: 330px;">
@@ -162,7 +172,7 @@
 </div>
 
 <div id="landmarkmenu" style=
-"width: 170px; height: 337px; position:fixed; background-color:#e6e4ea; border-style:solid; border-color:#444d51; border:1px top:101px; left:398px; z-index:1; margin-top: 48px;"
+"width: 170px; height: 325px; position:fixed; background-color:#e6e4ea; border-style:solid; border-color:#444d51; border:1px top:101px; left:398px; z-index:1; margin-top: 48px;"
 class="unhidden">
 <div style="padding: 6px 6px 6px 6px;">
     <?php include "php/landmark_menu.php"; ?>
@@ -171,65 +181,33 @@ class="unhidden">
 
 <div id="map" style="z-index:0;"></div>
 
-<div id="navbarr" style=
-"width: 434px; height: 37px; position:fixed; background-color:#7871a1; opacity: 0.85; border-style:solid; border-color:#2f5364; top:-29px; left:633px; z-index:1; margin-top: 48px; border-radius: 9;">
-<div style="padding: 0px 4px 4px 4px;">
+<div id="navbarr" class="unhidden" style=
+"width: 223px; height: 73px; position:fixed; background-color:#7871a1; opacity: 0.85; border-style:solid; border-color:#2f5364; top:-29px; left:633px; z-index:1; margin-top: 48px; border-radius: 9;">
+<div style="padding: 0px 4px 4px 22px;">
   <div id="clickgo" style=
   "position:relative; display:inline-block; margin-bottom:6px; opacity: 1; z-index:2; margin-top:-5px;"
-  value='Hide Layer' class="target"><img src="assets/images/clickgo.png" width="34" height=
+  value='Hide Layer' class="target" ><img style="display:none;" src="assets/images/clickgo.png" width="34" height=
   "25" /></div>
 
-  <div id="A" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  <div id="Istanbul" style=
+  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
   value='Hide Layer' onclick=
-  "gotoCoordinates(42.349481561625495, -83.05789589881897);" class="target"><img src=
-  "assets/images/A.png" width="39" height="37" /></div>
+  "gotoCoordinates(41.0128, 28.9744);" class="target"> Istanbul </div>
 
-  <div id="B" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  <div id="Izmir" style=
+  "background: #fff;  font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
   value='Hide Layer' onclick=
-  "gotoCoordinates(42.349703577207784, -83.05676937103271);" class="target"><img src=
-  "assets/images/B.png" width="39" height="37" /></div>
+  "gotoCoordinates(38.4202, 27.1283);" class="target">  Izmir  </div>
 
-  <div id="C" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  <div id="Ankara" style=
+  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
   value='Hide Layer' onclick=
-  "gotoCoordinates(42.34944191590328, -83.05510640144348);" class="target"><img src=
-  "assets/images/C.png" width="39" height="37" /></div>
+  "gotoCoordinates(39.9167, 32.8500);" class="target">  Ankara  </div>
 
-  <div id="AUD" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick="gotoCoordinates(42.36235320539709, -83.054478764534);"
-  class="target"><img src="assets/images/AUD.png" width="39" height="37" /></div>
-
-  <div id="154" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  <div id="searcher" style=
+  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
   value='Hide Layer' onclick=
-  "gotoCoordinates(42.352086230785794, -83.07842016220091);" class="target"><img src=
-  "assets/images/154.png" width="39" height="37" /></div>
-
-  <div id="156" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.352177412073424, -83.07647824287415);" class="target"><img src=
-  "assets/images/156.png" width="39" height="37" /></div>
-
-  <div id="157" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.35404858146037, -83.07889223098755);" class="target"><img src=
-  "assets/images/157.png" width="39" height="37" /></div>
-
-  <div id="1243" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick="gotoCoordinates(42.35659359955532, -83.0454021692276);"
-  class="target"><img src="assets/images/1243.png" width="39" height="37" /></div>
-
-  <div id="campus" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.35079382091884, -83.04302036762238);" class="target"><img src=
-  "assets/images/campus.png" width="39" height="37" /></div>
+  "addbyLocation();" class="target"> <img src="assets/images/search.png" width="112" height="43" /> </div>
 </div>
 </div>
 

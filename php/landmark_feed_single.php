@@ -75,7 +75,7 @@ try {
         echo '<div style="width:353; height:5; background-color:#7f275b; top:54;"></div>';
 
         echo '<div id="backbutton" style="position: relative; width:73px; background-image:url(assets/images/back.png); height:30px; top:7;" onclick="$(feedDiv).hide(); map.closePopup();" ></div>';
-        echo '<img style="float:right; padding-left:10px; max-width:125px; margin-top: -19px; position:relative;"src="assets/images/' . $v['stats']['avatar'].'"/></br>';
+        echo '<img style="float:right; padding-left:10px; max-width:125px; margin-top: -19px; position:relative;"src="' . $v['stats']['avatar'].'"/></br>';
         echo '<div id="text box" style="margin-top:-11">';
 
         echo "<p><b>" . $v['name'] . "</b></p>";  //plug into CSS here...
