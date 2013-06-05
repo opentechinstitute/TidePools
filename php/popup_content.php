@@ -114,6 +114,8 @@ if ($class == 'status') {
 
     if ($class == 'record') {
 
+        $type = str_replace("assets/images/","",$type); //removing a dumb code thing
+
         echo '<p style="color:#7f275b; font-size:14;  position:relative;
             display:inline-block; margin-top:-8;margin-bottom:9;"><b>New '
             . $type . '</b></p>';
@@ -122,145 +124,119 @@ if ($class == 'status') {
 
         switch ($type) {
 
-            case "event":
+            case "saglik":
 
-                echo 'Event Title</br><input type="text" id="name"
+                echo 'Yerin ya da kisinin ismi:</br><input type="text" id="name"
                     name="name" maxlength="50" value=""/></br>';
-                echo 'What"s happening?</br> <textarea name="description"
+                echo 'Aciklama:</br> <textarea name="description"
                     id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
+                echo '<input type="button" id="submit" value="kaydet"
                     onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
+                echo '<input type="button" id="submit" value="Iptal"
                     onClick="window.location.reload()" />';
                 echo '</br><hr>';
-                echo '</br><b>When is it? (landmark will appear/disappear
-                    during this time period) </b></br>';
+                break;
+
+            case "internet":
+
+                echo 'Yerin ismi:</br><input type="text" id="name"
+                    name="name" maxlength="50" value=""/></br>';
+                echo 'Aciklama:</br> <textarea name="description"
+                    id="description" maxlength="300"></textarea></br>';
+                echo '<input type="button" id="submit" value="kaydet"
+                    onsubmit="this.submit(); " />';
+                echo '<input type="button" id="submit" value="Iptal"
+                    onClick="window.location.reload()" />';
+                echo '</br><hr>';
+                break;
+
+            case "yarali":
+
+                echo 'Kisinin ismi</br><input type="text" id="name"
+                    name="name" maxlength="50" value=""/></br>';
+                echo 'Yaralinin durumu</br> <textarea name="description"
+                    id="description" maxlength="300"></textarea></br>';
+                echo '<input type="button" id="submit" value="kaydet"
+                    onsubmit="this.submit(); " />';
+                echo '<input type="button" id="submit" value="Iptal"
+                    onClick="window.location.reload()" />';
+                echo '</br><hr>';
+                break;
+
+            case "siginak":
+
+                echo 'Kac kisiye yer var?</br> <textarea name="description"
+                    id="description" maxlength="300"></textarea></br>';
+                echo 'Aciklama:</br> <textarea name="description"
+                    id="description" maxlength="300"></textarea></br>';
+                echo '<input type="button" id="submit" value="kaydet"
+                    onsubmit="this.submit(); " />';
+                echo '<input type="button" id="submit" value="Iptal"
+                    onClick="window.location.reload()" />';
+                echo '</br><hr>';
+                break;
+
+            case "dikkat":
+
+                echo 'Tehlike nedir?</br><input type="text" id="name" name="name"
+                    maxlength="50" value=""/></br>';
+                echo 'Neler oldu?</br>
+                    <textarea name="description" id="description"
+                    maxlength="300"></textarea></br>';
+                echo '<input type="button" id="submit" value="kaydet"
+                    onsubmit="this.submit(); " />';
+                echo '<input type="button" id="submit" value="Iptal"
+                    onClick="window.location.reload()" />';
+                echo '</br><hr>';
+                echo '</br><b>Ne zaman?</b></br>';
                 echo '<input type="radio" name="timespec" value="none"
                     checked> None <input type="radio" name="timespec"
-                    value="once"> Once <input type="radio" name="timespec"
-                    value="daily"> Daily ';
+                    value="once"> Bir Kere <input type="radio" name="timespec"
+                    value="daily"> Her Gun';
                 echo '<input type="radio" name="timespec" value="weekly">
-                    Weekly';
-                echo '</br>Start Date/Time  <input type="text"
+                    Her Hafta';
+                echo '</br>Baslangic Tarihi/Saati  <input type="text"
                     name="startdatetimepicker" id="startdatetimepicker"
                     value="Click Here" />';
-                echo '</br>End Date/Time  <input type="text"
+                echo '</br>Bitis Tarihi/Saati  <input type="text"
                     name="enddatetimepicker" id="enddatetimepicker"
                     value="Click Here" />';
                 break;
 
-            case "memory":
+            case "yangin":
 
-                echo 'Title</br><input type="text" id="name" name="name"
-                    maxlength="50" value=""/></br>';
-                echo 'What happened?</br> <textarea name="description"
+                echo 'Ne yaniyor?</br><input type="text" id="name"
+                    name="name" maxlength="50" value=""/></br>';
+                echo 'Yanginin buyuklugu nedir:</br> <textarea name="description"
                     id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
+                echo '<input type="button" id="submit" value="kaydet"
                     onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
+                echo '<input type="button" id="submit" value="Iptal"
                     onClick="window.location.reload()" />';
                 echo '</br><hr>';
-                echo '</br>When was it?  <input type="text"
+                echo '</br><b>Ne zaman basladi?</b></br>';
+                echo '</br>Tarih/Zaman<input type="text"
                     name="datetimepicker" id="datetimepicker"
                     value="Click Here" />';
                 break;
 
-            case "friend":
+            case "yiyecek-icecek":
 
-                echo 'Their name/nickname?</br><input type="text" id="name"
+                echo 'Ne tarz yiyecek ve icecek bulunuyor?</br><input type="text" id="name"
                     name="name" maxlength="50" value=""/></br>';
-                echo 'Anything else?</br> <textarea name="description"
-                    id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
+                echo '<input type="button" id="submit" value="kaydet"
                     onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
+                echo '<input type="button" id="submit" value="Iptal"
                     onClick="window.location.reload()" />';
                 echo '</br><hr>';
-                break;
-
-            case "group":
-
-                echo 'Group Name</br><input type="text" id="name" name="name"
-                    maxlength="50" value=""/></br>';
-                echo 'What do you/they do?</br> <textarea name="description"
-                    id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
-                    onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
-                    onClick="window.location.reload()" />';
-                echo '</br><hr>';
-                echo '</br><b>When do you/they meet?</b></br>';
+                echo '</br><b>Ne zaman acik?</b></br>';
                 echo '<input type="radio" name="timespec" value="none"
                     checked> None <input type="radio" name="timespec"
-                    value="once"> Once <input type="radio" name="timespec"
-                    value="daily"> Daily ';
+                    value="once"> Bir Kere<input type="radio" name="timespec"
+                    value="daily"> Her Gun';
                 echo '<input type="radio" name="timespec" value="weekly">
-                    Weekly';
-                echo '</br>Choose Date/Time  <input type="text"
-                    name="datetimepicker" id="datetimepicker"
-                    value="Click Here" />';
-                break;
-
-            case "alert":
-
-                echo 'What kind?</br><input type="text" id="name" name="name"
-                    maxlength="50" value=""/></br>';
-                echo 'What happened/will happen?</br>
-                    <textarea name="description" id="description"
-                    maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
-                    onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
-                    onClick="window.location.reload()" />';
-                echo '</br><hr>';
-                echo '</br><b>When?</b></br>';
-                echo '<input type="radio" name="timespec" value="none"
-                    checked> None <input type="radio" name="timespec"
-                    value="once"> Once <input type="radio" name="timespec"
-                    value="daily"> Daily ';
-                echo '<input type="radio" name="timespec" value="weekly">
-                    Weekly';
-                echo '</br>Choose Date/Time  <input type="text"
-                    name="datetimepicker" id="datetimepicker"
-                    value="Click Here" />';
-                break;
-
-            case "fixthis":
-
-                echo 'What"s wrong?</br><input type="text" id="name"
-                    name="name" maxlength="50" value=""/></br>';
-                echo 'Description</br> <textarea name="description"
-                    id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
-                    onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
-                    onClick="window.location.reload()" />';
-                echo '</br><hr>';
-                echo '</br><b>When did you notice it?</b></br>';
-                echo '</br>Choose Date/Time  <input type="text"
-                    name="datetimepicker" id="datetimepicker"
-                    value="Click Here" />';
-                break;
-
-            case "food":
-
-                echo 'What kind of food?</br><input type="text" id="name"
-                    name="name" maxlength="50" value=""/></br>';
-                echo 'Recommendations/Deals?</br> <textarea name="description"
-                    id="description" maxlength="300"></textarea></br>';
-                echo '<input type="button" id="submit" value="Save"
-                    onsubmit="this.submit(); " />';
-                echo '<input type="button" id="submit" value="Cancel"
-                    onClick="window.location.reload()" />';
-                echo '</br><hr>';
-                echo '</br><b>When is it open?</b></br>';
-                echo '<input type="radio" name="timespec" value="none"
-                    checked> None <input type="radio" name="timespec"
-                    value="once"> Once <input type="radio" name="timespec"
-                    value="daily"> Daily ';
-                echo '<input type="radio" name="timespec" value="weekly">
-                    Weekly';
-                echo '</br>Choose Date/Time  <input type="text"
+                    Her Haft';
+                echo '</br>Tarih/Zaman<input type="text"
                     name="datetimepicker" id="datetimepicker"
                     value="Click Here" />';
                 break;

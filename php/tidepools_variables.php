@@ -34,7 +34,8 @@
  */
 
 
-    $DBname = "defaultMap";
+    $DBname = "amc";
+
 
 
     // note: landmark types must be all lower-case letters
@@ -75,3 +76,37 @@
         'friend' => 'friends',
         'group' => 'groups',
     );
+
+    // //GEZI -----//
+    // // note: landmark types must be all lower-case letters
+    // $landmarkTypes = array(
+    //     'yarali', //injured
+    //     'saglik', //medical
+    //     'siginak', //shelter
+    //     'dikkat', //alert
+    //     'yangin', //fire
+    //     'yiyecek-icecek', //food-drinks
+    //     'internet', //internet
+    //     'somethingelse',
+    //     // Note, extra items in 'Filter Landmarks' section:
+    //     //   'freewifi',
+    //     //   'coupons',
+    //     //   'jobs',
+    // );
+
+    // // note: landmark type filters must be all lower-case letters
+    // $landmarkTypesFilters = array(
+    //     'yarali', //injured
+    //     'saglik', //medical
+    //     'siginak', //shelter
+    //     'dikkat', //alert
+    //     'yangin', //fire
+    //     'yiyecek-icecek', //food-drinks
+    //     'internet', //internet
+    //     'somethingelse',
+    // );
+
+    // $landmarkTypesPlural = array(
+    //     'yarali' => 'yaralilar',
+    //     'siginak' => 'siginaklar',
+    // );

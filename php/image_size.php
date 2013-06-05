@@ -33,6 +33,6 @@
  */
 
     // should have non local URL image option too...
-    list($w, $h) = getimagesize('../assets/images/' . $_POST['landmark']);
+    list($w, $h) = getimagesize('../' . $_POST['landmark']);
     $size = json_encode(array($w, $h));
     print_r($size);

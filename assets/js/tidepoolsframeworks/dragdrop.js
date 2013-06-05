@@ -71,7 +71,9 @@ $(function() { //making all "items" tag divs draggable
        function myHelper( event ) {
        
        		 landmarkType = event.currentTarget.id;
-       		 return '<div id="dragHelp"><img src="assets/images/icon_'+landmarkType+'"/></div>';
+           var n=landmarkType.replace("assets/images/","");
+       		 return '<div id="dragHelp"><img src="assets/images/icon_'+n+'"/></div>';
+           //return '<div id="dragHelp"><img src="'+landmarkType+'"/></div>';
 		}
 		
 		//removing HTML from div extraction

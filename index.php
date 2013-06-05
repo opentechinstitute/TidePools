@@ -191,45 +191,14 @@ class="unhidden">
   "gotoCoordinates(42.349703577207784, -83.05676937103271);" class="target"><img src=
   "assets/images/B.png" width="39" height="37" /></div>
 
-  <div id="C" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.34944191590328, -83.05510640144348);" class="target"><img src=
-  "assets/images/C.png" width="39" height="37" /></div>
+<div id="searcher" style=" top: 88px; left: 28px; font-family:Tahoma, Geneva, sans-serif; padding: 1px; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"value='Hide Layer' onclick=
+"addbyLocation();" class="target"> 
+  <button class="orange"> Haritada Ara ve Ekle</button> 
+</div>
+<div id="searcher" style=
+  "background: #fff; padding: 1px; bottom: 75px; left: 600; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;" value='Hide Layer' onclick= "getLocation();" class="target"> <img src="assets/images/gps.png" width="43" height="43" />
+</div>
 
-  <div id="AUD" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick="gotoCoordinates(42.36235320539709, -83.054478764534);"
-  class="target"><img src="assets/images/AUD.png" width="39" height="37" /></div>
-
-  <div id="154" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.352086230785794, -83.07842016220091);" class="target"><img src=
-  "assets/images/154.png" width="39" height="37" /></div>
-
-  <div id="156" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.352177412073424, -83.07647824287415);" class="target"><img src=
-  "assets/images/156.png" width="39" height="37" /></div>
-
-  <div id="157" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.35404858146037, -83.07889223098755);" class="target"><img src=
-  "assets/images/157.png" width="39" height="37" /></div>
-
-  <div id="1243" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick="gotoCoordinates(42.35659359955532, -83.0454021692276);"
-  class="target"><img src="assets/images/1243.png" width="39" height="37" /></div>
-
-  <div id="campus" style=
-  "width: 39px; height: 37px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(42.35079382091884, -83.04302036762238);" class="target"><img src=
-  "assets/images/campus.png" width="39" height="37" /></div>
 </div>
 </div>
 

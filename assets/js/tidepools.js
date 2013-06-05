@@ -39,10 +39,10 @@ $.extend({
 
     //------ BASE MAP SETTINGS------//
 
-    var minZ = 2; //min map zoom
-    var maxZ = 18; //max map zoom
+    var minZ = 6; //min map zoom
+    var maxZ = 19; //max map zoom
 
-    var maxScale = 1.2; //landmark scaling range (1 = true size of image source)
+    var maxScale = 2.5; //landmark scaling range (1 = true size of image source)
     var minScale = 30;
 
     var plantMap = "4fec77c3c33694d70a000000"; //have to manually set these right now
@@ -50,25 +50,29 @@ $.extend({
 
     //should query DB to find map base layer?
 
-    var map = new L.Map('map', {crs:L.CRS.EPSG3857});
-    var mapUrl = '1.0.0/conftest/{z}/{x}/{y}.png',
-    basemap = new L.TileLayer(mapUrl, {minZoom:minZ, maxZoom:maxZ, tms:'true'});  //this is the layer!! the tile map
 
-    map.setView(new L.LatLng(42.36219069106654,-83.06988000869751), 16); //setting current view to map layer, lat, long, zoom level
+    //-------- USING EXTERNAL CLOUD MAP SERVICE--------///
 
-    //------------------------//
+    // var map = L.map('map').setView([41.02899590297445,28.984766006469727], 14);
+    // L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {minZoom:minZ, maxZoom:maxZ}).addTo(map);
 
+    //--------------------------------------------------//
 
-    //---------- ADDING EXTERNAL WEB MAP LAYER ----------//
+    //--------- USING LOCAL MAP AND OPTIONAL CLOUD MAP LAYER--------//
 
-    var cloudUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-    cloud = new L.TileLayer(cloudUrl);
+    var map = new L.Map('map', {crs:L.CRS.EPSG3857}).setView([42.36219069106654,-83.06988000869751], 16);
+    var base = L.tileLayer('1.0.0/conftest/{z}/{x}/{y}.png', {minZoom:minZ, maxZoom:maxZ, tms:'true'});
 
-    // map.addLayer(cloud,true); // <---- UNCOMMENT TO ACTIVATE
+    //---------- ADDING OPTIONAL EXTERNAL WEB MAP LAYER (UNCOMMENT TO ACTIVATE) ----------//
+
+    // var cloudUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+    // cloud = new L.TileLayer(cloudUrl);
+    // map.addLayer(cloud,true); 
+
+    map.addLayer(base,true);
 
     //----------------------------------------//
 
-    map.addLayer(basemap,true);
 
     var APIload = false; //change to true to load external APIs (like bus time data)
 

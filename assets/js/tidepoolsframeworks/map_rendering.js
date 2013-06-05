@@ -170,6 +170,7 @@
 
     function reBoundFilter(filter){
 
+       
         currentFilter = filter;
 
         if (currentMap == "combined"){
@@ -188,13 +189,14 @@
                 'nelng' : bounds._northEast.lng,
                 'swlat' : bounds._southWest.lat,
                 'swlng' : bounds._southWest.lng,
-                'filter' : filter,
+                'filter' : "assets/images/"+filter+".png",
                 'mapIDs' : mapSend
             },
 
             function(landmarks){
                 drawLandmarks(landmarks);
                 $('#nav').load('php/landmark_feed.php',{'data':landmarks}); //also sending along the lat/long where landmark was dropped
+
             }
         );
     }
@@ -217,8 +219,6 @@
 
 
     function drawLandmarks(landmarks){
-
-       // console.log(landmarks);
 
         var currentZ = map.getZoom(); //current map zoom
 
@@ -367,12 +367,15 @@
         var iconSizeX;
         var iconSizeY;
 
+
         $.postJSON("php/image_size.php", //PHP query for image size dimensions
             {
                 'landmark' : landmark
             },
 
             function(landmarkSize){
+
+
 
                 iconSizeX=landmarkSize[0]; //image sizes
                 iconSizeY=landmarkSize[1];
@@ -382,8 +385,10 @@
                 var percent = (currentZ - minZ) / (maxZ - minZ);
                 var outputScale = percent * (maxScale - minScale) + minScale;
 
+               // alert(landmark);    
+
                 var sphinx = L.icon({
-                    iconUrl: 'assets/images/'+landmark,
+                    iconUrl: landmark,
                     iconSize: new L.Point(iconSizeX/outputScale, iconSizeY/outputScale),
                     iconAnchor: new L.Point(0,0),
                     popupAnchor: new L.Point(50/outputScale, 20/outputScale)

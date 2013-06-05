@@ -193,13 +193,13 @@
 	  // Adjusting div height for scrolling vertical
 	  
 	  var h = $(window).height();
-	  $("#nav").css('height',h - 315);
+	  $("#nav").css('height',h - 400);
 	  $("#searchform").css('height',h - 315);
 	
 	  $(window).resize(function(){
 	  
 	        var h = $(window).height();        
-	        $("#nav").css('height',h - 315);
+	        $("#nav").css('height',h - 400);
 	        $("#searchform").css('height',h - 315);
 
 	    });
@@ -219,7 +219,9 @@
 	}
 
 
-	function landmarkWindow(landmarkID){
+	function landmarkWindow(landmarkID, loc0, loc1){
+
+
 	
 		lastClickLandmark = landmarkID;
 	
@@ -231,6 +233,10 @@
 		});
 	
 		$('#landmarkfeed').load('php/landmark_feed_single.php',{'data':landmarkID}); 
+
+		gotoCoordinates(loc1,loc0);
+
+		map.setZoom(18);
 	}
 
 
@@ -249,6 +255,30 @@
  }
      
 
+	function getLocation(){
+
+
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+		} 
+		
+		
+		//Get latitude and longitude;
+		function successFunction(position) {
+		
+		   lat = position.coords.latitude;
+		   lon = position.coords.longitude;
+		  
+			gotoCoordinates(lat,lon);
+			map.setZoom(16);
+		 }
+
+		 function errorFunction(){
+
+		 	
+		 }
+	 
+	}
 	
 	
 	
