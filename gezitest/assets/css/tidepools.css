@@ -1,0 +1,458 @@
+body {
+		cursor:default;
+		
+		overflow: hidden;
+		
+		
+		}
+		
+		#map {
+		
+			height: 100%;
+			position: relative;
+			
+			overflow:hidden;
+			
+		}
+		
+		#mapborder {
+		
+			height: 100%;
+			position: relative;
+			
+			overflow:hidden;
+			
+			background-color: transparent;
+		
+		}
+		
+		#nav {
+		
+			width: 101%; 
+			height: 100%; 
+			
+			/*top:40; */
+				
+			float:left;
+			position: absolute;
+			
+			overflow-y: scroll;
+			
+			top:259px;
+
+		}
+
+
+		#searchwindow {
+		
+			width: 101%; 
+			height: 100%; 
+			
+			/*top:40; */
+				
+			float:left;
+			position: absolute;
+			
+			overflow-y: scroll;
+			
+			top:309;
+
+		}
+		
+		
+		#navframe {
+		
+			width: 370px; 
+			position:relative; 
+			height: 100%; 
+			
+			left:0;
+			
+			float:left;
+			
+			z-index:1;
+			
+			background-color: white;
+			
+
+			
+			
+
+		}
+		
+		
+		#navtop {
+		
+			width: 96%; 
+			position:absolute; 
+			height: 78px; 
+			top:57px; 
+			left:0;
+			
+			
+			overflow-x: scroll;
+			
+			padding: 2 0 3 2;
+		
+			
+		
+			
+			/*background-color:#000;*/
+
+		}
+		
+		
+		#landmarkfeed {
+		
+			width: 378px; 
+			background-repeat: no-repeat; 
+			position:absolute; 
+			height: 290px; 
+			top:7; 
+			left:0;
+			
+			float:left;
+			/*position: relative;*/
+			
+			overflow-y: scroll;
+			
+			/*background-color:#000;*/
+
+		}
+		
+		#addmap {
+		
+			width: 100px; 
+			background-repeat: no-repeat; 
+			position:fixed; 
+			height: 52; 
+			top:20px; 
+			left:20px; 
+			background-color:fuchsia; 
+			z-index:1;
+		
+		
+		
+		}
+		
+		.filter {
+		
+			width:50px;
+			height:50px;		
+		
+		
+		}
+		
+		
+		
+		
+		
+		
+			::-webkit-scrollbar {
+			    width: 11px;
+			}
+			
+			::-webkit-scrollbar-track {
+			    -webkit-box-shadow: inset 0 0 6px rgba(98,22,26,1);
+			    			   
+			}
+			
+			::-webkit-scrollbar-thumb {
+			    -webkit-box-shadow: inset 0 0 6px rgba(8,22,26,1);
+			    			    			    background-color: #8f99ac;
+
+			}
+		
+		
+		#form {
+		
+			width: 386px; 
+			position:absolute; 
+			height: 100%; 
+			top:40; 
+			left:0;
+			
+			float:left;
+			/*position: relative;*/
+			
+			overflow-y: scroll;
+			
+			background-color:#fff;
+			
+			/*display:none;*/
+			/*visibility:hidden;*/
+		
+		}
+
+
+		#mapform {
+		
+			width: 386px; 
+			position:absolute; 
+			height: 100%; 
+			top:7; 
+			left:0;
+			
+			float:left;
+			/*position: relative;*/
+			
+			overflow-y: scroll;
+			
+			background-color:#fff;
+			
+			z-index:1;
+			
+			/*display:none;*/
+			/*visibility:hidden;*/
+		
+		}
+		
+		
+		#landmarkfeed {
+		
+			width: 386px; 
+			position:absolute; 
+			height: 100%; 
+			top:7; 
+			left:0;
+			
+			float:left;
+			/*position: relative;*/
+			
+			overflow-y: scroll;
+			
+			background-color:#fff;
+			
+			z-index:1;
+			
+			/*display:none;*/
+			/*visibility:hidden;*/
+
+		
+		
+		
+		}
+		
+		.hidden { display: none; }
+ 		.unhidden { display: block; }
+
+		.select { background-color: #8BC3C5; }
+ 		.unselect { background-color: transparent; }
+ 		
+ 		
+ 		.shadowed {
+		    position:fixed;
+		    box-shadow: 0 0 40px 10px #888888 inset;
+		    width: 100%;
+		    height: 100%;
+		    opacity:.75;
+		}
+		 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.button {
+  height: 150px;
+  width: 150px;
+  float: left;
+  border: 2px solid #666666;
+  background-color: #ccc;
+  margin-right: 5px;
+  -webkit-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 3px #000;
+  -ms-box-shadow: inset 0 0 3px #000;
+  box-shadow: inset 0 0 3px #000;
+  text-align: center;
+  cursor: move;
+}
+.button header {
+  color: #fff;
+  text-shadow: #000 0 1px;
+  box-shadow: 5px;
+  padding: 5px;
+  background: -moz-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  background: -webkit-gradient(linear, left top, right top,
+                               color-stop(0, rgb(0,0,0)),
+                               color-stop(0.50, rgb(79,79,79)),
+                               color-stop(1, rgb(21,21,21)));
+  background: -webkit-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  background: -ms-linear-gradient(left center, rgb(0,0,0), rgb(79,79,79), rgb(21,21,21));
+  border-bottom: 1px solid #ddd;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -ms-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -ms-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+	p {
+	
+		color:#200f09;
+		
+		font-weight:normal;
+		
+		font-family:Tahoma, Geneva, sans-serif;
+		
+		font-size: 12;
+		
+		line-height:120%;
+
+	}
+
+
+
+
+	
+	p2 {
+	
+		color:#df1c53;
+		
+		font-weight:bold;
+		
+		font-family:Tahoma, Geneva, sans-serif;
+		
+		font-size: 12;
+
+	}
+
+
+	p3 {
+	
+		color:#4b3930;
+		
+		font-weight:normal;
+		
+		font-family:Tahoma, Geneva, sans-serif;
+		
+		font-size: 12;
+		
+		line-height:120%;
+		padding-top: 5px;
+		
+
+	}
+	
+	
+	p4 {
+	
+		color:#5c729d;
+		
+		font-weight:normal;
+		
+		font-family:Tahoma, Geneva, sans-serif;
+		
+		font-size: 11;
+		
+		line-height:120%;
+		
+		
+	}
+	
+	
+	p5 {
+	
+		color:#200f09;
+		
+		font-weight:bold;
+		
+		font-family:Tahoma, Geneva, sans-serif;
+		
+		font-size: 12;
+		
+		line-height:120%;
+		padding-top: 5px;
+		
+
+	}
+	
+	hr {
+	
+	
+		color:#726b6c;
+		background-color: #726b6c;
+	
+	}
+
+
+#trash, #items, .item {
+	        height: 50px;
+	        width: 50px;
+	}
+	 
+	#trash {
+	        color: #354e62;
+	}
+	 
+	#items {
+	       margin-top: 10px;
+	       width: 100%;
+	}
+	 
+	.item {
+	        background: #cdcdcd;
+	        color: #3b3b3b;
+	        float: left;
+	        margin-right: 10px;
+	}
+	 
+	.over {
+	    border:5px solid;
+	}
+	 
+	.out {
+	    border:1px solid;
+	}
+	
+	.landmark {
+	
+		float: center;
+	
+	
+	}
+	
+	
+	
+	
+	#dragHelp { 
+	
+		width:85px; 
+		height: 85px; 
+		
+	}
+	
+	
+	
+	.input {
+    	border: 1px solid #006;
+    	background: #ffc;
+	}
+
+	.button {
+	    border: 1px solid #040201;
+	    background: #8bc3c5;
+	}
+	
+	
+	
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }

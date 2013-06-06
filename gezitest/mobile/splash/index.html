@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' id='viewport' name='viewport' />
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title>Red Hook WiFi</title>
+
+
+<script src="js/libs/jquery-1.7.1.min.js"></script>
+
+<script src="cjs/libs/jquery.mobile-1.0.min.js"></script>
+
+<link rel="stylesheet" href="css/redtest.css" />
+
+<link rel="stylesheet" href="css/jquery.mobile.structure-1.0.min.css" />
+
+<link rel="stylesheet" href="css/scroll.css" />
+
+
+<script type="text/javascript">
+
+
+
+$(function() {
+	
+	//reloadPage();
+    refresh_shoutbox();
+    
+    refresh_announcements();
+  
+	$("#submit").click(function(e) {
+	
+	  $.ajax({
+	      type: $('#newPost').attr('method')
+	    , url: $('#newPost').attr('action')
+	    , data: $('#newPost').serialize()
+	    , success: function(html) {
+	    
+	        refresh_shoutbox();
+	        refresh_announcements();
+	      }
+	  });
+	  e.preventDefault();
+	});
+
+});
+
+
+
+
+
+
+function refresh_shoutbox() {
+    var data = 'refresh=1';
+    	
+    $.ajax({
+            type: "POST",
+            url: "shout.php",
+            data: data,
+            success: function(html){ // this happen after we get result
+
+                $("#shout").html(html);
+                
+                myScroll.refresh();
+ 
+            }
+        });
+}
+
+
+function refresh_announcements() {
+    var data = 'refresh=1';
+    	
+    $.ajax({
+            type: "POST",
+            url: "announce.php",
+            data: data,
+            success: function(html){ // this happen after we get result
+
+                $("#announce").html(html);
+                
+                myScroll.refresh();
+
+ 
+            }
+        });
+}
+
+</script>
+
+</head>
+<body>
+	
+
+
+	<div id="top" width="100%" style="position:static; background-color:#000; height:60px;"/>
+	
+		<div id="welcome" style="background-color:#fff; height:100%; width: 67%; position:relative; display:inline-block;"></div>
+		
+		<div id="weather" style="background-color:#a8cee2; height:100%; width: 32%; position:relative; display:inline-block;">
+			
+			<div id="weatherpic" style="background-color:#c4125a; width:50%; height:100%; position:relative;"></div>
+		
+		</div>
+	
+	</div>
+	
+	
+<div id="border">
+
+
+	<ul id="thelist">
+		
+	
+	
+	<div id="redbar">Community Announcements</div>
+	
+
+	
+	<div id="announce" width="100%">
+        
+	</div>
+	
+	<div id="bluebar">Shoutbox</div>
+
+	
+	<div id="formfont">
+	
+	<form id="newPost" action="shout.php" method="post" onsubmit="this.submit(); this.reset(); return false;">
+	
+	Your Name (or nickname) </br><input type="text" id="name" name="name" maxlength="50"/></br>
+
+	Do you have any ideas for local websites or apps that would benefit Red Hook residents? </br></br> Also, please report any problems with the WiFi hotspot - thanks! </br> <textarea name="message" id="message" maxlength="140"></textarea></br>
+	
+	<input type="button" id="submit" value="Shout!" onsubmit="this.submit(); this.reset(); return false;" />
+	
+	</form>
+	
+	</div>
+			
+		<div id="shout" width="100%">
+        
+		</div>
+		 
+	</ul>
+
+</div>
+
+
+
+</body>
+</html>

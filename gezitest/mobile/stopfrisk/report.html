@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width">
+        <meta http-equiv="cleartype" content="on">
+
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/touch/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/touch/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/touch/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="images/touch/apple-touch-icon-57x57-precomposed.png">
+        <link rel="shortcut icon" href="images/touch/apple-touch-icon.png">
+
+ 
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        
+        
+        <link rel="stylesheet" href="css/themes/new.css" />
+
+        <link rel="stylesheet" href="css/jquerymobile.css">
+        
+        
+        
+        
+
+
+        <script src="js/vendor/modernizr-2.6.1.min.js"></script>
+        <script src="js/vendor/jquery-1.8.1.js"></script>
+        <script src="js/vendor/iscroll-lite.js"></script>
+        
+        <script src="js/vendor/jquery-mobile-1.2.0.min.js"></script>
+        <script src="js/stopfrisk_report.js"></script>
+        
+
+
+		<script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-34989988-1']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+
+		function clearing(obj){
+			$(obj).val('');
+		}
+		
+		
+		</script>
+		
+		
+    </head>
+    <body>
+    
+    <div data-role="page" data-theme="a" data-content-theme="a">
+
+    
+    
+    <div id="fullcontainer" style="overflow-x:hidden;">
+    
+    	<!--	<div style="width:201%; height:124%; background-color:#61935E; z-index:-1; display:block;position:absolute;top:0;left:-133px; opacity:1; top:363px; transform: rotate(-26deg);
+	-ms-transform: rotate(-26deg); /* IE 9 */-webkit-transform: rotate(-26deg); /* Safari and Chrome */-o-transform: rotate(-26deg); /* Opera */-moz-transform: rotate(-26deg); /* Firefox */"></div> -->
+
+
+
+    
+    
+    <div id="navcontainer">
+    	
+    	<div id="back" onclick="window.location = 'index.html';">Back<img src="images/back.png" style="margin-top:11px; margin-left:16px; float:left;"></div>
+    	<div id="refresh" onclick="refresh();">Save for Later<span id="timer"></span><img src="images/refresh.png" style=" margin-right:15px; margin-top:11px; float:right;"></div>
+
+	</div>
+	
+	
+<div style="margin-left:8px; margin-right:8px;">	
+		
+	<form id="report" name="input" action="php/stopfrisk_record.php" method="post" >
+		
+		<p style="font-size:19px;">Report a Stop & Frisk Incident</p>
+		<span style="font-style:italic; font-size:12px;">Feel free to Skip any Questions</span><br>
+
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+				<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Were you frisked? (Pat down by Officer)</li>  
+				
+				
+					<input id="frisked1" type="radio" name="frisked" value="yes">
+					<label for="frisked1">Yes</label>
+
+					<input id="frisked2" type="radio" name="frisked" value="no">
+					<label for="frisked2">No</label>
+					
+					<input id="frisked3" type="radio" name="frisked" value="notsure">
+					<label for="frisked3">Not Sure</label>
+			</div>
+		</div>
+		<br>
+		
+		
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+
+					<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Did you consent to the frisk?</li> 
+					
+					
+					<input id="consent1" type="radio" name="consent" value="yes">
+					<label for="consent1">Yes</label>
+		
+					<input id="consent2" type="radio" name="consent" value="no">
+					<label for="consent2">No</label>
+					
+					<input id="consent3" type="radio" name="consent" value="notsure">
+					<label for="consent3">Not Sure</label>
+			</div>
+		</div>
+		
+
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+					
+					<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Did the police search your:</li> 
+					
+					     <input id="searched1" name="searched[]" type="checkbox" value="Bag" />
+					     <label for="searched1">Bag</label>
+					     
+					     <input id="searched2" name="searched[]" type="checkbox" value="Pockets" />
+					     <label for="searched2">Pockets</label>
+					     
+					     <input id="searched3" name="searched[]" type="checkbox" value="Car" />
+					     <label for="searched3">Car</label>
+					     
+					     <input id="searched4" name="searched[]" type="checkbox" value="Other" />
+					     
+					     <label style="height:90px; width:99.5%;" for="searched4">Other
+					     <input style="background-color:#dfdfdf; position:relative; height:36px; z-index:2; left:0px; width:100%;" id="searched4" name="othersearched"  type="text" value="" /></label>
+
+			</div>
+		</div>			   		
+			
+					<br>
+
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+				<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">If so, did you consent to the search?</li> 
+				
+				<input id="search1" type="radio" name="search" value="yes">
+			    <label for="search1">Yes</label>
+
+				<input id="search2" type="radio" name="search" value="no">
+			    <label for="search2">No</label>
+
+				<input id="search3" type="radio" name="search" value="notsure">
+			    <label for="search3">Not Sure</label>
+			</div>
+		</div>					
+		
+		<br>
+
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 					
+				<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Was force used?</li> 
+				<input id="force1" type="radio" name="force" value="yes">
+				<label for="force1">Yes</label>
+
+				<input id="force2" type="radio" name="force" value="no">
+				<label for="force2">No</label>
+
+				<input id="force3" type="radio" name="force" value="notsure">
+				<label for="force3">Not Sure</label>
+			</div>
+		</div>
+		
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 					
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined"> Were you injured by the police? </li>
+				<input id="injured1" type="radio" name="injured" value="yes">
+				<label for="injured1">Yes</label>
+
+				<input id="injured2" type="radio" name="injured" value="no">
+				<label for="injured2">No</label>
+
+				<input id="injured3" type="radio" name="injured" value="notsure">
+				<label for="injured3">Not Sure</label>
+			</div>
+		</div>
+		
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 					
+				        <li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Reason given for stop? </li>
+					     <input id="reason1" name="reason" type="radio" value="Fit Description" />
+					   	 <label for="reason1">Fit Description</label>
+
+					     <input id="reason2" name="reason" type="radio" value="Suspicious Behavior" />
+					   	 <label for="reason2">Suspicious Behavior</label>
+					   	 
+					     <input id="reason3" name="reason" type="radio" value="No Reason Given" />
+					   	 <label for="reason3">No Reason Given</label>
+					   	 
+					     <input id="reason4" name="reason" type="radio" value="Other" />
+					   	 
+					   	 <label style="height:90px; width:99.5%;" for="reason4">Other
+					   	 
+					     <input style=" background-color:#dfdfdf;position:relative; height:36px; z-index:2; left:0px; width:100%;" id="reason4" name="otherreason"  type="text" value="" /></label>
+
+			</div>
+		</div>					
+					
+					<br>
+
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			
+					<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">What was the outcome? </li>
+					
+						<input id="outcome1" type="radio" name="outcome" value="Arrest">
+						<label for="outcome1">Arrest</label>
+
+						<input id="outcome2" type="radio" name="outcome" value="Summons">
+						<label for="outcome2">Summons</label>
+
+						<input id="outcome3" type="radio" name="outcome" value="Allowed to go">
+						<label for="outcome3">Allowed to go</label>
+					<br>
+			</div>
+		</div>
+		
+				
+		When did it happen? <br>
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+					
+				<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Time of Day</li>
+				<select name="time">
+					<option value="Morning">Morning</option>
+					<option value="Afternoon">Afternoon</option>
+					<option value="Evening">Evening</option>
+					<option value="Late Night">Late Night</option>
+				</select>
+			</div>
+		</div>		
+				
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 			
+				<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Month</li>
+				<select name="month">
+					<option value="January">January</option>
+					<option value="February">February</option>
+					<option value="March">March</option>
+					<option value="April">April</option>
+					<option value="May">May</option>
+					<option value="June">June</option>
+					<option value="July">July</option>
+					<option value="August">August</option>
+					<option value="September">September</option>
+					<option value="October">October</option>
+					<option value="November">November</option>
+					<option value="December">December</option>
+				</select> 
+			</div>
+		</div>		
+						
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 				
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Year</li>
+				<select name="year">
+					<option value="2012">2012</option>
+					<option value="2011">2011</option>
+					<option value="2010">2010</option>
+					<option value="2009">2009</option>
+				</select>
+				
+			</div>
+		</div>	
+		
+
+	<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 					
+					
+					<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Where did it happen?</li>
+					<textarea style="background-color:#fff;" id="locationbox" cols="40" rows="3" name="location" onclick='clearing("#locationbox");'>(e.g. Dwight and Verona)</textarea>
+					<br> Or:
+					<button type="button" onclick="alert('A feature soon')">Click to Plot on Map</button>
+					<br>
+					<br>
+			</div>
+		</div>	
+				
+		
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+					
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">What Precinct was the Officer(s) from? </li>
+
+				<input id="precinct1" type="radio" name="precinct" value="76th">
+ 				<label for="precinct1">76th</label>
+
+				<input id="precinct2" type="radio" name="precinct" value="PS1">
+ 				<label for="precinct2">PS1</label>
+
+				<input id="precinct3" type="radio" name="precinct" value="Not Sure">
+ 				<label for="precinct3">Not Sure</label>
+
+				<input id="precinct4" type="radio" name="precinct" value="Other" />
+				<label style="height:90px; width:99.5%;" for="precinct4">Other
+			    <input style=" background-color:#dfdfdf; position:relative; height:36px; z-index:2; left:0px; width:100%;" id="reason4" name="otherprecinct"  type="text" value="" /></label>
+
+			</div>
+		</div>
+						
+			
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+				
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Did you report it? </li>
+			<input id="report1" type="radio" name="report" value="No">
+ 				<label for="report1">No</label>
+
+			<input id="report2" type="radio" name="report" value="311CCRB">
+ 				<label for="report2">311/CCRB</label>
+
+			<input id="report3" type="radio" name="report" value="Precinct76">
+ 				<label for="report3">Precinct 76 Captain</label>
+
+			<input id="report4" type="radio" name="report" value="NYCLU">
+ 				<label for="report4">NYCLU</label>
+
+			</div>
+		</div>
+		
+		
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+						
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">If you know the badge number, patrol car, or officer's name, write it here:</li>
+			<textarea style="background-color:#fff;" cols="40" rows="5" name="policeinfo"></textarea>
+			<br>
+			</div>
+		</div>
+		
+					
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Additional details about the incident?</li>
+			<textarea style="background-color:#fff;" cols="40" rows="8" name="additional"></textarea>
+
+			</div>
+		</div>
+		
+			-------------------<br>
+			Describe yourself:<br>
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Age </li>
+			<input style="background-color:#fff;" type="text" name="age"  maxlength="3"/>​
+			</div>
+		</div>
+
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Gender</li>
+			<input id="gender1" type="radio" name="gender" value="Female">
+ 				<label for="gender1">Female</label>
+
+			<input id="gender2" type="radio" name="gender" value="Male">
+ 				<label for="gender2">Male</label>
+
+			<input id="gender3" type="radio" name="gender" value="Trans">
+ 				<label for="gender3">Trans*</label>
+
+			<input id="gender4" type="radio" name="gender" value="Other"> 
+ 				<label style="height:90px; width:99.5%;" for="gender4">Other
+			    <input style="background-color:#dfdfdf; position:relative; height:36px; z-index:2; left:0px; width:100%;" id="gender4" name="othergender"  type="text" value="" /></label>			
+
+			</div>
+		</div>
+		
+		
+			
+					
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			<li data-role="list-divider" class="ui-li ui-li-divider ui-btn ui-bar-a ui-corner-top ui-btn-up-undefined">Race</li>
+			
+			<input id="race1" type="radio" name="race" value="White">
+ 				<label for="race1">White</label>
+		
+			<input id="race2" type="radio" name="race" value="Black">
+ 				<label for="race2">Black</label>
+			
+			<input id="race3" type="radio" name="race" value="Latino">
+ 				<label for="race3">Latino</label>
+			
+			<input id="race4" type="radio" name="race" value="Other">
+ 				<label style="height:90px; width:99.5%;" for="race4">Other
+ 				<input style="background-color:#dfdfdf; position:relative; height:36px; z-index:2; left:0px; width:100%;" id="race4" name="otherrace"  type="text" value="" /></label>			
+
+			</div>
+		</div>
+		
+					
+			Contact (Kept Hidden & Confidential)<br>
+			
+		<div data-role="fieldcontain"> 
+			<div data-role="controlgroup"> 
+			
+			<label for="name">Name</label>
+			<input style="background-color:#fff;" id="name" type="text" name="name" />
+			
+			<label for="name">Address</label>
+			<textarea style="background-color:#fff;" cols="30" rows="3" name="address" ></textarea>
+			
+			<label for="name">Phone #</label>
+			<input style="background-color:#fff;" type="text" name="phone" />
+
+		
+			<label for="name">Email</label>
+			<input style="background-color:#fff;" type="text" name="email" />​<br>
+			</div>
+		</div>			
+		
+		
+
+		
+		<br>
+		<input type="submit" value="Submit">
+		<br><br>
+		
+
+		
+	</form>	
+	
+</div>
+
+        <script src="js/vendor/zepto.min.js"></script>
+        <script src="js/helper.js"></script>
+
+    </body>
+</html>

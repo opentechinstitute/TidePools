@@ -1,0 +1,294 @@
+<html> 
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+    <title>#SandyAid Map</title>
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/tidepools.css" />
+    <link rel="stylesheet" href="css/jquery_ui.css" />
+    
+    <link rel="icon" 
+		      href="/images/pound.ico">
+    
+     
+     <script type="text/javascript">
+		
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-34989988-1']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+    
+  </head> 
+  <body> 
+  
+  
+  
+	<div id="navframe" style="margin-top:-10px">
+	
+	   <div style="width:353; height:5; background-color:#7f275b; position: relative; top:9;"></div>
+
+
+  		 <div id="mapcontrol" style="width:353; height:51;">
+  		 
+  		 
+  		 	<img src="/images/map_collection.png" style="margin-top:15"/>
+  		 
+  		 		<div id="newmap" style="width: 67px; position:absolute; height: 31; top:18px; left:217px; cursor:pointer; background-image:url('images/new_map.png'); z-index:1;" 			value='Hide Layer' onclick="unhide('mapform');" ></div>
+  		 
+  		 	<div id="browsemap" style="width: 67px; position:absolute; height: 31; top:18px; left:287px; cursor:pointer; background-image:url('images/browse_maps.png'); z-index:1;" 			value='Hide Layer' onclick="unhide('mapform');" ></div>
+  		 
+  		 </div>
+  		 
+  		 
+		
+    	<div id="navtop" class="unhidden" > 
+    	
+    	</div>
+ 
+	 	<div id="filters" style="width:353; height:134; background-color:#ebe1e3;top: 92;position: relative;">
+	 	
+		
+			 
+			 
+			<div style="padding: 6px 6px 6px 6px;"> 
+			
+				<div style="position:relative; display:inline-block; margin-bottom:6px;margin-right: -9; margin-left: -1;"><img src="/images/filter_landmarks.png"/></div>
+	  
+		    	
+			  	<div id="event" class="filter" style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; z-index:1; cursor:pointer;" onclick="reBoundFilter('event'); select('event');">
+			  	<img src="/images/filter_event.png" width="49" height="49"/></div>
+			  	
+			  	<div id="memory" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('memory'); select('memory');">
+			    <img src="/images/filter_memory.png" width="49" height="49"	/></div>
+			    
+			    	<div id="alert" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('alert'); select('alert');">
+			  	<img src="/images/filter_alert.png" width="49" height="49"/></div>
+			  	
+			  	
+			    <div id="fixthis" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('fixthis'); select('fixthis');">
+			    <img src="/images/filter_fixthis.png" width="49" height="49"/></div>
+
+			    
+			    
+			    <div id="freewifi" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('wifi'); select('freewifi');">
+			    <img src="/images/filter_wifi.png" width="49" height="49"/></div>
+		
+				<div id="friend" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('friend'); select('friend');">
+			    <img src="/images/filter_friend.png" width="49" height="49"/></div>
+		
+			  	
+			  	<div id="group" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; " onclick="reBoundFilter('group'); select('group');">
+			  	<img src="/images/filter_group.png" width="49" height="49"/></div>
+			  	
+			    	
+			    <div id="food" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('food'); select('food');">
+			  	<img src="/images/filter_food.png" width="49" height="49"/></div>
+			  	
+			  	<div id="coupons" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; " onclick="reBoundFilter('coupons'); select('coupons');">
+			  	<img src="/images/filter_coupons.png" width="49" height="49"/></div>
+			  	
+			  	
+			  	
+			  	<div id="jobs" class="filter"  style="width: 49px; height: 49px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; " onclick="reBoundFilter('jobs'); select('jobs');">
+			  	<img src="/images/filter_jobs.png" width="49" height="49"/></div>
+			  	
+			  	
+			  	
+			  	  	
+			  	<div id="somethingelse" class="filter"  style="width: 49px; height: 49px; 	position:relative; display:inline-block; margin-bottom:6px; cursor:pointer;" onclick="reBoundFilter('somethingelse'); select('somethingelse');">
+			  	<img src="/images/filter_other.png" width="49" height="49"/></div>
+	  
+			</div> 
+			 
+		
+		 </div>
+		 
+		 <div style="width:353; height:5; background-color:#7f275b; top: 92; position: relative;"></div>
+		 
+		
+
+
+		 <div id="LandmarksFeed" style="width:89px; height:19px; background-color:#8bc3c5; position: relative; display:inline-block; top:90; text-align: center; cursor:pointer;" onclick="changeFeed('landmarks');" ><p3>Landmarks</p3></div>
+	
+		 <div id="EventsFeed" style="width:89px; height:19px; background-color:#ebe1e3; position: relative; display:inline-block; top:90; margin-left:-1; text-align: center; cursor:pointer;" onclick="changeFeed('comments');" ><p3>Chat Feed</p3></div>
+
+
+
+    
+   			<div id="nav">
+
+   			</div>
+   			 
+
+    </div>
+    
+
+    <div id="landmarkfeed" class="hidden">
+    </div>
+    
+
+	<div id="mapform" class="hidden" style="background-color:#f2edea">
+    
+    
+				<div id="formfont" style="padding-left:12; padding-right:12;">
+		
+				<form id="newMap" action="/php/record_map.php" method="post" onsubmit="this.mapsubmit(); ">
+				
+					
+				<div id="backbutton" style="position: relative; width:73px; background-image:url(/images/back.png); height:30px; top:7;" onclick="unhide('mapform')" ></div>
+
+				</br>
+					
+					<p5>Create a New Map</p5></br>
+					<p><i>Note: All maps aggregate unless specified</i></p>
+					
+					<img src="/images/icon_map.png" /></br>
+				
+					<p>Map Name </br><input type="text" id="mapname" name="mapname" maxlength="50"/></br>
+				
+					Theme/Description </br></br> <textarea name="mapdescrip" id="mapdescrip" maxlength="300"></textarea></br>
+					
+					<input type="button" id="mapsubmit" value="Save" onsubmit="this.mapsubmit(); return false;" /></br></br>
+					
+					<p5>Map Options</p5></br></br>
+					
+					Free for All <input type="checkbox" name="openedit" value="Yes" /> </br>
+					
+					Private/Hidden <input type="checkbox" name="hidden" value="Yes" /> </br>
+										
+					Scavenger Hunt <input type="checkbox" name="scavenger" value="Yes" /> </br></p>
+
+
+					<input type="hidden" id="admin" name="admin" value="0" />
+
+				
+				</form>
+				
+				</div>
+								
+    </div>
+     
+
+ 
+  <div id="landmarkmenu" style="width: 170px; height: 337px; position:fixed; background-color:#e6e4ea; border-style:solid; border-color:#444d51; border:1px top:101px; left:398px; z-index:1; margin-top: 48px;" class="unhidden">
+
+
+  
+ 	 
+ 	<div style="padding: 6px 6px 6px 6px;"> 
+  
+
+	  	<div id="event" class="landmark" style="width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; z-index:1; cursor:move;" onclick="change('event');" >
+	  	<img src="/images/icon_event.png" width="70" height="70"/></div>
+	  	
+	  	<div id="memory" class="landmark" style="width: 75px; height: 75px;  position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('memory');">
+	    <img src="/images/icon_memory.png" width="70" height="70"/></div>
+
+		<div id="friend" class="landmark" style="width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('friend');">
+	    <img src="/images/icon_friend.png" width="70" height="70"/></div>
+
+	  	
+	  	<div id="group" class="landmark" style="width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move; " onclick="change('group');">
+	  	<img src="/images/icon_group.png" width="70" height="70"/></div>
+	  	
+	  		<div id="alert" class="landmark" style="width: 75px; height: 75px;position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('alert');">
+	  	<img src="/images/icon_alert.png" width="70" height="70"/></div>
+	  	
+	  
+	    <div id="fixthis" class="landmark" style="width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('fixthis');">
+	    <img src="/images/icon_fixthis.png" width="70" height="70"/></div>
+	    
+	    	
+	    <div id="food" class="landmark" style="width: 75px; height: 75px; position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('food');">
+	  	<img src="/images/icon_food.png" width="70" height="70"/></div>
+	  	
+	  
+	  
+	    	  	
+	  	<div id="somethingelse" class="landmark" style="width: 75px; height: 75px; 	position:relative; display:inline-block; margin-bottom:6px; cursor:move;" onclick="change('somethingelse');">
+	  	<img src="/images/icon_somethingelse.png" width="70" height="70"/></div>
+  
+	</div> 
+  
+  </div>
+  
+  
+  
+  
+  
+    <div id="info" style="width: 370px; height: 77px; position:fixed; background-color:#e6e4ea; border-style:solid; border-color:#444d51; border:1px top:101px; left:630px; z-index:1; margin-top: 11px;" ><p2 style="text-align:center; font-size:15px; margin-left:28px; line-height:2;">TEXT Needed Supplies to (347)778-0570</p2>
+    <br>
+    <p style="text-align:center; margin-top:5px; font-size:15px;">Format TEXT as <b>Need @ Your Location</b> </p>
+    <br>
+    
+       <p style="text-align:center; margin-top:-30px;">(i.e. "Gas, Water Pump @ Van Brundt and Pioneer Brooklyn")</p>
+
+    </div>
+  
+
+
+    
+  <div id="map" style="z-index:0;" onmousedown="" ></div>
+ 
+  
+  <div id="addlandmark" style="width: 140px; background-repeat: no-repeat; position:absolute; height: 42px; top:18px; left:397px; background-image:url('images/landmarkbutton.png'); z-index:1; cursor:pointer;" value='Hide Layer' onclick="unhide('landmarkmenu');" class="target"></div>
+
+   
+  <div id="trashlandmark" style="width: 171px; height: 337px; position:fixed; background-color:#2d3c4b; border-style:solid; top:58px; left:398px; z-index:1; opacity:0.7;" class="hidden"> <img src="/images/trash.png" />   </div>
+
+ 
+   
+  <div id="navbarr" style="width: 392px; height: 72px; position:fixed; top:69px; left:630px; z-index:1; margin-top: 36px;" >
+  
+		  
+		 <div id="brooklyn" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block; cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.648866,-73.951721);" class="target"><p style="line-height:0; font-size:16px; ">Brooklyn</p></div>
+		
+		<div id="manhattan" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block; cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.725405, -73.995667);" class="target"><p style=" line-height:0; font-size:16px; ">Manhattan</p></div>
+			 
+		 <div id="queens" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block;  cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.756620, -73.874817);" class="target"><p style=" line-height:0;font-size:16px; ">Queens</p></div>
+		 
+		  <div id="queens" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block;  cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.784701,-73.251343);" class="target"><p style=" line-height:0;font-size:16px; ">Long Island</p></div>
+			 		 
+		<div id="statenisland" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block; cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.599356, -74.120636);" class="target"><p style="line-height:0; font-size:14px; ">Staten Island</p></div>
+		
+		<div id="bronx" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block; cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(40.853293, -73.859711);" class="target"><p style=" line-height:0;font-size:16px; ">Bronx</p></div>
+			 		 		 
+		<div id="newjersey" style="text-align:center; border-style:solid; width: 90px; height: 32px; position:relative; display:inline-block;  cursor:pointer; opacity: 1; z-index:2; background-color:#fff; " value='Hide Layer' onclick="gotoCoordinates(39.373587, -74.457092);" class="target"><p style=" line-height:0;font-size:16px; ">New Jersey</p></div>
+		
+
+
+
+    	    	
+    </div>
+  </div>
+
+
+  
+  <div id="secretbutton" style="z-index:2; background-color:#fff; position:absolute; width: 8px; height:40px; top:0; margin-left:-8; cursor:pointer;" onclick="secretLandmark()">
+  
+  
+  <div id="loadingDiv" style="background-image:url('images/loading.gif'); position:absolute;"></div>
+  	
+
+  <script src="js/leaflet.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/tidepools.js"></script>
+
+  <script src="js/tidepools_dragdrop.js"></script>
+
+  <script src="js/jquery_ui.js"></script>
+  <script src="js/jquery_ui_timepicker.js"></script>
+  <script src="js/tidepools_conf.js"></script>
+
+
+  
+
+     
+  </body> 
+</html> 

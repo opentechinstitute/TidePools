@@ -194,21 +194,26 @@
 
 
 	function addbyLocation(){
+		console.log("success");
+	  $("#search-address").click(function(e) {   //on submit, send info to DB
+	   console.log ($ ("#query").val());
+	   var address = $("#query").val();
 
-		var userSearch = prompt("Hangi Noktayi Bildiriyorsunuz?","Adresi buraya giriniz");
+	        $.postJSON("php/locationsearch.php",
+	            {
+	                'query' : address
+	            },
 
-        $.postJSON("php/locationsearch.php",
-            {
-                'query' : userSearch
-            },
+	            function(success){
 
-            function(success){
+	                gotoCoordinates(success[1],success[0]);
+	                L.marker([success[1],success[0]]).addTo(map);
+	            }
+	        );
 
-                gotoCoordinates(success[1],success[0]);
-                L.marker([success[1],success[0]]).addTo(map);
-            }
-        );
-    }
+			  e.preventDefault();
+			});
+		}
 	
 
 		 

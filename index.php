@@ -38,7 +38,83 @@
     })();
 
   </script>
-    
+
+  <style>
+  .whereAmI {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #a53df6), color-stop(1, #7c16cb) );
+    background:-moz-linear-gradient( center top, #a53df6 5%, #7c16cb 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
+    background-color:#a53df6;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #9c33ed;
+    display:inline-block;
+    color:#ffffff;
+    font-family:arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:12px 9px;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #7d15cd;
+    top: 0px;
+    position:relative;
+  }
+  }.whereAmI:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7c16cb), color-stop(1, #a53df6) );
+    background:-moz-linear-gradient( center top, #7c16cb 5%, #a53df6 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
+    background-color:#7c16cb;
+  }.whereAmI:active {
+    position:relative;
+    top:1px;
+  }
+    .orange {
+      background-color:#ed8b0a;
+      -moz-border-radius:6px;
+      -webkit-border-radius:6px;
+      border-radius:6px;
+      border:1px solid #eeb44f;
+      display:inline-block;
+      color:#ffffff;
+      font-family:arial;
+      font-size:15px;
+      font-weight:bold;
+      padding:12px 76px;
+      text-decoration:none;
+      text-shadow:1px 1px 0px #cc9f52;
+      position: relative;
+      left: 620px;
+      bottom: 178px;
+      width: 296px;i
+
+    }.orange:hover {
+      background-color:#fb9e25;
+    }.orange:active {
+      position:relative;
+    }
+
+    .blue {
+      background-color:#28b3e2;
+      -moz-border-radius:6px;
+      -webkit-border-radius:6px;
+      border-radius:6px;
+      border:1px solid #43a2bf;
+      display:inline-block;
+      color:#ffffff;
+      font-family:arial;
+      font-size:15px;
+      font-weight:bold;
+      padding:4px 20px;
+      text-decoration:none;
+      text-shadow:1px 1px 0px #528ecc;
+    }.blue:hover {
+      background-color:#0a9bc7;
+    }.blue:active {
+      position:relative;
+    }
+
+    </style> 
   </head>
 
   <body>
@@ -50,7 +126,7 @@
         value='Hide Layer' onclick="unhide('mapform');"></div>
       </div>
       <div id="navtop" class="unhidden" style="display:none; top: 12px; left:-3"></div>
-      <img src="assets/images/sms_note.png" ">
+      <img style= "display: none;" src="assets/images/sms_note.png" ">
       <div id="filters" style=
       "width:353; height:134; background-color:#ebe1e3;position: relative;">
       <div style="padding: 6px 6px 6px 6px;">
@@ -92,7 +168,7 @@
     </div>
 
 
-<div id="nav" style="top:266px;"></div>
+<div id="nav" style="top:160px;"></div>
 
 <div id="searchwindow" style="z-index:1; position:absolute; background-color:#fff; top:170px;" class="hidden">
         <form id="searchform">
@@ -182,32 +258,34 @@ class="unhidden">
 <div id="map" style="z-index:0;"></div>
 
 <div id="navbarr" class="unhidden" style=
-"width: 223px; height: 73px; position:fixed; background-color:#7871a1; opacity: 0.85; border-style:solid; border-color:#2f5364; top:-29px; left:633px; z-index:1; margin-top: 48px; border-radius: 9;">
-<div style="padding: 0px 4px 4px 22px;">
+"width: 318px; height: 73px; position:fixed; top:-29px; left:633px; z-index:1; margin-top: 48px; border-radius: 9;">
+<div style="padding: 0px 4px 4px 22px; width: 450px;">
   <div id="clickgo" style=
   "position:relative; display:inline-block; margin-bottom:6px; opacity: 1; z-index:2; margin-top:-5px;"
   value='Hide Layer' class="target" ><img style="display:none;" src="assets/images/clickgo.png" width="34" height=
   "25" /></div>
 
-  <div id="Istanbul" style=
-  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(41.0128, 28.9744);" class="target"> Istanbul </div>
+  <div id="Istanbul" class="blue" style= "position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;" value='Hide Layer' onclick="gotoCoordinates(41.0128, 28.9744);" class="target"> Istanbul </div>
 
-  <div id="Izmir" style=
-  "background: #fff;  font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "gotoCoordinates(38.4202, 27.1283);" class="target">  Izmir  </div>
+  <div id="Izmir" class="blue" style="position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;" value='Hide Layer' onclick="gotoCoordinates(38.4202, 27.1283);" class="target">  Izmir  </div>
 
-  <div id="Ankara" style=
-  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  <div id="Ankara" class="blue" style= "position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
   value='Hide Layer' onclick=
   "gotoCoordinates(39.9167, 32.8500);" class="target">  Ankara  </div>
 
   <div id="searcher" style=
-  "background: #fff; font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
-  value='Hide Layer' onclick=
-  "addbyLocation();" class="target"> <img src="assets/images/search.png" width="112" height="43" /> </div>
+  "font-family:Tahoma, Geneva, sans-serif; padding: 1px; position:relative; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;"
+  value='Hide Layer' onclick="addbyLocation();" class="target">
+<form style="position: relative; bottom: 15px;" id="address-post" action="php/locationsearch.php" method="post" onsubmit="this.search-address(); return false;">
+  <input style="padding: 15px; width: 290px;" type="text" id="query" name="address" maxlength= "50" value="Adresi buraya yaziniz"/>
+  <input class="whereAmI" type="button" id="search-address" value="Yolla" />
+</form>
+</div>
+
+  <div id="searcher" style=
+  "background: #fff; padding: 1px; bottom: 75px; left: 600; display:inline-block; margin-bottom:6px; cursor:pointer; opacity: 1; z-index:2;" value='Hide Layer' onclick= "getLocation();" class="target"> <img src="assets/images/gps.png" width="43" height="43" />
+</div>
+
 </div>
 </div>
 

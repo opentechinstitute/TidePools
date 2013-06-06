@@ -1,4 +1,5 @@
-/**
+/** 
+5.6.2013
  *.---.      .                    .     
  *  |  o     |                    |     
  *  |  .  .-.| .-. .,-.  .-.  .-. | .--.
@@ -193,13 +194,13 @@
 	  // Adjusting div height for scrolling vertical
 	  
 	  var h = $(window).height();
-	  $("#nav").css('height',h - 260);
+	  $("#nav").css('height',h - 175);
 	  $("#searchform").css('height',h - 315);
 	
 	  $(window).resize(function(){
 	  
 	        var h = $(window).height();        
-	        $("#nav").css('height',h - 260);
+	        $("#nav").css('height',h - 175);
 	        $("#searchform").css('height',h - 315);
 
 	    });
@@ -240,7 +241,7 @@
 	}
 
 
-  function mobileCheck(){
+ function mobileCheck(){
 	if( navigator.userAgent.match(/Android/i)
 	 || navigator.userAgent.match(/webOS/i)
 	 || navigator.userAgent.match(/iPhone/i)
@@ -249,12 +250,37 @@
 	 || navigator.userAgent.match(/BlackBerry/i)
 	 ){
 	 
-	 window.location = "http://localhost/mobile.html";
-	 
-	}  //http://stackoverflow.com/questions/3514784/best-way-to-detect-handheld-device-in-jquery
+        if(window.location.href !== "http://tidepools.co/gezi/m.php"){
+	         window.location = "http://tidepools.co/gezi/m.php";
+	    }
+	}   //http://stackoverflow.com/questions/3514784/best-way-to-detect-handheld-device-in-jquery
  }
      
 
+	function getLocation(){
+
+
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+		} 
+		
+		
+		//Get latitude and longitude;
+		function successFunction(position) {
+		
+		   lat = position.coords.latitude;
+		   lon = position.coords.longitude;
+		  
+			gotoCoordinates(lat,lon);
+			map.setZoom(16);
+		 }
+
+		 function errorFunction(){
+
+		 	
+		 }
+	 
+	}
 	
 	
 	
