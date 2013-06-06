@@ -62,7 +62,7 @@ try {
     $marktype = $_POST['marktype'];
     $mapID = $_POST['maplist'];
     $landmarkAdmin = $_POST['landmarkAdmin'];
-    $id = 'test';
+
 
     // $landmarks = (isset($_POST['data']) ? $_POST['data'] : null);
 
@@ -157,6 +157,27 @@ try {
 
     if ($_POST['name']) {
 
+        //creating unique id for item URL 
+        $uniqueID = seoUrl($_POST['name']);
+        $uniqueIDCheck;
+
+        $i = 0;
+        $uniqueCounter = 1;
+
+        //looping till unique id value, not adding values correctly (adding to string atoh well
+        while ($i < 1) {
+            $response = $collection->findOne(array('id' => $uniqueID));
+            if ($response == null){
+                $i = 1;
+            }
+            else {
+                $uniqueID = $uniqueID.strval($uniqueCounter);
+                $uniqueCounter++;
+            }
+        }
+
+
+
         $description = $_POST['description'];
 
         $lat = floatval($_POST['lat']); //converting from string to floats
@@ -177,7 +198,7 @@ try {
             'insides'=>$insides,
             'feed'=>$feed,
             'permissions'=>$permissions,
-            'id'=>$id
+            'id'=>$uniqueID
         );
 
         //---------------------------//
@@ -213,4 +234,18 @@ try {
         $newdata = array('$push' => array("landmarks" => $landmarkID));
         $collection2 -> update(array("_id" => $mapIDObj), $newdata);
 
+    }
+
+
+    //http://stackoverflow.com/questions/11330480/strip-php-variable-replace-white-spaces-with-dashes
+    function seoUrl($string) {
+        //lower case everything
+        $string = strtolower($string);
+        //make alphaunermic
+        $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+        //Clean multiple dashes or whitespaces
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //Convert whitespaces and underscore to dash
+        $string = preg_replace("/[\s_]/", "-", $string);
+        return $string;
     }
