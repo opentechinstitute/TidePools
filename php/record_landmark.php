@@ -191,7 +191,7 @@ try {
         $landmark = array(
             'name'=>$_POST['name'],
             'description'=>$description,
-            'type'=>$marktype,
+            //'type'=>$marktype,
             'loc'=>$loc,
             'mapID'=>$mapID,
             'stats'=>$stats,
