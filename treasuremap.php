@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <!doctype html>
 <html class="no-js" lang="en">
 <!--
@@ -30,28 +30,23 @@
     
 
 
-<div id="map" style="z-index:0;"></div>
+<div id="map" style="position:inherit;"></div>
 
 
 
-<div id="secretbutton" style=
-"z-index:2; background-color:#fff; position:absolute; width: 8px; height:40px; top:0; margin-left:-8; cursor:pointer;"
-onclick="secretLandmark()">
-<div id="loadingDiv" style=
-"background-image:url('assets/images/loading.gif'); position:absolute;"></div>
-</div>
+
 
 <script src="assets/js/resources/leaflet.js" type="text/javascript"></script>
 <script src="assets/js/resources/jquery.js" type="text/javascript"></script>
-<script src="assets/js/resources/jquery_ui.js" type="text/javascript"></script>
-<script src="assets/js/resources/jquery_ui_timepicker.js" type="text/javascript"></script>
-<script src="assets/js/resources/svg-min.js" type="text/javascript"></script>
-<!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> <!-- UNCOMMENT TO LOAD YOUR API Keys-->
-<script src="assets/js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script>
-<script src="assets/js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script>
-<script src="assets/js/tidepoolsframeworks/map_rendering.js" type="text/javascript"></script>
-<script src="assets/js/tidepoolsframeworks/API_collect.js" type="text/javascript"></script>
-<script src="assets/js/tidepoolsframeworks/landmark_functions.js" type="text/javascript"></script>
+<!-- <script src="assets/js/resources/jquery_ui.js" type="text/javascript"></script>
+ --><!-- <script src="assets/js/resources/jquery_ui_timepicker.js" type="text/javascript"></script>
+ --><!-- <script src="assets/js/resources/svg-min.js" type="text/javascript"></script>
+ --><!-- <script src="js/tidepoolsframeworks/APIkeys.js"></script> <!-- UNCOMMENT TO LOAD YOUR API Keys-->
+<!-- <script src="assets/js/tidepoolsframeworks/global_functions.js" type="text/javascript"></script>
+ --><!-- <script src="assets/js/tidepoolsframeworks/dragdrop.js" type="text/javascript"></script> -->
+<!-- <script src="assets/js/tidepoolsframeworks/map_rendering.js" type="text/javascript"></script> -->
+<!-- <script src="assets/js/tidepoolsframeworks/API_collect.js" type="text/javascript"></script>
+ --><!-- <script src="assets/js/tidepoolsframeworks/landmark_functions.js" type="text/javascript"></script> -->
 <script src="assets/js/tidepools.js" type="text/javascript"></script>
 
 </body>

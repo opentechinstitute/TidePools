@@ -822,9 +822,9 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; }
 
 body { cursor: default; overflow: hidden; }
 
-#map { height: 100%; position: relative; overflow: hidden; }
+#map { height: 100%; overflow: hidden; }
 
-#mapborder { height: 100%; position: relative; overflow: hidden; background-color: transparent; }
+#mapborder { height: 100%; overflow: hidden; background-color: transparent; }
 
 #nav { width: 101%; height: 100%; /*top:40; */ float: left; position: absolute; overflow-y: scroll; top: 309; }
 

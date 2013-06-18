@@ -37,18 +37,18 @@ $.extend({
 });
 
 
-    //------ BASE MAP SETTINGS------//
+    // //------ BASE MAP SETTINGS------//
 
-    var minZ = 2; //min map zoom
-    var maxZ = 18; //max map zoom
+    // var minZ = 2; //min map zoom
+    // var maxZ = 18; //max map zoom
 
-    var maxScale = 1.2; //landmark scaling range (1 = true size of image source)
-    var minScale = 30;
+    // var maxScale = 1.2; //landmark scaling range (1 = true size of image source)
+    // var minScale = 30;
 
-    var plantMap = "4fec77c3c33694d70a000000"; //have to manually set these right now
-    var adminMap = "4fec7800c336947909000000";
+    // var plantMap = "4fec77c3c33694d70a000000"; //have to manually set these right now
+    // var adminMap = "4fec7800c336947909000000";
 
-    //should query DB to find map base layer?
+    // //should query DB to find map base layer?
 
 
 
@@ -121,8 +121,8 @@ $.extend({
 
     //---------- ADDING EXTERNAL WEB MAP LAYER ----------//
 
-    var cloudUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-    cloud = new L.TileLayer(cloudUrl);
+    // var cloudUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+    // cloud = new L.TileLayer(cloudUrl);
 
     // map.addLayer(cloud,true); // <---- UNCOMMENT TO ACTIVATE
 
@@ -130,36 +130,36 @@ $.extend({
 
    // map.addLayer(basemap,true);
 
-    var APIload = false; //change to true to load external APIs (like bus time data)
+   // var APIload = false; //change to true to load external APIs (like bus time data)
 
-    $(document).ready(function(){
+    // $(document).ready(function(){
 
-        //map.panTo([1900, 30]);
+    //     //map.panTo([1900, 30]);
 
-        resourceLoader(); //UX framework
-        //-------- MAPS -------//
+    //     resourceLoader(); //UX framework
+    //     //-------- MAPS -------//
 
-        getMaps(userID); //generate map layers for this user
+    //     getMaps(userID); //generate map layers for this user
 
-        //----------------------//
+    //     //----------------------//
 
-        if (APIload == true){
-            getAPIs(); //gets APIs
-        }
+    //     if (APIload == true){
+    //         getAPIs(); //gets APIs
+    //     }
 
-        //------ Events for changing landmarks in view (when map moves, re-query landmark locations) -----//
+    //     //------ Events for changing landmarks in view (when map moves, re-query landmark locations) -----//
 
-        map.on('dragend', reBound);
-        map.on('zoomend', reBound);
-    //  map.on('click', coordsPop); <--- UNCOMMENT FOR CLICK FOR MAP BOUNDS (TO BUILD NEW MAPS based in geo)
+    //     map.on('dragend', reBound);
+    //     map.on('zoomend', reBound);
+    // //  map.on('click', coordsPop); <--- UNCOMMENT FOR CLICK FOR MAP BOUNDS (TO BUILD NEW MAPS based in geo)
 
-       // map.on('dragend', console.log());
+    //    // map.on('dragend', console.log());
 
-        //----------------------//
-
-
+    //     //----------------------//
 
 
 
 
-    });
+
+
+    // });
