@@ -112,6 +112,7 @@ try {
         }
     } elseif ($maps != null) {
 
+
         foreach ($maps as $v) {
 
             $cursor = $collection -> find(array(

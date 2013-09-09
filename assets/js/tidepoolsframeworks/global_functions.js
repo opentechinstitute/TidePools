@@ -215,8 +215,10 @@
 
     function coordsPop(){ //bounds for current map view
 		var bounds = map.getBounds();
+		console.log(bounds);
 		alert(bounds._northEast.lat + " " +  bounds._southWest.lat + " " + bounds._northEast.lng + " " + bounds._southWest.lng)
 	}
+
 
 
 	function landmarkWindow(landmarkID, loc0, loc1){

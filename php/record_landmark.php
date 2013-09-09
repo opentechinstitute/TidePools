@@ -183,7 +183,7 @@ try {
         $lat = floatval($_POST['lat']); //converting from string to floats
         $lng = floatval($_POST['lng']); //...^
 
-        $loc = array($lng, $lat);
+        $loc = array($lat, $lng);
 
 
         //----Landmark JSON Object------//

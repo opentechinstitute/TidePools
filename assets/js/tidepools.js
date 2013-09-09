@@ -61,7 +61,7 @@ $.extend({
     //--------- USING LOCAL MAP AND OPTIONAL CLOUD MAP LAYER--------//
 
     var map = new L.Map('map', {crs:L.CRS.EPSG3857}).setView([42.36219069106654,-83.06988000869751], 16);
-    var base = L.tileLayer('1.0.0/conftest/{z}/{x}/{y}.png', {minZoom:minZ, maxZoom:maxZ, tms:'true'});
+    var base = L.tileLayer('1.0.0/amc2013/{z}/{x}/{y}.png', {minZoom:minZ, maxZoom:maxZ, tms:'true'});
 
     //---------- ADDING OPTIONAL EXTERNAL WEB MAP LAYER (UNCOMMENT TO ACTIVATE) ----------//
 
@@ -93,7 +93,8 @@ $.extend({
 
         map.on('dragend', reBound);
         map.on('zoomend', reBound);
-    //  map.on('click', coordsPop); <--- UNCOMMENT FOR CLICK FOR MAP BOUNDS (TO BUILD NEW MAPS based in geo)
+        //map.on('click', function(e){alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);}); //<----- UNCOMMENT TO CLICK FOR COORDINATES OF CLICKER
+        //map.on('click', coordsPop); //<--- UNCOMMENT FOR CLICK FOR MAP BOUNDS (TO BUILD NEW MAPS based in geo)
 
         //----------------------//
 

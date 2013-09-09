@@ -67,6 +67,57 @@ try {
     $cursor -> sort(array('_id' => -1));  //sort maps by creation, newest first
 
     $cursor = iterator_to_array($cursor);
+   
+    // //-------------------------//
+
+    // //-------------------------//
+
+    // //------ SORTING OUT FORM INPUTS ------//
+    // $mapName = $_POST['mapname'];
+    // $mapDescrip = $_POST['mapdescrip'];
+
+    // //------ Map Stats -----------//
+    // $avatar = $mapType . '.png'; //avatar based on user selection
+    // $expires = 'never';
+
+    // $stats = array(
+    //     'expires' => $expires,
+    //     'avatar' => $avatar,
+    //     'level' => 1,
+    //     'reputation' => 0,
+    //     'likes' => 0,
+    //     'buzz'=> 0,
+    //     'scavenger' => $scavengerHunt,
+    // );
+
+    // //---------- Landmarks on Map --------//
+    // $landmarks = array();
+
+    // //---------- Permissions --------//
+    // $viewers = array();
+    // $admins = array();
+    // //hidden = not on global map aggregation
+
+    // $permissions = array(
+    //     'hidden' => $hidden,
+    //     'viewers' => $viewers,
+    //     'openedit' => $openEdit,
+    //     'admins' => $admins,
+    // );
+
+    // //----Map JSON Object------//
+    // $map = array(
+    //     'name' => $mapName,
+    //     'description' => $mapDescrip,
+    //     'landmarks' => $landmarks,
+    //     'stats' => $stats,
+    //     'permissions' => $permissions,
+    // );
+    // //---------------------------//
+
+    // //---------------------------//
+
+
     $cursor = json_encode($cursor);
 
     print_r($cursor);

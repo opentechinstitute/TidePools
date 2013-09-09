@@ -34,7 +34,7 @@
  */
 
 
-    $DBname = "amc";
+    $DBname = "tidepools";
 
 
 

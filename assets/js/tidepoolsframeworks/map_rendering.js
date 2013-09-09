@@ -122,12 +122,20 @@
 
         else {
 
+            if (mapIDArray.indexOf("TidepoolsBaseMap") > -1) {
+            } else {
+                mapIDArray.push("TidepoolsBaseMap");
+            }
+
+            console.log(mapIDArray);
+
+
             $.postJSON("php/rebound.php", //what data is inside this geo window?
                 {
-                    'nelat' : bounds._northEast.lat,
-                    'nelng' : bounds._northEast.lng,
-                    'swlat' : bounds._southWest.lat,
-                    'swlng' : bounds._southWest.lng,
+                    'nelng' : bounds._northEast.lat, //values changed to opposite lat lng for geo compatibility
+                    'nelat' : bounds._northEast.lng,
+                    'swlng' : bounds._southWest.lat,
+                    'swlat' : bounds._southWest.lng,
                     'mapIDs' : mapIDArray
                 },
 
@@ -310,7 +318,7 @@
 
 
                             if (z.mapID == plantMap){ //this stops indexing of landmarks (for cosmetic landmarks, like plants)
-                                var building = new L.Marker(new L.LatLng(z.loc[1], z.loc[0]), {icon: result, clickable:false});
+                                var building = new L.Marker(new L.LatLng(z.loc[0], z.loc[1]), {icon: result, clickable:false});
                                 mapLayersArray[landmarkCounter].addLayer(building);
                             }
 
@@ -318,7 +326,7 @@
                             else {
 
                                 //adding landmark
-                                L.marker(new L.LatLng(z.loc[1], z.loc[0]), {icon: result}).bindPopup(buildingOptions).addTo(landmarksGroup)
+                                L.marker(new L.LatLng(z.loc[0], z.loc[1]), {icon: result}).bindPopup(buildingOptions).addTo(landmarksGroup)
 
                                     .on('click', function(e) { //when building clicked, do this
 
@@ -366,6 +374,13 @@
 
         var iconSizeX;
         var iconSizeY;
+
+
+        if (landmark.indexOf("tidepools") != -1){
+
+            alert(landmark);
+
+        }
 
 
         $.postJSON("php/image_size.php", //PHP query for image size dimensions
